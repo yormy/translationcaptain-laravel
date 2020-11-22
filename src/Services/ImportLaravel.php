@@ -9,24 +9,142 @@ class ImportLaravel
 {
 
     /** @var \Illuminate\Filesystem\Filesystem */
-    protected $files;
+    protected $fileSystem;
 
     protected array $messages = [];
 
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
 
+    protected array $allFiles=[];
+
+    protected array $all;
+
     public function __construct()
     {
         $this->app = App();
-        $this->files = new Filesystem();
+        $this->fileSystem = new Filesystem();
     }
 
     public function getMessages()
     {
-        $this->importAllFileTranslations();
+        $baseDir = $this->app['path.lang'];
+
+        $baseDir .= "/vendor/";
+        //dd($baseDir);
+        //$this->importPlainFileTranslations($baseDir, $baseDir);
+        $this->importVendorFileTranslations($baseDir, $baseDir);
+dd($this->all);
         return $this->messages;
     }
+
+    public function importVendorFileTranslations($root, $baseDir)
+    {
+        $this->addVendorFiles($root, $baseDir);
+        foreach ($this->fileSystem->directories($baseDir) as $langPath) {
+            $this->importVendorFileTranslations($root, $langPath);
+        }
+    }
+
+
+    public function importPlainFileTranslations($root, $baseDir)
+    {
+        $this->addFiles($root, $baseDir);
+        foreach ($this->fileSystem->directories($baseDir) as $langPath) {
+            $this->importPlainFileTranslations($root, $langPath);
+        }
+    }
+
+    public function addVendorFiles($root, $langPath)
+    {
+        foreach ($this->fileSystem->allfiles($langPath) as $file) {
+            $fullPathname = $file->getPathname();
+            $relative = str_replace($root, '', $fullPathname);
+
+            // remove php extension
+            $relative = substr($relative,0, strlen($relative) - strlen('.php'));
+
+            // determine filename vs keyname
+            $parts = explode(DIRECTORY_SEPARATOR, $relative);
+
+            $group = $parts[0];
+            $language = $parts[1];
+            unset($parts[0]);
+            unset($parts[1]);
+
+            $keyprefix = implode('.', $parts);
+
+            $translations = $this->convertImportfileToArray($fullPathname);
+
+            if ($keyprefix) {
+                $keyprefix .= ".";
+            }
+
+            $keysForGroup = [];
+            foreach ($translations as $key => $translation)
+            {
+
+                $fullKey = $keyprefix. $key;
+
+                $keysForGroup[$fullKey] = $translation;
+
+             }
+
+            $this->all[$language][$group] = $keysForGroup;
+        }
+    }
+
+
+    public function addFiles($root, $langPath)
+    {
+        foreach ($this->fileSystem->allfiles($langPath) as $file) {
+
+            $fullPathname = $file->getPathname();
+            $relative = str_replace($root, '', $fullPathname);
+
+            // remove php extension
+            $relative = substr($relative,0, strlen($relative) - strlen('.php'));
+
+            // determine filename vs keyname
+            $parts = explode(DIRECTORY_SEPARATOR, $relative);
+
+            $group = $parts[0];
+            unset($parts[0]);
+            $keyprefix = implode('.', $parts);
+
+            $this->allFiles[] = $group . " / ". $keyprefix;
+
+
+
+            $translations = $this->convertImportfileToArray($fullPathname);
+            if ($keyprefix) {
+                $keyprefix .= ".";
+            }
+
+            foreach ($translations as $key => $translation)
+            {
+                $this->messages[] = $group . " | ". $keyprefix . "$key => $translation";
+            }
+        }
+
+    }
+
+    public function convertImportfileToArray(string $filename)
+    {
+        $arrayTranslations = include $filename;
+        $keyValues = Arr::dot($arrayTranslations);
+
+        // Arr::dot convert an empty array not to a dotted value but remains an empty array.
+        // Remove this empty array so we can trust on a single dimensional array
+        foreach ($keyValues as $key => $value) {
+            if (is_array($value)) {
+               unset ($keyValues[$key]);
+            }
+        }
+        return $keyValues;
+
+    }
+
 
     /**
      * @param bool $replace
