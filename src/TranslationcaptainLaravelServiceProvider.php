@@ -8,6 +8,7 @@ use Yormy\TranslationcaptainLaravel\Commands\TranslationcaptainLaravelCommand;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ImportController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\SearchSourcesController;
 use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
 
 class TranslationcaptainLaravelServiceProvider extends ServiceProvider
@@ -84,6 +85,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
     private function registerGuestRoutes()
     {
         Route::get('/import', [ImportController::class, 'import'])->name('show');
+        Route::get('/search', [SearchSourcesController::class, 'search'])->name('show');
     }
 
     private function registerUserRoutes()
