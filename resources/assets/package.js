@@ -1,4 +1,3 @@
 /*eslint-disable */
-Vue.component('referrer-details-overview', require('./components/DetailsOverview').default);
-Vue.component('referrer-referrer-overview', require('./components/ReferrerOverview').default);
+Vue.component('translationcaptain-overview', require('./components/Overview').default);
 /*eslint-enable */

@@ -30,13 +30,6 @@
         :items="dataTable"
         :search="search"
     >
-
-      <template v-slot:item.actions="{ item }">
-        <button type="button" class="btn btn-link" @click="open(item)">
-          open
-        </button>
-      </template>
-
     </v-data-table>
 
 
@@ -60,11 +53,6 @@ export default {
   },
 
   methods : {
-    open(item) {
-      console.log(window.location.href);
-      const current = window.location.href;
-      window.location.href = current + '/' + item.id
-    }
   }
 
 }

@@ -63,7 +63,6 @@ class ImportLaravel
         $importFromVendorDir = $importFromDir . "/vendor";
         $this->importFileTranslations(self::VENDOR_FILES, $importFromVendorDir, $importFromVendorDir, $language);
 
-dd($this->messages);
         return $this->messages;
     }
 
