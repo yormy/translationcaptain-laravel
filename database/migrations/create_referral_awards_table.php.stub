@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateReferralAwardsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('referral_awards', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('referrer_id');
+            $table->unsignedBigInteger('action_id');
+            $table->text('description')->nullable();
+            $table->text('delete_reason')->nullable();
+
+            $table->unsignedBigInteger('payment_id')->nullable();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('referrer_id')->references('id')->on('users');
+            $table->foreign('action_id')->references('id')->on('referral_actions');
+            $table->foreign('payment_id')->references('id')->on('referral_payments');
+
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+}

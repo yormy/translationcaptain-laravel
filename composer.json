@@ -1,0 +1,65 @@
+{
+    "name": "yormy/referral-system",
+    "description": "Tracking of referrals in laravel",
+    "keywords": [
+        "yormy",
+        "referral-system"
+    ],
+    "homepage": "https://github.com/yormy/referral-system",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Yormy",
+            "email": "dev@yormy.com",
+            "homepage": "https://yormy.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/auth": "^6.0|^7.0|^8.0",
+        "illuminate/container": "^6.0|^7.0|^8.0",
+        "illuminate/contracts": "^6.0|^7.0|^8.0",
+        "illuminate/database": "^6.0|^7.0|^8.0",
+        "laravel/framework": "8.*",
+        "laravel/legacy-factories": "^1.0",
+        "orchestra/testbench": "6.*"
+    },
+    "require-dev": {
+        "jaschilz/php-coverage-badger": "^2.0",
+        "phpunit/phpunit": "^9.3",
+        "psalm/plugin-laravel": "^1.2",
+        "vimeo/psalm": "^4.1.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yormy\\ReferralSystem\\": "src",
+            "Yormy\\ReferralSystem\\Database\\Factories\\": "database/factories"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Yormy\\ReferralSystem\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "psalm": "vendor/bin/psalm",
+        "test": "vendor/bin/phpunit --colors=always --testdox",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Yormy\\ReferralSystem\\ReferralSystemServiceProvider"
+            ],
+            "aliases": {
+                "ReferralSystem": "Yormy\\ReferralSystem\\ReferralSystemFacade"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

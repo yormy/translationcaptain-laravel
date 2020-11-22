@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateReferralActionsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('referral_actions', function (Blueprint $table) {
+            $table->bigIncrements('id');
+
+            /**
+             * On SIGNUP action the referrer is awarded with 4 points
+             */
+            $table->string('name')->comment('ie: SIGNUP');
+            $table->integer('points')->comment('ie: 4');
+            $table->text('description')->nullable();
+
+            $table->timestamps();
+        });
+    }
+}

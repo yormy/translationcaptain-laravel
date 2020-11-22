@@ -1,0 +1,70 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use Yormy\ReferralSystem\Models\ReferralAction;
+
+class SeedReferralActionsTable extends Migration
+{
+    public function up()
+    {
+        $actions[] = [
+            "id" => 1,
+            "name" => "SIGNUP",
+            "points" => 10,
+            "description" => "on completion of their account",
+            ];
+
+        $actions[] = [
+            "id" => 100,
+            "name" => "UPGRADE_BRONZE",
+            "points" => 100,
+            "description" => "on upgrading their account to bronze level",
+        ];
+
+        $actions[] = [
+            "id" => 110,
+            "name" => "UPGRADE_SILVER",
+            "points" => 200,
+            "description" => "on upgrading their account to silver level",
+        ];
+
+        $actions[] = [
+            "id" => 120,
+            "name" => "UPGRADE_GOLD",
+            "points" => 300,
+            "description" => "on upgrading their account to gold level",
+        ];
+
+        $actions[] = [
+            "id" => 1000,
+            "name" => "CHARGE_BRONZE",
+            "points" => 100,
+            "description" => "on paying for their bronze level",
+        ];
+
+        $actions[] = [
+            "id" => 1100,
+            "name" => "CHARGE_SILVER",
+            "points" => 200,
+            "description" => "on paying for their silver level",
+        ];
+
+        $actions[] = [
+            "id" => 1200,
+            "name" => "CHARGE_GOLD",
+            "points" => 300,
+            "description" => "on paying for their gold level",
+        ];
+
+        $this->createActions($actions);
+    }
+
+    private function createActions($actions)
+    {
+        foreach ($actions as $details) {
+            ReferralAction::create($details);
+        }
+    }
+}

@@ -1,0 +1,24 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateReferralPaymentsTable extends Migration
+{
+    public function up()
+    {
+        Schema::create('referral_payments', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('referrer_id');
+            $table->integer('paid_points');
+            $table->text('description')->nullable();
+
+            $table->foreign('referrer_id')->references('id')->on('users');
+
+            $table->timestamps();
+
+            $table->softDeletes();
+        });
+    }
+}
