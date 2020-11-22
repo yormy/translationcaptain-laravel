@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Models;
+namespace Yormy\TranslationcaptainLaravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -20,7 +20,7 @@ class ReferralAward extends Model
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);
-        $this->referrerClass = config('referral-system.models.referrer.class');
+        $this->referrerClass = config('translationcaptain-laravel.models.referrer.class');
     }
 
     public function user()

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to `referral-system` will be documented in this file
+All notable changes to `translationcaptain-laravel` will be documented in this file
 
 [TODO ITEMS](./docs/todo.md)
 

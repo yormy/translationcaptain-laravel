@@ -1,11 +1,11 @@
 {
-    "name": "yormy/referral-system",
+    "name": "yormy/translationcaptain-laravel",
     "description": "Tracking of referrals in laravel",
     "keywords": [
         "yormy",
-        "referral-system"
+        "translationcaptain-laravel"
     ],
-    "homepage": "https://github.com/yormy/referral-system",
+    "homepage": "https://github.com/yormy/translationcaptain-laravel",
     "license": "MIT",
     "authors": [
         {
@@ -33,13 +33,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Yormy\\ReferralSystem\\": "src",
-            "Yormy\\ReferralSystem\\Database\\Factories\\": "database/factories"
+            "Yormy\\TranslationcaptainLaravel\\": "src",
+            "Yormy\\TranslationcaptainLaravel\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Yormy\\ReferralSystem\\Tests\\": "tests"
+            "Yormy\\TranslationcaptainLaravel\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -50,10 +50,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Yormy\\ReferralSystem\\ReferralSystemServiceProvider"
+                "Yormy\\TranslationcaptainLaravel\\TranslationcaptainLaravelServiceProvider"
             ],
             "aliases": {
-                "ReferralSystem": "Yormy\\ReferralSystem\\ReferralSystemFacade"
+                "TranslationcaptainLaravel": "Yormy\\TranslationcaptainLaravel\\TranslationcaptainLaravelFacade"
             }
         }
     },

@@ -1,47 +1,47 @@
 <?php
 
-namespace Yormy\ReferralSystem;
+namespace Yormy\TranslationcaptainLaravel;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Yormy\ReferralSystem\Commands\ReferralSystemCommand;
-use Yormy\ReferralSystem\Http\Controllers\ReferrerDetailsController;
-use Yormy\ReferralSystem\Http\Controllers\ReferrerOverviewController;
-use Yormy\ReferralSystem\Providers\EventServiceProvider;
+use Yormy\TranslationcaptainLaravel\Commands\TranslationcaptainLaravelCommand;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
+use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
 
-class ReferralSystemServiceProvider extends ServiceProvider
+class TranslationcaptainLaravelServiceProvider extends ServiceProvider
 {
     public function boot()
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/referral-system.php' => config_path('referral-system.php'),
+                __DIR__ . '/../config/translationcaptain-laravel.php' => config_path('translationcaptain-laravel.php'),
             ], 'config');
 
             $this->publishes([
-                __DIR__ . '/../resources/views/blade' => base_path('resources/views/vendor/referral-system'),
+                __DIR__ . '/../resources/views/blade' => base_path('resources/views/vendor/translationcaptain-laravel'),
             ], 'blade');
 
             $this->publishes([
-                __DIR__ . '/../resources/views/vue' => base_path('resources/views/vendor/referral-system'),
-                __DIR__ . '/../resources/assets' => resource_path('assets/vendor/referral-system'),
+                __DIR__ . '/../resources/views/vue' => base_path('resources/views/vendor/translationcaptain-laravel'),
+                __DIR__ . '/../resources/assets' => resource_path('assets/vendor/translationcaptain-laravel'),
             ], 'vue');
 
             $this->publishMigrations();
 
             $this->commands([
-                ReferralSystemCommand::class,
+                TranslationcaptainLaravelCommand::class,
             ]);
 
             $ui_type = 'blade';
         } else {
             $ui_type = 'blade';
-            if ("VUE" === config('referral-system.ui_type')) {
+            if ("VUE" === config('translationcaptain-laravel.ui_type')) {
                 $ui_type = 'vue';
             }
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/'. $ui_type, 'referral-system');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/'. $ui_type, 'translationcaptain-laravel');
 
         $this->registerGuestRoutes();
         $this->registerUserRoutes();
@@ -76,7 +76,7 @@ class ReferralSystemServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/referral-system.php', 'referral-system');
+        $this->mergeConfigFrom(__DIR__ . '/../config/translationcaptain-laravel.php', 'translationcaptain-laravel');
         $this->app->register(EventServiceProvider::class);
     }
 
@@ -86,7 +86,7 @@ class ReferralSystemServiceProvider extends ServiceProvider
 
     private function registerUserRoutes()
     {
-        Route::macro('ReferralSystemUser', function (string $prefix) {
+        Route::macro('TranslationcaptainLaravelUser', function (string $prefix) {
             Route::prefix($prefix)->name($prefix. ".")->group(function () {
                 Route::get('/details', [ReferrerDetailsController::class, 'show'])->name('show');
             });
@@ -97,7 +97,7 @@ class ReferralSystemServiceProvider extends ServiceProvider
     {
         //  Route::get('/admin1/ref/details/{referrer}', [ReferrerDetailsController::class, 'showForUser'])->name('shownow');
 
-        Route::macro('ReferralSystemAdmin', function (string $prefix) {
+        Route::macro('TranslationcaptainLaravelAdmin', function (string $prefix) {
             Route::prefix($prefix)->name($prefix. ".")->group(function () {
                 Route::get('/referrers', [ReferrerOverviewController::class, 'index'])->name('overview');
                 Route::get('/referrers/{referrer}', [ReferrerDetailsController::class, 'showForUser'])->name('showForUser');

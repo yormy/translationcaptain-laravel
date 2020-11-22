@@ -1,13 +1,13 @@
 <?php
 
-namespace Yormy\ReferralSystem\Tests\Features;
+namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 
 use Illuminate\Support\Facades\Auth;
-use Yormy\ReferralSystem\Models\ReferralAction;
-use Yormy\ReferralSystem\Models\ReferralAward;
+use Yormy\TranslationcaptainLaravel\Models\ReferralAction;
+use Yormy\TranslationcaptainLaravel\Models\ReferralAward;
 
-use Yormy\ReferralSystem\Observers\Events\AwardReferrerEvent;
-use Yormy\ReferralSystem\Tests\TestCase;
+use Yormy\TranslationcaptainLaravel\Observers\Events\AwardReferrerEvent;
+use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
 class DetailsTest extends TestCase
 {

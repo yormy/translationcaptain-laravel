@@ -1,12 +1,12 @@
 <?php
 
-namespace Yormy\ReferralSystem\Http\Controllers;
+namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
-use Yormy\ReferralSystem\Http\Controllers\Resources\ReferrerAwardedActionCollection;
-use Yormy\ReferralSystem\Models\ReferralAward;
-use Yormy\ReferralSystem\Services\AwardService;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\Resources\ReferrerAwardedActionCollection;
+use Yormy\TranslationcaptainLaravel\Models\ReferralAward;
+use Yormy\TranslationcaptainLaravel\Services\AwardService;
 
 class ReferrerDetailsController extends Controller
 {
@@ -30,7 +30,7 @@ class ReferrerDetailsController extends Controller
         $awardedActions = $this->getAwardedActions($referringUser);
         $points = $this->getTotalPoints($referringUser);
 
-        return view('referral-system::user.details', [
+        return view('translationcaptain-laravel::user.details', [
             'awardedActions' => json_encode($awardedActions),
             'points' => json_encode($points),
         ]);

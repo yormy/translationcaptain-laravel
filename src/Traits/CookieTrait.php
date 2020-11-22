@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Traits;
+namespace Yormy\TranslationcaptainLaravel\Traits;
 
 use Illuminate\Support\Facades\Cookie;
 
@@ -8,7 +8,7 @@ trait CookieTrait
 {
     public function getReferrerFromCookie()
     {
-        $cookieName = config('referral-system.cookie.name');
+        $cookieName = config('translationcaptain-laravel.cookie.name');
         if (request()->hasCookie($cookieName)) {
             $publicReferrerId = request()->cookie($cookieName);
 
@@ -20,8 +20,8 @@ trait CookieTrait
 
     public function setCookie($referringUserId)
     {
-        $cookieName = config('referral-system.cookie.name');
-        $cookieLifetime = config('referral-system.cookie.lifetime');
+        $cookieName = config('translationcaptain-laravel.cookie.name');
+        $cookieLifetime = config('translationcaptain-laravel.cookie.lifetime');
 
         if ($referringUserId) {
             Cookie::queue($cookieName, $referringUserId, $cookieLifetime);

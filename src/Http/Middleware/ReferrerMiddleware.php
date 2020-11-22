@@ -1,10 +1,10 @@
 <?php
 
-namespace Yormy\ReferralSystem\Http\Middleware;
+namespace Yormy\TranslationcaptainLaravel\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Yormy\ReferralSystem\Traits\CookieTrait;
+use Yormy\TranslationcaptainLaravel\Traits\CookieTrait;
 
 class ReferrerMiddleware
 {
@@ -16,8 +16,8 @@ class ReferrerMiddleware
 
     public function __construct()
     {
-        $this->referrerClass = config('referral-system.models.referrer.class');
-        $this->queryParam = config('referral-system.query_parameter');
+        $this->referrerClass = config('translationcaptain-laravel.models.referrer.class');
+        $this->queryParam = config('translationcaptain-laravel.query_parameter');
     }
 
     public function handle(Request $request, Closure $next)

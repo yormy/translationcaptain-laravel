@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Database\Factories;
+namespace Yormy\TranslationcaptainLaravel\Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 

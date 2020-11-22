@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Models;
+namespace Yormy\TranslationcaptainLaravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

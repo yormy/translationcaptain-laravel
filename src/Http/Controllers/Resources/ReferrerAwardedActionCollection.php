@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Http\Controllers\Resources;
+namespace Yormy\TranslationcaptainLaravel\Http\Controllers\Resources;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

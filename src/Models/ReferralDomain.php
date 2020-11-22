@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Models;
+namespace Yormy\TranslationcaptainLaravel\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,6 @@ class ReferralDomain extends Model
 {
     public function user()
     {
-        // return $this->belongsTo(config('referral-system.models.referrer.class'));
+        // return $this->belongsTo(config('translationcaptain-laravel.models.referrer.class'));
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace Yormy\ReferralSystem\Observers\Listeners;
+namespace Yormy\TranslationcaptainLaravel\Observers\Listeners;
 
 use Illuminate\Support\Facades\Auth;
-use Yormy\ReferralSystem\Models\ReferralAward;
-use Yormy\ReferralSystem\Observers\Events\AwardReferrerEvent;
-use Yormy\ReferralSystem\Services\AwardService;
-use Yormy\ReferralSystem\Traits\CookieTrait;
+use Yormy\TranslationcaptainLaravel\Models\ReferralAward;
+use Yormy\TranslationcaptainLaravel\Observers\Events\AwardReferrerEvent;
+use Yormy\TranslationcaptainLaravel\Services\AwardService;
+use Yormy\TranslationcaptainLaravel\Traits\CookieTrait;
 
 class AwardReferrerListener
 {

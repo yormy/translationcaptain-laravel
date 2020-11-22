@@ -1,9 +1,9 @@
 <?php
 
-namespace Yormy\ReferralSystem\Providers;
+namespace Yormy\TranslationcaptainLaravel\Providers;
 
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Yormy\ReferralSystem\Observers\ActionSubscriber;
+use Yormy\TranslationcaptainLaravel\Observers\ActionSubscriber;
 
 class EventServiceProvider extends ServiceProvider
 {

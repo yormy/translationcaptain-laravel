@@ -1,13 +1,13 @@
 <?php
 
-namespace Yormy\ReferralSystem\Tests;
+namespace Yormy\TranslationcaptainLaravel\Tests;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Yormy\ReferralSystem\Http\Middleware\ReferrerMiddleware;
-use Yormy\ReferralSystem\ReferralSystemServiceProvider;
+use Yormy\TranslationcaptainLaravel\Http\Middleware\ReferrerMiddleware;
+use Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider;
 
 class TestCase extends Orchestra
 {
@@ -22,7 +22,7 @@ class TestCase extends Orchestra
         parent::setUp();
 
 //        Factory::guessFactoryNamesUsing(
-//            fn (string $modelName) => 'Yormy\\ReferralSystem\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
+//            fn (string $modelName) => 'Yormy\\TranslationcaptainLaravel\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
 //        );
 
         // Note: this also flushes the cache from within the migration
@@ -35,8 +35,8 @@ class TestCase extends Orchestra
 
         Route::middleware(ReferrerMiddleware::class)
             ->group(function () {
-                Route::ReferralSystemUser($this->prefix);
-                Route::ReferralSystemAdmin($this->prefix);
+                Route::TranslationcaptainLaravelUser($this->prefix);
+                Route::TranslationcaptainLaravelAdmin($this->prefix);
             });
 
         $this->setViewForLayout();
@@ -46,9 +46,9 @@ class TestCase extends Orchestra
 
     public function overwriteConfigForTesting()
     {
-        config(['referral-system.models.referrer.public_id' => 'id']);
+        config(['translationcaptain-laravel.models.referrer.public_id' => 'id']);
 
-        config(['referral-system.models.referrer.class' => User::class]);
+        config(['translationcaptain-laravel.models.referrer.class' => User::class]);
     }
 
     public function user(string $email)
@@ -73,7 +73,7 @@ class TestCase extends Orchestra
     protected function getPackageProviders($app)
     {
         return [
-            ReferralSystemServiceProvider::class,
+            TranslationcaptainLaravelServiceProvider::class,
         ];
     }
 
@@ -111,23 +111,23 @@ class TestCase extends Orchestra
             $table->softDeletes();
         });
 
-        include_once __DIR__.'/../database/migrations/create_referral_awards_table.php.stub';
-        (new \CreateReferralAwardsTable())->up();
-
-        include_once __DIR__.'/../database/migrations/create_referral_actions_table.php.stub';
-        (new \CreateReferralActionsTable())->up();
-
-        include_once __DIR__.'/../database/migrations/create_referral_domains_table.php.stub';
-        (new \CreateReferralDomainsTable())->up();
-
-        include_once __DIR__.'/../database/migrations/create_referral_payments_table.php.stub';
-        (new \CreateReferralPaymentsTable())->up();
-
-        include_once __DIR__.'/../database/migrations/seed_referral_actions_table.php.stub';
-        (new \SeedReferralActionsTable())->up();
-
-        User::create(['email' => 'bob@user.com', 'name' => 'bobuser']);
-        User::create(['email' => 'adam@user.com', 'name' => 'adamuser']);
-        User::create(['email' => 'felix@referrer.com', 'name' => 'felixreferrer']);
+//        include_once __DIR__.'/../database/migrations/create_referral_awards_table.php.stub';
+//        (new \CreateReferralAwardsTable())->up();
+//
+//        include_once __DIR__.'/../database/migrations/create_referral_actions_table.php.stub';
+//        (new \CreateReferralActionsTable())->up();
+//
+//        include_once __DIR__.'/../database/migrations/create_referral_domains_table.php.stub';
+//        (new \CreateReferralDomainsTable())->up();
+//
+//        include_once __DIR__.'/../database/migrations/create_referral_payments_table.php.stub';
+//        (new \CreateReferralPaymentsTable())->up();
+//
+//        include_once __DIR__.'/../database/migrations/seed_referral_actions_table.php.stub';
+//        (new \SeedReferralActionsTable())->up();
+//
+//        User::create(['email' => 'bob@user.com', 'name' => 'bobuser']);
+//        User::create(['email' => 'adam@user.com', 'name' => 'adamuser']);
+//        User::create(['email' => 'felix@referrer.com', 'name' => 'felixreferrer']);
     }
 }

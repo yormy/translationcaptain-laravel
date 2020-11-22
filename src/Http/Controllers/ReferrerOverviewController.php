@@ -1,21 +1,21 @@
 <?php
 
-namespace Yormy\ReferralSystem\Http\Controllers;
+namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
-use Yormy\ReferralSystem\Models\ReferralAward;
-use Yormy\ReferralSystem\Services\AwardService;
+use Yormy\TranslationcaptainLaravel\Models\ReferralAward;
+use Yormy\TranslationcaptainLaravel\Services\AwardService;
 
 class ReferrerOverviewController extends Controller
 {
     public function index()
     {
-        $referrerClass = config('referral-system.models.referrer.class');
+        $referrerClass = config('translationcaptain-laravel.models.referrer.class');
         $table = (new $referrerClass)->getTable();
 
-        $modelIdColumn = config('referral-system.models.referrer.public_id');
-        $modelNameColumn = config('referral-system.models.referrer.name');
+        $modelIdColumn = config('translationcaptain-laravel.models.referrer.public_id');
+        $modelNameColumn = config('translationcaptain-laravel.models.referrer.name');
 
         $allReferrers = ReferralAward::select('referrer_id', $table.".". $modelIdColumn, $table. ".". $modelNameColumn)
             ->leftJoin($table, 'referrer_id', '=', $table.'.id')
@@ -60,7 +60,7 @@ class ReferrerOverviewController extends Controller
             $referrer['total'] = $totalPoints->get($referrerId, 0);
             $referrer['paid'] = $paidPoints->get($referrerId, 0);
             $referrer['unpaid'] = $unpaidPoints->get($referrerId, 0);
-            $referrer['created_at'] = $lastAward->get($referrerId, 0)->format(config('referral-system.datetime_format'));
+            $referrer['created_at'] = $lastAward->get($referrerId, 0)->format(config('translationcaptain-laravel.datetime_format'));
 
             $referrers[] = (object)$referrer;
         }
@@ -76,7 +76,7 @@ class ReferrerOverviewController extends Controller
             "unpaid" => $unpaidPoints ?? 0,
         ];
 
-        return view('referral-system::admin.overview', [
+        return view('translationcaptain-laravel::admin.overview', [
             'referrers' => json_encode($referrers),
             'points' => json_encode($points),
         ]);

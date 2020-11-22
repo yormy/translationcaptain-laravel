@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Http\Controllers\Resources;
+namespace Yormy\TranslationcaptainLaravel\Http\Controllers\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,8 +14,8 @@ class ReferrerAwardedAction extends JsonResource
      */
     public function toArray($request)
     {
-        $modelIdColumn = config('referral-system.models.referrer.public_id');
-        $modelNameColumn = config('referral-system.models.referrer.name');
+        $modelIdColumn = config('translationcaptain-laravel.models.referrer.public_id');
+        $modelNameColumn = config('translationcaptain-laravel.models.referrer.name');
 
         return [
             'user_id' => $this->user->{$modelIdColumn},
@@ -24,7 +24,7 @@ class ReferrerAwardedAction extends JsonResource
             'points' => $this->action->points,
             'paid' => $this->payment_id ? true : false,
             'paidSearchable' => $this->payment_id ? "#paid" : "#unpaid",
-            'created_at' => $this->created_at->format(config('referral-system.datetime_format')),
+            'created_at' => $this->created_at->format(config('translationcaptain-laravel.datetime_format')),
         ];
     }
 }

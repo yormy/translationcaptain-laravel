@@ -1,12 +1,12 @@
 <?php
 
-namespace Yormy\ReferralSystem\Commands;
+namespace Yormy\TranslationcaptainLaravel\Commands;
 
 use Illuminate\Console\Command;
 
-class ReferralSystemCommand extends Command
+class TranslationcaptainLaravelCommand extends Command
 {
-    public $signature = 'referral-system';
+    public $signature = 'translationcaptain-laravel';
 
     public $description = 'My command';
 

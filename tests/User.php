@@ -1,6 +1,6 @@
 <?php
 
-namespace Yormy\ReferralSystem\Tests;
+namespace Yormy\TranslationcaptainLaravel\Tests;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;

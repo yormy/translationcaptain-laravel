@@ -1,12 +1,12 @@
 <?php
 
-namespace Yormy\ReferralSystem\Observers;
+namespace Yormy\TranslationcaptainLaravel\Observers;
 
 use Illuminate\Events\Dispatcher;
-use Yormy\ReferralSystem\Observers\Events\AwardReferrerEvent;
-use Yormy\ReferralSystem\Observers\Events\AwardRevokeEvent;
-use Yormy\ReferralSystem\Observers\Listeners\AwardReferrerListener;
-use Yormy\ReferralSystem\Observers\Listeners\AwardRevokeListener;
+use Yormy\TranslationcaptainLaravel\Observers\Events\AwardReferrerEvent;
+use Yormy\TranslationcaptainLaravel\Observers\Events\AwardRevokeEvent;
+use Yormy\TranslationcaptainLaravel\Observers\Listeners\AwardReferrerListener;
+use Yormy\TranslationcaptainLaravel\Observers\Listeners\AwardRevokeListener;
 
 class ActionSubscriber
 {
