@@ -5,6 +5,7 @@ namespace Yormy\TranslationcaptainLaravel;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Yormy\TranslationcaptainLaravel\Commands\TranslationcaptainLaravelCommand;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\ImportController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
 use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
@@ -82,6 +83,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
 
     private function registerGuestRoutes()
     {
+        Route::get('/import', [ImportController::class, 'import'])->name('show');
     }
 
     private function registerUserRoutes()
