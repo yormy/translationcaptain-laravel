@@ -11,30 +11,51 @@ class ImportLaravel
     /** @var \Illuminate\Filesystem\Filesystem */
     protected $fileSystem;
 
-    protected array $messages = [];
-
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
 
-    protected array $allFiles=[];
+    protected array $messages;
 
-    protected array $all;
+    protected array $languages;
 
+    protected $defaultGroup = "basedefault";
+
+    /**
+     * Published vendor translations
+     * lang/vendor/<package-name>/<language>/directory/directory/translations.php
+     */
     const VENDOR_FILES = 0;
+
+    /**
+     * App translations
+     * lang/<language>/directory/directory/translations.php
+     */
     const APP_FILES = 1;
+
+    /**
+     * App translations
+     * lang/en.php
+     */
+    const APP_SINGLE_FILES = 2;
 
     public function __construct()
     {
         $this->app = App();
         $this->fileSystem = new Filesystem();
+
+        $this->languages =['en','nl','ar'];
     }
 
     public function getMessages()
     {
         $importFromDir = $this->app['path.lang'];
 
-        $languages =['en','nl','ar'];
-        foreach ($languages as $language) {
+        foreach ($this->languages as $language) {
+            $filename = $importFromDir. DIRECTORY_SEPARATOR. $language. ".php";
+            $this->addSingleTranslationFiles(self::APP_SINGLE_FILES, $filename, $importFromDir, $language);
+        }
+
+        foreach ($this->languages as $language) {
             $importFromLanguageDir = $importFromDir . DIRECTORY_SEPARATOR. $language;
             $this->importFileTranslations(self::APP_FILES, $importFromLanguageDir, $importFromLanguageDir, $language);
         }
@@ -42,7 +63,7 @@ class ImportLaravel
         $importFromVendorDir = $importFromDir . "/vendor";
         $this->importFileTranslations(self::VENDOR_FILES, $importFromVendorDir, $importFromVendorDir, $language);
 
-dd($this->all);
+dd($this->messages);
         return $this->messages;
     }
 
@@ -53,7 +74,7 @@ dd($this->all);
      * @param $root
      * @param $baseDir
      */
-    public function importFileTranslations(int $directoryType, string $root, string $importFromDir, string $language) : void
+    public function importFileTranslations(int $directoryType, string $root, string $importFromDir, string $language = null) : void
     {
         if (!is_dir($importFromDir)) {
             return;
@@ -65,54 +86,69 @@ dd($this->all);
         }
     }
 
-    public function addTranslationFiles(int $directoryType, string $root, string $langPath, string $language)
+    public function addTranslationFiles(int $directoryType, string $root, string $importFromDir, string $language = null)
     {
-        foreach ($this->fileSystem->allfiles($langPath) as $file) {
-
+        foreach ($this->fileSystem->files($importFromDir) as $file) {
             $fullPathname = $file->getPathname();
-            $relative = str_replace($root, '', $fullPathname);
+            $this->addSingleTranslationFiles($directoryType, $fullPathname, $root, $language);
+        }
+    }
 
-            // remove php extension
-            $relative = substr($relative,0, strlen($relative) - strlen('.php'));
-
-            // strip leading directory separator
-            $first = substr($relative, 0,1);
-            if ($first === DIRECTORY_SEPARATOR) {
-                $relative = substr($relative,1, strlen($relative));
-            }
-
-            // determine filename vs keyname
-            $parts = explode(DIRECTORY_SEPARATOR, $relative);
-
-
-            if (self::VENDOR_FILES=== $directoryType) {
-                $group = $parts[0];
-                $language = $parts[1];
-                unset($parts[0]);
-                unset($parts[1]);
-            }
-            if (self::APP_FILES=== $directoryType) {
-                $group = $parts[0];
-                unset($parts[0]);
-            }
-
-            // All keys of this group are prefixed with entire directory path
-            $keyPrefix = implode('.', $parts);
-            if ($keyPrefix) {
-                $keyPrefix .= ".";
-            }
-
-            $keysForPackage = [];
-            $translations = $this->convertImportfileToArray($fullPathname);
-            foreach ($translations as $key => $translation)
-            {
-                $fullKey = $keyPrefix. $key;
-                $keysForPackage[$fullKey] = $translation;
-            }
-
-            $this->all[$language][$group] = $keysForPackage;
+    public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null)
+    {
+        if (!is_file($fullPathname)) {
+            return;
         }
 
+        $relative = str_replace($root, '', $fullPathname);
+
+        // remove php extension
+        $relative = substr($relative,0, strlen($relative) - strlen('.php'));
+
+        // strip leading directory separator
+        $first = substr($relative, 0,1);
+        if ($first === DIRECTORY_SEPARATOR) {
+            $relative = substr($relative,1, strlen($relative));
+        }
+
+        // determine filename vs keyname
+        $parts = explode(DIRECTORY_SEPARATOR, $relative);
+
+
+        if (self::VENDOR_FILES === $directoryType) {
+            $group = $parts[0];
+            $language = $parts[1];
+            unset($parts[0]);
+            unset($parts[1]);
+        }
+        if (self::APP_FILES === $directoryType) {
+            $group = $parts[0];
+            unset($parts[0]);
+        }
+        if (self::APP_SINGLE_FILES === $directoryType) {
+            $group = $this->defaultGroup;
+        }
+
+        // All keys of this group are prefixed with entire directory path
+        $keyPrefix = implode('.', $parts);
+        if ($keyPrefix) {
+            $keyPrefix .= ".";
+        }
+
+        $keysForPackage = [];
+        $translations = $this->convertImportfileToArray($fullPathname);
+        foreach ($translations as $key => $translation)
+        {
+            $fullKey = $keyPrefix. $key;
+
+            if (self::APP_SINGLE_FILES === $directoryType) {
+                $fullKey = $key;
+            }
+
+            $keysForPackage[$fullKey] = $translation;
+        }
+
+        $this->messages[$language][$group] = $keysForPackage;
     }
 
     /**
