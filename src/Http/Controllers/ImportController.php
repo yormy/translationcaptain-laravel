@@ -24,7 +24,7 @@ class ImportController extends Controller
             $messages2[$language] = Arr::dot($languageMessages);
         }
 //
-//        dd($messages);
+        dd($messages);
 //dd($messages2);
 //// todo flatten
         return view('translationcaptain-laravel::overview', [

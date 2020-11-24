@@ -63,6 +63,7 @@ class ImportLaravel
         $importFromVendorDir = $importFromDir . "/vendor";
         $this->importFileTranslations(self::VENDOR_FILES, $importFromVendorDir, $importFromVendorDir, $language);
 
+        //d($this->messages);
         return $this->messages;
     }
 
@@ -99,7 +100,10 @@ class ImportLaravel
             return;
         }
 
+
         $relative = str_replace($root, '', $fullPathname);
+
+
 
         // remove php extension
         $relative = substr($relative,0, strlen($relative) - strlen('.php'));
@@ -109,45 +113,61 @@ class ImportLaravel
         if ($first === DIRECTORY_SEPARATOR) {
             $relative = substr($relative,1, strlen($relative));
         }
-
+//        echo $relative. "<br>";
+//        return;
         // determine filename vs keyname
-        $parts = explode(DIRECTORY_SEPARATOR, $relative);
 
+
+        $groupPrefix ="###";
 
         if (self::VENDOR_FILES === $directoryType) {
-            $group = $parts[0];
+
+            $lastDirSep = (int)strrpos($relative, DIRECTORY_SEPARATOR);
+
+            $filename = substr($relative, $lastDirSep + 1, strlen($relative));
+            $path = substr($relative, 0, $lastDirSep);
+
+            $parts = explode(DIRECTORY_SEPARATOR, $path);
+            $vendor = $parts[0];
             $language = $parts[1];
             unset($parts[0]);
             unset($parts[1]);
+
+            $newPath = implode(DIRECTORY_SEPARATOR, $parts);
+            if ($newPath) {
+                $newPath.= DIRECTORY_SEPARATOR;
+            }
+            $relative = $vendor. "::". $newPath.  $filename;
+
         }
-        if (self::APP_FILES === $directoryType) {
-            $group = $parts[0];
-            unset($parts[0]);
-        }
-        if (self::APP_SINGLE_FILES === $directoryType) {
-            $group = $this->defaultGroup;
-        }
+//        if (self::APP_FILES === $directoryType) {
+//            $group = $parts[0];
+//            unset($parts[0]);
+//        }
+//        if (self::APP_SINGLE_FILES === $directoryType) {
+//            $group = $this->defaultGroup;
+//        }
 
         // All keys of this group are prefixed with entire directory path
-        $keyPrefix = implode('.', $parts);
-        if ($keyPrefix) {
-            $keyPrefix .= ".";
-        }
+//        $keyPrefix = implode('.', $parts);
+//        if ($keyPrefix) {
+//            $keyPrefix .= ".";
+//        }
 
         $keysForPackage = [];
         $translations = $this->convertImportfileToArray($fullPathname);
         foreach ($translations as $key => $translation)
         {
-            $fullKey = $keyPrefix. $key;
+//            $fullKey = $keyPrefix. $key;
+//
+//            if (self::APP_SINGLE_FILES === $directoryType) {
+//                $fullKey = $key;
+//            }
 
-            if (self::APP_SINGLE_FILES === $directoryType) {
-                $fullKey = $key;
-            }
-
-            $keysForPackage[$fullKey] = $translation;
+            $keysForPackage[$key] = $translation;
         }
 
-        $this->messages[$language][$group] = $keysForPackage;
+        $this->messages[$language][$relative] = $keysForPackage;
     }
 
     /**

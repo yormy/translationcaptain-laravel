@@ -100,6 +100,9 @@ class SearchSources
 
         $allStrings = $this->collectStrings($files);
 
+
+        $allStrings = $this->formatGroupKey($allStrings);
+
         dd($allStrings);
 
         $currentTranslatedStrings = $this->getCurrentDefaultTranslations();
@@ -136,6 +139,38 @@ class SearchSources
         return 0;
     }
 
+    private function formatGroupKey(array $allStrings)
+    {
+        $string = [];
+        foreach ($allStrings as $fullkey => $translation) {
+
+            $firstDotSeparator = (int)strpos($fullkey, ".");
+
+            if ($firstDotSeparator > 0) {
+                $filename = substr($fullkey, 0, $firstDotSeparator);
+                $key = substr($fullkey, $firstDotSeparator + 1, strlen($fullkey));
+
+                $string[] = "$filename @ $key => $translation";
+            } else {
+                $string[] = "??? @ $fullkey => $translation";
+            }
+        }
+        return $string;
+//            $lastDirSep = strrpos($key, DIRECTORY_SEPARATOR);
+//            if ($lastDirSep >0) {
+//                $directories = substr($key, 0, $lastDirSep);
+//                $fileAndKey = substr($key, $lastDirSep + 1, strlen($key));
+//
+//                // get file
+//                $parts = explode('.', $fileAndKey);
+//                $file = $parts[0];
+//                unset($parts[0]);
+//                $key = implode('.', $parts);
+//
+//                echo $directories . " == $file ==> $key";
+//                die();
+//            }
+    }
 
     /**
      * Traverse all paths and collect filenames
