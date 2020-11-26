@@ -181,12 +181,12 @@ class BladeFilesGenerator extends FilesGenerator
 
     private function prepareTranslationForExport(string $translation) : string
     {
-        return "#".$translation;
+        return $translation;
     }
 
     private function prepareKeyForExport(string $key) : string
     {
-        return "#".$key;
+        return $key;
     }
 
 
