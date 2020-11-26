@@ -2,7 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\Generators;
 
-class ArraySettings
+class ExportSettingsPhp
 {
     public $quote = "'";
     public $keyToValue = " => ";

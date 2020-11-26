@@ -47,10 +47,11 @@ abstract class FilesGenerator
         return $this;
     }
 
-    protected function prepareExport(string $locale)
+    protected function prepareExport(string $locale) : array
     {
         $groups = $this->labels[$locale];
 
+        $filesToExport = [];
         foreach ($groups as $groupname => $keys) {
             $filename = $this->groupnameToFilename($groupname , $locale);
 
@@ -58,14 +59,15 @@ abstract class FilesGenerator
             {
                 $keyToExport = $this->prepareKeyForExport($key);
                 $translationToExport = $this->prepareTranslationForExport($translation);
-                $this->filesToExport[$filename][$keyToExport] = $translationToExport;
+                $filesToExport[$filename][$keyToExport] = $translationToExport;
             }
         }
+        return $filesToExport;
     }
 
-    protected function generateFiles()
+    protected function generateFiles(array $filesToExport)
     {
-        foreach ($this->filesToExport as $filename => $translations) {
+        foreach ($filesToExport as $filename => $translations) {
             $fullpath = $this->exportPath. DIRECTORY_SEPARATOR. $filename;
 
             $fileContents = "";

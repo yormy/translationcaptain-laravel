@@ -7,20 +7,13 @@ use Illuminate\Support\Facades\Storage;
 class BladeFilesGenerator extends FilesGenerator
 {
 
-    protected $filesToExport;
-
     protected $vendorPath = 'vendor';
-
-    const FILE_EOL = ',';
-
-    const FILE_TAB = '    ';
 
     protected $filetype;
 
-
     public function __construct(array $labels)
     {
-        $this->settings = new ArraySettings();
+        $this->settings = new ExportSettingsPhp();
 
         $this->filetype = new FileTypePhp();
 
@@ -37,8 +30,8 @@ class BladeFilesGenerator extends FilesGenerator
 //            //$this->zipFilename = "laravel";
 
         foreach ($locales as $locale) {
-            $this->prepareExport($locale);
-            $this->generateFiles();
+            $filesToExport = $this->prepareExport($locale);
+            $this->generateFiles($filesToExport);
 
 //            $roots = $this->prepareForBlade($locale);
 //
