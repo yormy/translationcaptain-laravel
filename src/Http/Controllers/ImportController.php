@@ -2,6 +2,8 @@
 
 namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
+use Yormy\TranslationcaptainLaravel\Services\Generators\BladeFilesGenerator;
+use Yormy\TranslationcaptainLaravel\Services\LabelsExport;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -17,20 +19,41 @@ class ImportController extends Controller
         $importer = new ImportLaravel();
         $messages = $importer->getMessages();
 
-        $messages2 =[];
+        $bladeFilesGenerator = new BladeFilesGenerator($messages);
+        $locales = ['nl'];
 
-        foreach ($messages as $language => $languageMessages)
-        {
-            $messages2[$language] = Arr::dot($languageMessages);
-        }
-//
-        dd($messages);
+  //      $languagePath = App()['path.lang'];
+  //      dd($languagePath);
+//        $bladeFilesGenerator->setExportPath($languagePath);
+        $bladeFilesGenerator->export($locales);
+
+        dd('done');
+
+
+
+
+
+
+
+        //======================
+
+        //$labelExport = new LabelsExport(LabelsExport::FOR_VUE, LabelsExport::AS_JSON, $messages);
+        $labelExport = new LabelsExport(LabelsExport::FOR_BLADE, LabelsExport::AS_ARRAY, $messages);
+        //$labelExport = new LabelsExport(LabelsExport::FOR_BLADE, LabelsExport::AS_ARRAY);
+
+        $locales = ['nl'];
+        $labelExport->export($locales);
+        //$labelExport->exportlabelsFromDb($locales);
+
+die();
 //dd($messages2);
 //// todo flatten
         return view('translationcaptain-laravel::overview', [
             'overview' => json_encode($messages),
         ]);
     }
+
+
 
 
 }
