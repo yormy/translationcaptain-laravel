@@ -3,6 +3,7 @@
 namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
 use Yormy\TranslationcaptainLaravel\Services\Generators\BladeFilesGenerator;
+use Yormy\TranslationcaptainLaravel\Services\Generators\VueFilesGenerator;
 use Yormy\TranslationcaptainLaravel\Services\LabelsExport;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
@@ -19,13 +20,15 @@ class ImportController extends Controller
         $importer = new ImportLaravel();
         $messages = $importer->getMessages();
 
-        $bladeFilesGenerator = new BladeFilesGenerator($messages);
-        $locales = ['nl'];
+//        $bladeFilesGenerator = new BladeFilesGenerator($messages);
+//        $locales = ['nl'];
+//        $bladeFilesGenerator->export($locales);
 
-  //      $languagePath = App()['path.lang'];
-  //      dd($languagePath);
-//        $bladeFilesGenerator->setExportPath($languagePath);
-        $bladeFilesGenerator->export($locales);
+        $vueFilesGenerator = new VueFilesGenerator($messages);
+        $locales = ['nl'];
+        $vueFilesGenerator->zipCurrentFiles();
+        //$vueFilesGenerator->export($locales);
+
 
         dd('done');
 

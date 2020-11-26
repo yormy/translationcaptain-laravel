@@ -103,40 +103,40 @@ class SearchSources
 
         $allStrings = $this->formatGroupKey($allStrings);
 
-        dd($allStrings);
+        return $allStrings;
 
-        $currentTranslatedStrings = $this->getCurrentDefaultTranslations();
-
-        // Merge the view strings with the
-        $mergedStrings = array_merge($allStrings, $currentTranslatedStrings);
-        ksort($mergedStrings, SORT_FLAG_CASE | SORT_NATURAL);
-
-        $missingInCurrentLanguage = array_diff_key($mergedStrings, $currentTranslatedStrings);
-
-        // Check if there are new changes detected
-        if (count($missingInCurrentLanguage) === 0) {
-            $this->info('No new translatable strings found. Exiting...');
-            return 0;
-        }
-
-        $this->info('Found the following new translation strings:');
-
-        $this->line('--------');
-        foreach ($missingInCurrentLanguage as $key => $diff) {
-            $this->info($key);
-            $this->line('--------');
-        }
-
-        if ($this->confirm('Would you like to add this values to ' . self::DEFAULT_LANG . '.json?', false)) {
-            File::put(
-                $this->findTranslationPath(),
-                json_encode($mergedStrings, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
-            );
-            $this->info('Translations written to file!');
-        } else {
-            $this->info('Operation cancelled.');
-        }
-        return 0;
+//        $currentTranslatedStrings = $this->getCurrentDefaultTranslations();
+//
+//        // Merge the view strings with the
+//        $mergedStrings = array_merge($allStrings, $currentTranslatedStrings);
+//        ksort($mergedStrings, SORT_FLAG_CASE | SORT_NATURAL);
+//
+//        $missingInCurrentLanguage = array_diff_key($mergedStrings, $currentTranslatedStrings);
+//
+//        // Check if there are new changes detected
+//        if (count($missingInCurrentLanguage) === 0) {
+//            $this->info('No new translatable strings found. Exiting...');
+//            return 0;
+//        }
+//
+//        $this->info('Found the following new translation strings:');
+//
+//        $this->line('--------');
+//        foreach ($missingInCurrentLanguage as $key => $diff) {
+//            $this->info($key);
+//            $this->line('--------');
+//        }
+//
+//        if ($this->confirm('Would you like to add this values to ' . self::DEFAULT_LANG . '.json?', false)) {
+//            File::put(
+//                $this->findTranslationPath(),
+//                json_encode($mergedStrings, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
+//            );
+//            $this->info('Translations written to file!');
+//        } else {
+//            $this->info('Operation cancelled.');
+//        }
+//        return 0;
     }
 
     private function formatGroupKey(array $allStrings)
@@ -150,26 +150,12 @@ class SearchSources
                 $filename = substr($fullkey, 0, $firstDotSeparator);
                 $key = substr($fullkey, $firstDotSeparator + 1, strlen($fullkey));
 
-                $string[] = "$filename @ $key => $translation";
+                $string[$filename][$key] = $translation;
             } else {
-                $string[] = "??? @ $fullkey => $translation";
+                $string["??"][$fullkey] =  $translation;
             }
         }
         return $string;
-//            $lastDirSep = strrpos($key, DIRECTORY_SEPARATOR);
-//            if ($lastDirSep >0) {
-//                $directories = substr($key, 0, $lastDirSep);
-//                $fileAndKey = substr($key, $lastDirSep + 1, strlen($key));
-//
-//                // get file
-//                $parts = explode('.', $fileAndKey);
-//                $file = $parts[0];
-//                unset($parts[0]);
-//                $key = implode('.', $parts);
-//
-//                echo $directories . " == $file ==> $key";
-//                die();
-//            }
     }
 
     /**

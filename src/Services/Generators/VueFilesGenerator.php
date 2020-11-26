@@ -11,7 +11,6 @@ class VueFilesGenerator extends FilesGenerator
 
     protected $filetype;
 
-
     public function __construct(array $labels)
     {
         $this->settings = new ExportSettingsJson();
@@ -24,12 +23,8 @@ class VueFilesGenerator extends FilesGenerator
         parent::__construct($labels);
     }
 
-
     public function export(array $locales)
     {
-//            $this->exportPath = $this->exportRoot . DIRECTORY_SEPARATOR . "blade";
-//            //$this->zipFilename = "laravel";
-
         foreach ($locales as $locale) {
             $this->prepareExport($locale);
             $this->generateFiles();
@@ -64,16 +59,7 @@ class VueFilesGenerator extends FilesGenerator
             $contents .= $this->settings->quote. $key. $this->settings->quote;
             $contents .= $this->settings->keyToValue;
 
-            $result = "";
-//            $level = 2;
-//            if (is_array($value)) {
-//                $this->arrayToText($value, $result, $level);
-//
-//                $fileLines .= $objectOpen. $result;
-//                $fileLines .= PHP_EOL. $this->tab. $objectClose;
-//            } else {
             $contents .= $this->settings->quote. $value. $this->settings->quote;
-//            }
         }
 
         return $contents;
@@ -82,6 +68,33 @@ class VueFilesGenerator extends FilesGenerator
     protected function prepareTranslationForExport(string $translation) : string
     {
         $translation = addslashes($translation);
-        return $translation;
+
+        return $this->processMessage($translation);
+    }
+
+    protected function processMessage(string $message) : string
+    {
+        $jsonMessage = json_encode($message);
+        $jsonMessage = $this->processDataBindingVue($jsonMessage);
+        return json_decode($jsonMessage, true);
+    }
+
+    protected function processDataBindingVue(string $message) : string
+    {
+        $endingChars = "\.|;|:| |@|\(|\)";
+        $pattern = ":([a-zA-Z]+?)($endingChars)";
+
+        preg_match_all("/$pattern/", $message, $matches);
+        if ($matches) {
+            //$exactFind = $matches[0];
+            $innerFind = $matches[1];
+
+            foreach ($innerFind as $value) {
+                $laravelBinding = ":$value";
+                $vueBinding = "{". $value. "}";
+                $message = str_ireplace($laravelBinding, $vueBinding, $message);
+            }
+        }
+        return $message;
     }
 }

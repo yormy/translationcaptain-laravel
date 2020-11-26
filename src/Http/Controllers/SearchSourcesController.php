@@ -20,12 +20,14 @@ class SearchSourcesController extends Controller
 
         $messages = $importer->getMessages();
         dd($messages);
-        $messages2 =[];
 
-        foreach ($messages as $language => $languageMessages)
-        {
-            $messages2[$language] = Arr::dot($languageMessages);
-        }
+
+//        $messages2 =[];
+//
+//        foreach ($messages as $language => $languageMessages)
+//        {
+//            $messages2[$language] = Arr::dot($languageMessages);
+//        }
 //
 //        dd($messages);
 //dd($messages2);
