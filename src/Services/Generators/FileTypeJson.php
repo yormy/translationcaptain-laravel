@@ -2,26 +2,25 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\Generators;
 
-class FileTypePhp
+class FileTypeJson
 {
     public $eol = ',';
 
     public $tab = '    ';
 
-    public $extension = ".php";
+    public $extension = ".json";
 
     public function getFileStart(string $header)
     {
         $open = "";
-        $open .= "<?php " . PHP_EOL . PHP_EOL;
-        $open .= "//" . $header . PHP_EOL;
-        $open .= "return [";
-
+        $open .= "{ " . PHP_EOL . PHP_EOL;
+        $open .= $this->tab. '"'. $header. '" : "",'. PHP_EOL;
         return $open;
     }
 
     public function getFileEnd()
     {
-        return PHP_EOL . "];" . PHP_EOL;
+        return PHP_EOL . "}" . PHP_EOL;
     }
+
 }

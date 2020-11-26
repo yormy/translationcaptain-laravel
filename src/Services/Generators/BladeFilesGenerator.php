@@ -11,8 +11,6 @@ class BladeFilesGenerator extends FilesGenerator
 
     protected $vendorPath = 'vendor';
 
-    const VENDORNAME_SEPARATOR = '::';
-
     const FILE_EOL = ',';
 
     const FILE_TAB = '    ';
@@ -50,30 +48,7 @@ class BladeFilesGenerator extends FilesGenerator
         }
     }
 
-    private function generateFiles()
-    {
-        foreach ($this->filesToExport as $filename => $translations) {
-            $fullpath = $this->exportPath. DIRECTORY_SEPARATOR. $filename;
-
-            $fileContents = "";
-            $fileContents .= $this->setFileStart();
-            $fileContents .= $this->generateFileContents($translations);
-            $fileContents .= $this->setFileEnd();
-
-            $this->writeFile($fullpath, $fileContents);
-        }
-    }
-
-    private function writeFile(string $fullpath , string $fileContents)
-    {
-        if (!file_exists(dirname($fullpath))) {
-            mkdir(dirname($fullpath), 0660, true);
-        }
-
-        file_put_contents($fullpath, $fileContents);
-    }
-
-    private function generateFileContents(array $translations) : string
+    protected function generateFileContents(array $translations) : string
     {
         $contents = "";
         foreach ($translations as $key => $value) {
@@ -85,86 +60,13 @@ class BladeFilesGenerator extends FilesGenerator
             $contents .= $this->settings->quote. $key. $this->settings->quote;
             $contents .= $this->settings->keyToValue;
 
-            $result = "";
-//            $level = 2;
-//            if (is_array($value)) {
-//                $this->arrayToText($value, $result, $level);
-//
-//                $fileLines .= $objectOpen. $result;
-//                $fileLines .= PHP_EOL. $this->tab. $objectClose;
-//            } else {
             $contents .= $this->settings->quote. $value. $this->settings->quote;
-//            }
         }
 
         return $contents;
     }
 
-
-
-    private function generateOrg($roots, $fileExtension = "php")
-    {
-        $quote = $this->quote;
-        $keyToValue  = $this->keyToValue;
-        $objectOpen  = $this->objectOpen;
-        $objectClose  = $this->objectClose;
-
-        foreach ($roots as $rootItem => $files) {
-            foreach ($files as $fileName => $translations) {
-
-                $filename = $rootItem. DIRECTORY_SEPARATOR. $fileName;
-                $filename .= ".". $fileExtension;
-
-                $fileLines = "";
-                foreach ($translations as $key => $value) {
-                    if ($fileLines) {
-                        $fileLines .= ",";
-                    }
-
-                    $fileLines .= PHP_EOL. $this->tab;
-                    $fileLines .= $quote. $key. $quote;
-                    $fileLines .= $keyToValue;
-
-                    $result = "";
-                    $level = 2;
-                    if (is_array($value)) {
-                        $this->arrayToText($value, $result, $level);
-
-                        $fileLines .= $objectOpen. $result;
-                        $fileLines .= PHP_EOL. $this->tab. $objectClose;
-                    } else {
-                        $fileLines .= $quote. $value. $quote;
-                    }
-                }
-
-                $fileContents = "";
-                $fileContents .= $this->fileOpen;
-                $fileContents .= $fileLines;
-                $fileContents .= $this->fileClose;
-                dd($this->exportPath. DIRECTORY_SEPARATOR. $filename);
-                Storage::put($this->exportPath. DIRECTORY_SEPARATOR. $filename, $fileContents);
-            }
-        }
-    }
-
-
-    private function prepareExport(string $locale)
-    {
-        $groups = $this->labels[$locale];
-
-        foreach ($groups as $groupname => $keys) {
-            $filename = $this->groupnameToFilename($groupname , $locale);
-
-            foreach ($keys as $key => $translation)
-            {
-                $keyToExport = $this->prepareKeyForExport($key);
-                $translationToExport = $this->prepareTranslationForExport($translation);
-                $this->filesToExport[$filename][$keyToExport] = $translationToExport;
-            }
-        }
-    }
-
-    private function groupnameToFilename(string $groupName, string $locale): string
+    protected function groupnameToFilename(string $groupName, string $locale): string
     {
         if ($this->isVendorKey($groupName))
         {
@@ -180,36 +82,7 @@ class BladeFilesGenerator extends FilesGenerator
         return $locale. DIRECTORY_SEPARATOR.  $groupName. $this->filetype->extension;
     }
 
-    private function isVendorKey(string $groupName)
-    {
-        return strpos($groupName, self::VENDORNAME_SEPARATOR) > 0;
-    }
 
-    private function prepareTranslationForExport(string $translation) : string
-    {
-        return $translation;
-    }
-
-    private function prepareKeyForExport(string $key) : string
-    {
-        return $key;
-    }
-
-
-    private function setFileStart()
-    {
-        $open = "";
-        $open .= "<?php " . PHP_EOL . PHP_EOL;
-        $open .= "//" . $this->header . PHP_EOL;
-        $open .= "return [";
-
-        return $open;
-    }
-
-    private function setFileEnd()
-    {
-        return PHP_EOL . "];" . PHP_EOL;
-    }
 
 
 
