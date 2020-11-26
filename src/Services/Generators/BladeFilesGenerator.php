@@ -17,10 +17,14 @@ class BladeFilesGenerator extends FilesGenerator
 
     const FILE_TAB = '    ';
 
+    protected $filetype;
+
 
     public function __construct(array $labels)
     {
         $this->settings = new ArraySettings();
+
+        $this->filetype = new FileTypePhp();
 
         $this->exportPath = App()['path.lang'];
         $this->exportPath .='_tc';
@@ -74,10 +78,10 @@ class BladeFilesGenerator extends FilesGenerator
         $contents = "";
         foreach ($translations as $key => $value) {
             if ($contents) {
-                $contents .= self::FILE_EOL;
+                $contents .= $this->filetype->eol;
             }
 
-            $contents .= PHP_EOL. self::FILE_TAB;
+            $contents .= PHP_EOL. $this->filetype->tab;
             $contents .= $this->settings->quote. $key. $this->settings->quote;
             $contents .= $this->settings->keyToValue;
 
@@ -162,16 +166,18 @@ class BladeFilesGenerator extends FilesGenerator
 
     private function groupnameToFilename(string $groupName, string $locale): string
     {
-        $extension = '.php';
         if ($this->isVendorKey($groupName))
         {
             $vendorSeparatorPosition = strpos($groupName,self::VENDORNAME_SEPARATOR);
             $vendorName = substr($groupName, 0, $vendorSeparatorPosition);
             $filename = substr($groupName, $vendorSeparatorPosition + strlen(self::VENDORNAME_SEPARATOR) , strlen($groupName));
-            return $this->vendorPath. DIRECTORY_SEPARATOR. $vendorName. DIRECTORY_SEPARATOR. $locale. DIRECTORY_SEPARATOR.  $filename. $extension;
+            return $this->vendorPath.
+                DIRECTORY_SEPARATOR. $vendorName.
+                DIRECTORY_SEPARATOR. $locale.
+                DIRECTORY_SEPARATOR.  $filename. $this->filetype->extension;
         }
 
-        return $locale. DIRECTORY_SEPARATOR.  $groupName. $extension;
+        return $locale. DIRECTORY_SEPARATOR.  $groupName. $this->filetype->extension;
     }
 
     private function isVendorKey(string $groupName)
