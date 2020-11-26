@@ -2,61 +2,28 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\Generators;
 
-use Illuminate\Support\Facades\Storage;
-
-class BladeFilesGenerator extends FilesGenerator
+class GeneratorVue extends FilesGenerator
 {
-
     protected $vendorPath = 'vendor';
-
-    protected $filetype;
 
     public function __construct(array $labels)
     {
-        $this->settings = new ExportSettingsPhp();
+        $this->exportSettings = new ExportSettingsJson();
 
-        $this->filetype = new FileTypePhp();
+        $this->filetype = new FileTypeJson();
 
         $this->exportPath = App()['path.lang'];
-        $this->exportPath .='_tc';
+        $this->exportPath .='_tc_vuw';
 
         parent::__construct($labels);
     }
 
-
     public function export(array $locales)
     {
-//            $this->exportPath = $this->exportRoot . DIRECTORY_SEPARATOR . "blade";
-//            //$this->zipFilename = "laravel";
-
         foreach ($locales as $locale) {
             $filesToExport = $this->prepareExport($locale);
             $this->generateFiles($filesToExport);
-
-//            $roots = $this->prepareForBlade($locale);
-//
-//            if ($this->exportFormat === self::AS_ARRAY) {
-//                $this->generate($roots, "php");
-//            }
         }
-    }
-
-    protected function generateFileContents(array $translations) : string
-    {
-        $contents = "";
-        foreach ($translations as $key => $value) {
-            if ($contents) {
-                $contents .= $this->filetype->eol;
-            }
-
-            $contents .= PHP_EOL. $this->filetype->tab;
-            $contents .= $this->settings->quote. $key. $this->settings->quote;
-            $contents .= $this->settings->keyToValue;
-
-            $contents .= $this->settings->quote. $value. $this->settings->quote;
-        }
-
-        return $contents;
     }
 
     protected function groupnameToFilename(string $groupName, string $locale): string
@@ -75,9 +42,36 @@ class BladeFilesGenerator extends FilesGenerator
         return $locale. DIRECTORY_SEPARATOR.  $groupName. $this->filetype->extension;
     }
 
+    protected function prepareTranslationForExport(string $translation) : string
+    {
+        $translation = addslashes($translation);
 
+        return $this->processMessage($translation);
+    }
 
+    protected function processMessage(string $message) : string
+    {
+        $jsonMessage = json_encode($message);
+        $jsonMessage = $this->processDataBindingVue($jsonMessage);
+        return json_decode($jsonMessage, true);
+    }
 
+    protected function processDataBindingVue(string $message) : string
+    {
+        $endingChars = "\.|;|:| |@|\(|\)";
+        $pattern = ":([a-zA-Z]+?)($endingChars)";
 
+        preg_match_all("/$pattern/", $message, $matches);
+        if ($matches) {
+            //$exactFind = $matches[0];
+            $innerFind = $matches[1];
 
+            foreach ($innerFind as $value) {
+                $laravelBinding = ":$value";
+                $vueBinding = "{". $value. "}";
+                $message = str_ireplace($laravelBinding, $vueBinding, $message);
+            }
+        }
+        return $message;
+    }
 }
