@@ -2,6 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
+use Yormy\TranslationcaptainLaravel\Exceptions\DuplicateKeyException;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
 use Yormy\TranslationcaptainLaravel\Services\Generators\GeneratorBlade;
@@ -19,19 +20,23 @@ class ImportController extends Controller
 {
     public function import()
     {
-//        $importer = new ImportLaravel();
-//        $messages = $importer->getMessages();
+        $locales = ['nl'];
+        $blade = new ReaderBlade($locales);
+        $bladeLabels = $blade->getMessages();
+       // dd($bladeLabels['nl']['validation']);
 
-         $locales = ['nl'];
-        $importer = new ReaderBlade($locales);
-        $messages = $importer->getMessages();
-//        dd($messages['nl']['validation']);
+        $vue = new ReaderVue($locales);
+        $importPath = base_path(). DIRECTORY_SEPARATOR. 'resources/js/components/lang';
+        $vue->setImportPath($importPath);
+        $vueLabels = $vue->getMessages();
+
+        $allLabels = $this->mergeLabels($bladeLabels, $vueLabels);
+
+        //dd($bladeLabels);
+        dd($allLabels['nl']);
+        dd('done');
 
 
-//        $importer = new ReaderVue($locales);
-//        $importPath = base_path(). DIRECTORY_SEPARATOR. 'resources/js/components/lang';
-//        $importer->setImportPath($importPath);
-//        $messages = $importer->getMessages();
 //
 //        dd($messages['nl']['validations']);
 
@@ -48,31 +53,47 @@ class ImportController extends Controller
 
         dd('done');
 
+        die();
 
-
-
-
-
-
-        //======================
-
-        //$labelExport = new LabelsExport(LabelsExport::FOR_VUE, LabelsExport::AS_JSON, $messages);
-        $labelExport = new LabelsExport(LabelsExport::FOR_BLADE, LabelsExport::AS_ARRAY, $messages);
-        //$labelExport = new LabelsExport(LabelsExport::FOR_BLADE, LabelsExport::AS_ARRAY);
-
-        $locales = ['nl'];
-        $labelExport->export($locales);
-        //$labelExport->exportlabelsFromDb($locales);
-
-die();
-//dd($messages2);
-//// todo flatten
         return view('translationcaptain-laravel::overview', [
             'overview' => json_encode($messages),
         ]);
     }
 
+    private function mergeLabels(array $origin, array $toMerge) : array
+    {
+        $this->checkMerge($origin, $toMerge);
 
+        return array_merge_recursive($origin, $toMerge);
+    }
+
+
+    public function checkMerge(array $labels, array $labelsToMerge)
+    {
+        $labelsDotted = Arr::dot($labels);
+        $labelsToMergeDotted = Arr::dot($labelsToMerge);
+
+        foreach($labelsDotted as $key => $translation) {
+            if (array_key_exists($key, $labelsToMergeDotted)) {
+
+                $labelTranslation = $this->removeBinding($translation);
+                $labelTranslationToMerge = $this->removeBinding($labelsToMergeDotted[$key]);
+
+                if ($labelTranslation !== $labelTranslationToMerge) {
+                    throw new DuplicateKeyException($key, $labelTranslation, $labelTranslationToMerge);
+                }
+            }
+        }
+    }
+
+    public function removeBinding(string $translation): string
+    {
+        $start = config('translationcaptain-laravel.databinding.start');
+        $end = config('translationcaptain-laravel.databinding.end');
+        $pattern ="$start(.*?)$end";
+
+        return preg_replace("/". $pattern ."/", '', $translation);
+    }
 
 
 }
