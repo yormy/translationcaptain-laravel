@@ -70,8 +70,12 @@ class ReaderVue extends FileReader
         $arrayTranslations = json_decode(file_get_contents($filename), true);
 
         if(is_array($arrayTranslations)) {
-            return Arr::dot($arrayTranslations);  // make single dimensional array
+            $keyValues = Arr::dot($arrayTranslations);
+            $keyValues = $this->fixEmptyArray($keyValues);
+
+            return $keyValues;
         }
+
         return [];
     }
 

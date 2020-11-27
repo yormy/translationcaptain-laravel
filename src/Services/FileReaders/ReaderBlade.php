@@ -137,14 +137,7 @@ class ReaderBlade extends FileReader
         $arrayTranslations = include $filename;
         $keyValues = Arr::dot($arrayTranslations);
 
-        // Arr::dot convert an empty array not to a dotted value but remains an empty array.
-        // Remove this empty array so we can trust on a single dimensional array
-        foreach ($keyValues as $key => $value) {
-            if (is_array($value)) {
-                unset ($keyValues[$key]);
-            }
-        }
-
+        $keyValues = $this->fixEmptyArray($keyValues);
         return $keyValues;
     }
 
