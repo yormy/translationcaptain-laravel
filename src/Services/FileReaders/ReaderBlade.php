@@ -154,8 +154,6 @@ class ReaderBlade extends FileReader
         return $translation;
     }
 
-
-
     protected function getRawDataBinding($value)
     {
         return ":$value";

@@ -6,10 +6,6 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class FileReader
 {
-
-    const TC_BINDING_START = "%%";
-    const TC_BINDING_END = "%%";
-
     protected $locales;
 
     protected $importPath;
@@ -90,7 +86,10 @@ abstract class FileReader
 
             foreach ($innerFind as $value) {
                 $bladeBinding = $this->getRawDataBinding($value);
-                $TranslationCaptainBinding = self::TC_BINDING_START. $value. self::TC_BINDING_END;
+                $TranslationCaptainBinding =
+                    config('translationcaptain-laravel.databinding.start')
+                    . $value
+                    . config('translationcaptain-laravel.databinding.end');
                 $translation = str_ireplace($bladeBinding, $TranslationCaptainBinding, $translation);
             }
         }

@@ -11,7 +11,10 @@ return [
     |
     */
 
-    'query_parameter' => 'via',
+    'databinding' => [
+        'start' => "%%",
+        'end' => "%%",
+    ],
 
 
     /*
