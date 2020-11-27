@@ -46,4 +46,14 @@ class GeneratorBlade extends FilesGenerator
 
         return $locale. DIRECTORY_SEPARATOR.  $groupName. $this->filetype->extension;
     }
+
+    protected function processMessage(string $message) : string
+    {
+        return $this->processDataBinding($message);
+    }
+
+    protected function makeRawDataBinding($value)
+    {
+        return ':'. $value;
+    }
 }

@@ -105,10 +105,12 @@ abstract class FilesGenerator
         return $key;
     }
 
+
     protected function prepareTranslationForExport(string $translation) : string
     {
-        return $translation;
+        return $this->processMessage($translation);
     }
+
 
     private function writeFile(string $fullpath , string $fileContents)
     {
@@ -143,4 +145,24 @@ abstract class FilesGenerator
         }
         $zip->close();
     }
+
+    protected function processDataBinding(string $message) : string
+    {
+        $start = config('translationcaptain-laravel.databinding.start');
+        $end = config('translationcaptain-laravel.databinding.end');
+        $pattern ="$start(.*?)$end";
+
+        preg_match_all("/$pattern/", $message, $matches);
+        if ($matches) {
+            $exactFind = $matches[0];
+            $innerFind = $matches[1];
+
+            foreach ($innerFind as $value) {
+                $binding = $this->makeRawDataBinding($value);
+                $message = str_ireplace($exactFind, $binding, $message);
+            }
+        }
+        return $message;
+    }
+
 }

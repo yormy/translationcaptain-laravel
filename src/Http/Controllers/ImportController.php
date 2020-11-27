@@ -25,19 +25,20 @@ class ImportController extends Controller
          $locales = ['nl'];
         $importer = new ReaderBlade($locales);
         $messages = $importer->getMessages();
-        dd($messages['nl']['validation']);
+//        dd($messages['nl']['validation']);
 
 
-        $importer = new ReaderVue($locales);
-        $importPath = base_path(). DIRECTORY_SEPARATOR. 'resources/js/components/lang';
-        $importer->setImportPath($importPath);
-        $messages = $importer->getMessages();
+//        $importer = new ReaderVue($locales);
+//        $importPath = base_path(). DIRECTORY_SEPARATOR. 'resources/js/components/lang';
+//        $importer->setImportPath($importPath);
+//        $messages = $importer->getMessages();
+//
+//        dd($messages['nl']['validations']);
 
-        dd($messages['nl']['validations']);
-
-//        $bladeFilesGenerator = new BladeFilesGenerator($messages);
-//        $locales = ['nl'];
-//        $bladeFilesGenerator->export($locales);
+        $bladeFilesGenerator = new GeneratorBlade($messages);
+        $locales = ['nl'];
+        $bladeFilesGenerator->export($locales);
+        dd('done');
 
         $vueFilesGenerator = new GeneratorVue($messages);
         $locales = ['nl'];
