@@ -1,24 +1,11 @@
 <?php declare(strict_types = 1);
 
-namespace Yormy\TranslationcaptainLaravel\Services;
+namespace Yormy\TranslationcaptainLaravel\Services\FileReaders;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 
-class ImportLaravel
+class ReaderBlade extends FileReader
 {
-
-    /** @var \Illuminate\Filesystem\Filesystem */
-    protected $fileSystem;
-
-    /** @var \Illuminate\Contracts\Foundation\Application */
-    protected $app;
-
-    protected array $messages;
-
-    protected array $languages;
-
-    protected $defaultGroup = "basedefault";
 
     /**
      * Published vendor translations
@@ -38,60 +25,28 @@ class ImportLaravel
      */
     const APP_SINGLE_FILES = 2;
 
-    public function __construct()
+    public function __construct(array $locales)
     {
-        $this->app = App();
-        $this->fileSystem = new Filesystem();
-
-        $this->languages =['en','nl','ar'];
+        $this->importPath = App()['path.lang'];
+        parent::__construct($locales);
     }
 
     public function getMessages()
     {
-        $importFromDir = $this->app['path.lang'];
-
-        foreach ($this->languages as $language) {
-            $filename = $importFromDir. DIRECTORY_SEPARATOR. $language. ".php";
-            $this->addSingleTranslationFiles(self::APP_SINGLE_FILES, $filename, $importFromDir, $language);
+        foreach ($this->locales as $locale) {
+            $filename = $this->importPath . DIRECTORY_SEPARATOR . $locale . ".php";
+            $this->addSingleTranslationFiles(self::APP_SINGLE_FILES, $filename, $this->importPath, $locale);
         }
 
-        foreach ($this->languages as $language) {
-            $importFromLanguageDir = $importFromDir . DIRECTORY_SEPARATOR. $language;
-            $this->importFileTranslations(self::APP_FILES, $importFromLanguageDir, $importFromLanguageDir, $language);
+        foreach ($this->locales as $locale) {
+            $importFromLanguageDir = $this->importPath . DIRECTORY_SEPARATOR . $locale;
+            $this->importFileTranslations(self::APP_FILES, $importFromLanguageDir, $importFromLanguageDir, $locale);
         }
 
-        $importFromVendorDir = $importFromDir . "/vendor";
-        $this->importFileTranslations(self::VENDOR_FILES, $importFromVendorDir, $importFromVendorDir, $language);
+        $importFromVendorDir = $this->importPath . "/vendor";
+        $this->importFileTranslations(self::VENDOR_FILES, $importFromVendorDir, $importFromVendorDir, $locale);
 
-        //d($this->messages);
         return $this->messages;
-    }
-
-    /**
-     * Recursive walk the directory tree and import the files according to
-     * the laravel base structure: lang/<language>/group/group.php file stucture
-     *
-     * @param $root
-     * @param $baseDir
-     */
-    public function importFileTranslations(int $directoryType, string $root, string $importFromDir, string $language = null) : void
-    {
-        if (!is_dir($importFromDir)) {
-            return;
-        }
-
-        $this->addTranslationFiles($directoryType, $root, $importFromDir, $language);
-        foreach ($this->fileSystem->directories($importFromDir) as $currentDir) {
-            $this->importFileTranslations($directoryType, $root, $currentDir, $language);
-        }
-    }
-
-    public function addTranslationFiles(int $directoryType, string $root, string $importFromDir, string $language = null)
-    {
-        foreach ($this->fileSystem->files($importFromDir) as $file) {
-            $fullPathname = $file->getPathname();
-            $this->addSingleTranslationFiles($directoryType, $fullPathname, $root, $language);
-        }
     }
 
     public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null)
@@ -100,10 +55,7 @@ class ImportLaravel
             return;
         }
 
-
         $relative = str_replace($root, '', $fullPathname);
-
-
 
         // remove php extension
         $relative = substr($relative,0, strlen($relative) - strlen('.php'));
@@ -185,11 +137,10 @@ class ImportLaravel
         // Remove this empty array so we can trust on a single dimensional array
         foreach ($keyValues as $key => $value) {
             if (is_array($value)) {
-               unset ($keyValues[$key]);
+                unset ($keyValues[$key]);
             }
         }
         return $keyValues;
 
     }
-
 }

@@ -2,6 +2,8 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\Generators;
 
+use Yormy\TranslationcaptainLaravel\Services\FileTypes\FileTypeJson;
+
 class GeneratorVue extends FilesGenerator
 {
     protected $vendorPath = 'vendor';

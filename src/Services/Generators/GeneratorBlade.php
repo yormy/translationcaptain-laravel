@@ -2,7 +2,8 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\Generators;
 
-use Illuminate\Support\Facades\Storage;
+
+use Yormy\TranslationcaptainLaravel\Services\FileTypes\FileTypePhp;
 
 class GeneratorBlade extends FilesGenerator
 {

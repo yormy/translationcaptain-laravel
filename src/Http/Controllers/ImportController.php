@@ -2,6 +2,8 @@
 
 namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
 use Yormy\TranslationcaptainLaravel\Services\Generators\GeneratorBlade;
 use Yormy\TranslationcaptainLaravel\Services\Generators\GeneratorVue;
 use Yormy\TranslationcaptainLaravel\Services\LabelsExport;
@@ -17,8 +19,21 @@ class ImportController extends Controller
 {
     public function import()
     {
-        $importer = new ImportLaravel();
+//        $importer = new ImportLaravel();
+//        $messages = $importer->getMessages();
+
+         $locales = ['nl'];
+        $importer = new ReaderBlade($locales);
         $messages = $importer->getMessages();
+        dd($messages);
+
+
+        $importer = new ReaderVue($locales);
+        $importPath = base_path(). DIRECTORY_SEPARATOR. 'resources/js/components/lang';
+        $importer->setImportPath($importPath);
+        $messages = $importer->getMessages();
+
+        dd($messages);
 
 //        $bladeFilesGenerator = new BladeFilesGenerator($messages);
 //        $locales = ['nl'];
