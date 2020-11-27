@@ -6,6 +6,10 @@ use Illuminate\Filesystem\Filesystem;
 
 abstract class FileReader
 {
+
+    const TC_BINDING_START = "%%";
+    const TC_BINDING_END = "%%";
+
     protected $locales;
 
     protected $importPath;
@@ -15,6 +19,8 @@ abstract class FileReader
     protected array $messages;
 
     protected $filetype;
+
+    protected $dataBindingPattern;
 
     public function __construct(array $locales)
     {
@@ -69,5 +75,25 @@ abstract class FileReader
             $fullPathname = $file->getPathname();
             $this->addSingleTranslationFiles($directoryType, $fullPathname, $root, $language);
         }
+    }
+
+    protected function processTranslation(string $translation) : string
+    {
+        return $translation;
+    }
+
+    protected function createNewDataBinding(string $translation) : string
+    {
+        preg_match_all("/$this->dataBindingPattern/", $translation, $matches);
+        if ($matches) {
+            $innerFind = $matches[1];
+
+            foreach ($innerFind as $value) {
+                $bladeBinding = $this->getRawDataBinding($value);
+                $TranslationCaptainBinding = self::TC_BINDING_START. $value. self::TC_BINDING_END;
+                $translation = str_ireplace($bladeBinding, $TranslationCaptainBinding, $translation);
+            }
+        }
+        return $translation;
     }
 }

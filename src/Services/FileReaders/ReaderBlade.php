@@ -28,6 +28,10 @@ class ReaderBlade extends FileReader
     public function __construct(array $locales)
     {
         $this->importPath = App()['path.lang'];
+
+        $endingChars = "\.|;|:| |@|\(|\)";
+        $this->dataBindingPattern = ":([a-zA-Z]+?)($endingChars)";
+
         parent::__construct($locales);
     }
 
@@ -116,7 +120,7 @@ class ReaderBlade extends FileReader
 //                $fullKey = $key;
 //            }
 
-            $keysForPackage[$key] = $translation;
+            $keysForPackage[$key] = $this->processTranslation($translation);
         }
 
         $this->messages[$language][$relative] = $keysForPackage;
@@ -140,7 +144,20 @@ class ReaderBlade extends FileReader
                 unset ($keyValues[$key]);
             }
         }
-        return $keyValues;
 
+        return $keyValues;
+    }
+
+    protected function processTranslation(string $translation) : string
+    {
+        $translation = $this->createNewDataBinding($translation);
+        return $translation;
+    }
+
+
+
+    protected function getRawDataBinding($value)
+    {
+        return ":$value";
     }
 }

@@ -17,6 +17,8 @@ class ReaderVue extends FileReader
     {
         $this->filetype = new FileTypeJson();
 
+        $this->dataBindingPattern ="{(.*?)}";
+
         parent::__construct($locales);
     }
 
@@ -44,11 +46,17 @@ class ReaderVue extends FileReader
 
         if (count($translations) > 0) {
             foreach ($translations as $key => $translation) {
-                $keysForPackage[$key] = $translation;
+                $keysForPackage[$key] = $this->processTranslation($translation);
             }
 
             $this->messages[$language][$relative] = $keysForPackage;
         }
+    }
+
+    protected function processTranslation(string $translation) : string
+    {
+        $translation = $this->createNewDataBinding($translation);
+        return $translation;
     }
 
     /**
@@ -65,5 +73,10 @@ class ReaderVue extends FileReader
             return Arr::dot($arrayTranslations);  // make single dimensional array
         }
         return [];
+    }
+
+    protected function getRawDataBinding($value)
+    {
+        return '{'. $value. '}';
     }
 }

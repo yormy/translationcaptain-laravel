@@ -25,7 +25,7 @@ class ImportController extends Controller
          $locales = ['nl'];
         $importer = new ReaderBlade($locales);
         $messages = $importer->getMessages();
-        dd($messages);
+        dd($messages['nl']['validation']);
 
 
         $importer = new ReaderVue($locales);
@@ -33,7 +33,7 @@ class ImportController extends Controller
         $importer->setImportPath($importPath);
         $messages = $importer->getMessages();
 
-        dd($messages);
+        dd($messages['nl']['validations']);
 
 //        $bladeFilesGenerator = new BladeFilesGenerator($messages);
 //        $locales = ['nl'];
