@@ -1,6 +1,6 @@
 <?php declare(strict_types = 1);
 
-namespace Yormy\TranslationcaptainLaravel\Services\Generators;
+namespace Yormy\TranslationcaptainLaravel\Services\FileWriters;
 
 
 use Yormy\TranslationcaptainLaravel\Services\FileTypes\FileTypePhp;
