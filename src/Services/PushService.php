@@ -32,6 +32,8 @@ class PushService
     private function getExistingTranslations()
     {
         $blade = new ReaderBlade($this->locales);
+        $importPath = base_path() . config('translationcaptain-laravel.paths.blade');
+        $blade->setImportPath($importPath);
         $bladeLabels = $blade->getMessages();
 
         $vue = new ReaderVue($this->locales);
@@ -52,6 +54,7 @@ class PushService
         $missingKeys = [];
         foreach ($this->locales as $locale) {
             $missingKeysForLanguage = [];
+
             if(array_key_exists($locale, $existingTranslations)) {
                 $existingForLanguageDotted = Arr::dot($existingTranslations[$locale]);
 
@@ -60,7 +63,12 @@ class PushService
                         $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
                     }
                 }
+            } else {
+                foreach ($foundKeysDotted as $key => $transation) {
+                    $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
+                }
             }
+
             $missingKeys[$locale] = $missingKeysForLanguage;
 
         }

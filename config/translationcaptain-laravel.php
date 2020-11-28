@@ -22,6 +22,19 @@ return [
     ],
 
     'paths' => [
-        'vue' => '/resources/js/components/lang'
+        'vue' => '/resources/js/components/lang',
+        'blade' => '/resources/lang',
+
+        ],
+
+    'paths_sources' => [
+        'blade' => [
+            '/resources/views/bedrock/admin'
+            //'/app/',
+            //'/config/',
+        ]
+
     ]
+
+
 ];

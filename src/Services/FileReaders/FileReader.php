@@ -12,7 +12,7 @@ abstract class FileReader
 
     protected $fileSystem;
 
-    protected array $messages;
+    protected array $messages = [];
 
     protected $filetype;
 

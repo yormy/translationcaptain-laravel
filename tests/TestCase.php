@@ -21,46 +21,30 @@ class TestCase extends Orchestra
     {
         parent::setUp();
 
-//        Factory::guessFactoryNamesUsing(
-//            fn (string $modelName) => 'Yormy\\TranslationcaptainLaravel\\Database\\Factories\\' . class_basename($modelName) . 'Factory'
-//        );
-
         // Note: this also flushes the cache from within the migration
         $this->setUpDatabase($this->app);
 
-        $this->userBob = $this->user('bob@user.com');
-        $this->userAdam = $this->user('adam@user.com');
-        $this->referrerFelix = $this->user('felix@referrer.com');
-
-
-        Route::middleware(ReferrerMiddleware::class)
-            ->group(function () {
-                Route::TranslationcaptainLaravelUser($this->prefix);
-                Route::TranslationcaptainLaravelAdmin($this->prefix);
-            });
-
-        $this->setViewForLayout();
+//        Route::middleware(ReferrerMiddleware::class)
+//            ->group(function () {
+//                Route::TranslationcaptainLaravelUser($this->prefix);
+//                Route::TranslationcaptainLaravelAdmin($this->prefix);
+//            });
+//
+//        $this->setViewForLayout();
 
         $this->overwriteConfigForTesting();
     }
 
     public function overwriteConfigForTesting()
     {
-        config(['translationcaptain-laravel.models.referrer.public_id' => 'id']);
+        $toAppRoot = "/../../../../";
+        config(['translationcaptain-laravel.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
 
-        config(['translationcaptain-laravel.models.referrer.class' => User::class]);
-    }
+        config(['translationcaptain-laravel.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
 
-    public function user(string $email)
-    {
-        return User::where('email', $email)->first();
-    }
-
-    private function setViewForLayout()
-    {
-        $viewPath = dirname(__DIR__);
-        $viewPath .= "/resources/views";
-        config(['view.paths' => [$viewPath]]);
+        config(['translationcaptain-laravel.paths_sources.blade' => [
+            $toAppRoot. 'tests/Features/Data/Sources/Blade',
+            ]]);
     }
 
     public function get($uri, array $headers = [])
@@ -110,24 +94,5 @@ class TestCase extends Orchestra
             $table->string('name');
             $table->softDeletes();
         });
-
-//        include_once __DIR__.'/../database/migrations/create_referral_awards_table.php.stub';
-//        (new \CreateReferralAwardsTable())->up();
-//
-//        include_once __DIR__.'/../database/migrations/create_referral_actions_table.php.stub';
-//        (new \CreateReferralActionsTable())->up();
-//
-//        include_once __DIR__.'/../database/migrations/create_referral_domains_table.php.stub';
-//        (new \CreateReferralDomainsTable())->up();
-//
-//        include_once __DIR__.'/../database/migrations/create_referral_payments_table.php.stub';
-//        (new \CreateReferralPaymentsTable())->up();
-//
-//        include_once __DIR__.'/../database/migrations/seed_referral_actions_table.php.stub';
-//        (new \SeedReferralActionsTable())->up();
-//
-//        User::create(['email' => 'bob@user.com', 'name' => 'bobuser']);
-//        User::create(['email' => 'adam@user.com', 'name' => 'adamuser']);
-//        User::create(['email' => 'felix@referrer.com', 'name' => 'felixreferrer']);
     }
 }

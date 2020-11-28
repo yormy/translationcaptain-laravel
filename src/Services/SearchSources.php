@@ -60,12 +60,6 @@ class SearchSources
      */
 //    private $path;
 
-    private const PATHS_TO_SCAN = [
-        //'/app/',
-        //'/config/',
-        '/resources/views/bedrock/admin',
-    ];
-
     /**
      * Translation function pattern.
      *
@@ -84,19 +78,7 @@ class SearchSources
 
     public function getMessages()
     {
-//
-//        dd('ooo');
-//        $path = $this->argument('path');
-//
-//        if ($path) {
-//            $files = $this->getPathFilesToProcess($path);
-//        } else {
-//            $files = $this->getAllFilesToProcess();
-//        }
-
         $files = $this->getAllFilesToProcess();
-
-
 
         $allStrings = $this->collectStrings($files);
 
@@ -166,7 +148,8 @@ class SearchSources
     private function getAllFilesToProcess()
     {
         $files = [];
-        foreach (self::PATHS_TO_SCAN as $path) {
+        $sources = config('translationcaptain-laravel.paths_sources.blade');
+        foreach ($sources as $path) {
             $absPath = base_path() . $path;
 
             // create an array with all processable files
