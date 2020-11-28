@@ -29,7 +29,7 @@ class ReaderBlade extends FileReader
     {
         $this->importPath = App()['path.lang'];
 
-        $endingChars = "\.|;|:| |@|\(|\)";
+        $endingChars = "\.|;|:| |$|@|\(|\)";
         $this->dataBindingPattern = ":([a-zA-Z]+?)($endingChars)";
 
         parent::__construct($locales);
@@ -96,30 +96,10 @@ class ReaderBlade extends FileReader
             $relative = $vendor. "::". $newPath.  $filename;
 
         }
-//        if (self::APP_FILES === $directoryType) {
-//            $group = $parts[0];
-//            unset($parts[0]);
-//        }
-//        if (self::APP_SINGLE_FILES === $directoryType) {
-//            $group = $this->defaultGroup;
-//        }
-
-        // All keys of this group are prefixed with entire directory path
-//        $keyPrefix = implode('.', $parts);
-//        if ($keyPrefix) {
-//            $keyPrefix .= ".";
-//        }
 
         $keysForPackage = [];
         $translations = $this->convertImportfileToArray($fullPathname);
-        foreach ($translations as $key => $translation)
-        {
-//            $fullKey = $keyPrefix. $key;
-//
-//            if (self::APP_SINGLE_FILES === $directoryType) {
-//                $fullKey = $key;
-//            }
-
+        foreach ($translations as $key => $translation) {
             $keysForPackage[$key] = $this->processTranslation($translation);
         }
 

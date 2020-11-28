@@ -23,7 +23,7 @@ class ReaderTest extends TestCase
 
         $this->translationsRead = Arr::dot($allKeys);
 
-//        dd($this->translationsRead);
+        //dd($this->translationsRead);
     }
 
     /** @test */
@@ -61,22 +61,28 @@ class ReaderTest extends TestCase
     }
 
     /** @test */
-    public function correct_translation_in_languages()
-    {
-        // test to see if the actual value is translated into the correct languages
-        $this->markTestIncomplete('This test has not been implemented yet.');
-    }
-
-    /** @test */
     public function key_added_to_non_existing_language()
     {
         $this->assertArrayHasKeyLocales('app.welcome.found', ['xx']);
         $this->assertNewKeyHasPrefixedValue('xx',"app.welcome.found");
     }
 
+    /** @test */
+    public function key_has_translation()
+    {
+       $this->assertKeyHasValue('en.validations.alpha', 'The %%_field_%% field may only contain alphabetic characters');
+    }
 
+    /** @test */
+    public function key_has_binding_eol()
+    {
+        $this->assertKeyHasValue('en.firewall::level1/rr/notifications.mail.message',
+            'A possible %%middleware%% attack on %%domain%% has been detected from %%ip%% address. The following URL has been affected: %%url%%');
+    }
 
-
+    /**
+     * =========== HELPER FUNCTIONS ================
+     */
     private function assertArrayHasKeyLocales($key, $locales = null)
     {
         if (!$locales) {
