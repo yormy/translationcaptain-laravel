@@ -1,0 +1,14 @@
+{
+    "Hello world": "Bonjour le monde",
+    "Next": "suivante",
+    "Result": "Résultat",
+    "multilingual-admin": {
+        "this_is_base_language": {
+            "level1" : {
+                "level2" : "level2",
+                "level2B" : "level2B",
+                "level2C" : "level2c"
+            }
+        }
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "plans" : {
+        "monthly" : "monthly",
+        "yearly" : "yearly"
+    },
+    "subscription" : {
+        "cancelled" : "cancelled",
+        "resumed"   : "resumed"
+    },
+    "payment_method" : {
+        "add_method" : "add payment method",
+        "mark_as_default" : "Mark as default",
+        "brand" : "brand",
+        "expiry" : "expiry",
+        "last" : "last"
+    },
+}

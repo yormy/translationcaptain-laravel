@@ -1,0 +1,11 @@
+{
+    "welcome_form_vue": "Hola Mundo-smoly",
+    "Next": "Next",
+    "Result": "Result",
+    "actions" : {
+        "cancel" : "cancel",
+        "confirm" : "confirm",
+        "delete" : "delete",
+        "edit" : "edit"
+    }
+}
