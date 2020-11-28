@@ -157,20 +157,20 @@ class SearchSources
         }
         return $files;
     }
-
-    private function getPathFilesToProcess($path)
-    {
-        $files = [];
-        if (!Str::startsWith($path, '/')) {
-            $path = '/' . $path;
-        }
-        $absPath = base_path() . $path;
-
-        // create an array with all processable files
-        $this->getAllFiles($absPath, $files);
-
-        return $files;
-    }
+//
+//    private function getPathFilesToProcess($path)
+//    {
+//        $files = [];
+//        if (!Str::startsWith($path, '/')) {
+//            $path = '/' . $path;
+//        }
+//        $absPath = base_path() . $path;
+//
+//        // create an array with all processable files
+//        $this->getAllFiles($absPath, $files);
+//
+//        return $files;
+//    }
 
     /**
      * Parse all files and store keys in return array
