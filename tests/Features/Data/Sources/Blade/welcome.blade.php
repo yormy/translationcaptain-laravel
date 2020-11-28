@@ -28,6 +28,8 @@
             @endphp
             <div class="">
                 {{ __('app.welcome.found') }}<br>
+                {{ __('key-without-dot') }}<br>
+                {{ __('validations.alpha') }}<br>
             </div>
         </div>
     </div>

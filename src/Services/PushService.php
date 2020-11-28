@@ -79,7 +79,7 @@ class PushService
     private function addMissingKey(string $fullKey, array $missingKeys) : array
     {
         $firstDot = strpos($fullKey, '.');
-        if ($firstDot === false || $firstDot ===0) {
+        if ($firstDot === false || $firstDot === 0) {
             return $missingKeys;
         }
 
