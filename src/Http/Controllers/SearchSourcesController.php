@@ -4,11 +4,6 @@ namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Auth;
-use Yormy\TranslationcaptainLaravel\Http\Controllers\Resources\ReferrerAwardedActionCollection;
-use Yormy\TranslationcaptainLaravel\Models\ReferralAward;
-use Yormy\TranslationcaptainLaravel\Services\AwardService;
-use Yormy\TranslationcaptainLaravel\Services\ImportLaravel;
 use Yormy\TranslationcaptainLaravel\Services\SearchSources;
 
 class SearchSourcesController extends Controller
@@ -30,12 +25,10 @@ class SearchSourcesController extends Controller
 //        }
 //
 //        dd($messages);
-//dd($messages2);
-//// todo flatten
+        //dd($messages2);
+        //// todo flatten
         return view('translationcaptain-laravel::overview', [
             'overview' => json_encode($messages),
         ]);
     }
-
-
 }

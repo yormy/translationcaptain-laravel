@@ -15,6 +15,7 @@ class FileTypeJson
         $open = "";
         $open .= "{ " . PHP_EOL . PHP_EOL;
         $open .= $this->tab. '"'. $header. '" : "",'. PHP_EOL;
+
         return $open;
     }
 
@@ -22,5 +23,4 @@ class FileTypeJson
     {
         return PHP_EOL . "}" . PHP_EOL;
     }
-
 }

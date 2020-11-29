@@ -34,6 +34,7 @@ abstract class FilesGenerator
     public function setHeader(string $header) : self
     {
         $this->header = $header;
+
         return $this;
     }
 
@@ -45,6 +46,7 @@ abstract class FilesGenerator
     public function setExportPath(string $pathname) : self
     {
         $this->exportPath = $pathname;
+
         return $this;
     }
 
@@ -54,15 +56,15 @@ abstract class FilesGenerator
 
         $filesToExport = [];
         foreach ($groups as $groupname => $keys) {
-            $filename = $this->groupnameToFilename($groupname , $locale);
+            $filename = $this->groupnameToFilename($groupname, $locale);
 
-            foreach ($keys as $key => $translation)
-            {
+            foreach ($keys as $key => $translation) {
                 $keyToExport = $this->prepareKeyForExport($key);
                 $translationToExport = $this->prepareTranslationForExport($translation);
                 $filesToExport[$filename][$keyToExport] = $translationToExport;
             }
         }
+
         return $filesToExport;
     }
 
@@ -98,7 +100,6 @@ abstract class FilesGenerator
         return $contents;
     }
 
-
     protected function isVendorKey(string $groupName)
     {
         return strpos($groupName, self::VENDORNAME_SEPARATOR) > 0;
@@ -109,22 +110,19 @@ abstract class FilesGenerator
         return $key;
     }
 
-
     protected function prepareTranslationForExport(string $translation) : string
     {
         return $this->processMessage($translation);
     }
 
-
-    private function writeFile(string $fullpath , string $fileContents)
+    private function writeFile(string $fullpath, string $fileContents)
     {
-        if (!file_exists(dirname($fullpath))) {
+        if (! file_exists(dirname($fullpath))) {
             mkdir(dirname($fullpath), 0660, true);
         }
 
         file_put_contents($fullpath, $fileContents);
     }
-
 
     private function zipping()
     {
@@ -139,8 +137,8 @@ abstract class FilesGenerator
         $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($backupDirectory));
         foreach ($files as $file) {
             // We're skipping all subfolders
-            if (!$file->isDir()) {
-                $filePath     = $file->getRealPath();
+            if (! $file->isDir()) {
+                $filePath = $file->getRealPath();
 
                 $relativePath = '' . substr($filePath, strlen($backupDirectory) + 1);
 
@@ -154,7 +152,7 @@ abstract class FilesGenerator
     {
         $start = config('translationcaptain-laravel.databinding.start');
         $end = config('translationcaptain-laravel.databinding.end');
-        $pattern ="$start(.*?)$end";
+        $pattern = "$start(.*?)$end";
 
         preg_match_all("/$pattern/", $message, $matches);
         if ($matches) {
@@ -166,7 +164,7 @@ abstract class FilesGenerator
                 $message = str_ireplace($exactFind, $binding, $message);
             }
         }
+
         return $message;
     }
-
 }

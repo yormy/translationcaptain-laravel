@@ -2,12 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services;
 
-use Illuminate\Filesystem\Filesystem;
-use Illuminate\Support\Arr;
-use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 
 class SearchSources
 {
@@ -43,7 +38,6 @@ class SearchSources
     {
         $string = [];
         foreach ($allStrings as $fullkey => $translation) {
-
             $firstDotSeparator = (int)strpos($fullkey, ".");
 
             if ($firstDotSeparator > 0) {
@@ -53,9 +47,10 @@ class SearchSources
                 $string[$filename][$key] = $translation;
             } else {
                 $defaultGroup = config('translationcaptain-laravel.group_when_group_missing');
-                $string[$defaultGroup][$fullkey] =  $translation;
+                $string[$defaultGroup][$fullkey] = $translation;
             }
         }
+
         return $string;
     }
 
@@ -74,6 +69,7 @@ class SearchSources
             // create an array with all processable files
             $this->getAllFiles($absPath, $files);
         }
+
         return $files;
     }
 
@@ -98,7 +94,6 @@ class SearchSources
         return $allStrings;
     }
 
-
     /**
      * Get all the files that need to be parsed
      *
@@ -112,7 +107,7 @@ class SearchSources
 
         foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
-            if (!is_dir($path)) {
+            if (! is_dir($path)) {
                 $results[] = $path;
             } elseif ($value != "." && $value != "..") {
                 $this->getAllFiles($path, $results);
@@ -131,7 +126,7 @@ class SearchSources
     private function getTranslatable(string $viewData)
     {
         $strings = [];
-        if (!preg_match_all($this->pattern, $viewData, $matches)) {
+        if (! preg_match_all($this->pattern, $viewData, $matches)) {
             return $strings;
         }
         foreach ($matches[2] as $string) {
@@ -139,6 +134,7 @@ class SearchSources
         }
         // Remove duplicates.
         $strings = array_unique($strings);
+
         return $this->formatArray($strings);
     }
 
@@ -154,6 +150,7 @@ class SearchSources
         foreach ($strings as $string) {
             $result[$string] = '';
         }
+
         return $result;
     }
 }

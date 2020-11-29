@@ -54,7 +54,6 @@ class ReaderTest extends TestCase
         $this->assertArrayHasKeyLocales('billing.plans.monthly.description', ['en']);
     }
 
-
     /** @test */
     public function found_new_key_in_scanned_blade_source()
     {
@@ -68,36 +67,38 @@ class ReaderTest extends TestCase
     public function key_added_to_non_existing_language()
     {
         $this->assertArrayHasKeyLocales('app.welcome.found', ['xx']);
-        $this->assertNewKeyHasPrefixedValue('xx',"app.welcome.found");
+        $this->assertNewKeyHasPrefixedValue('xx', "app.welcome.found");
     }
 
     /** @test */
     public function key_has_translation()
     {
-       $this->assertKeyHasValue('nl.billing.plans.monthly.title', 'Maandelijkse betaal plan');
+        $this->assertKeyHasValue('nl.billing.plans.monthly.title', 'Maandelijkse betaal plan');
     }
 
     /** @test */
     public function key_blade_has_bindings()
     {
-        $this->assertKeyHasValue('en.yormy::level1/rr/notifications.mail.message',
-            '%%middleware%% attack on %%domain%% has from %%ip%% address. affected: %%url%%');
+        $this->assertKeyHasValue(
+            'en.yormy::level1/rr/notifications.mail.message',
+            '%%middleware%% attack on %%domain%% has from %%ip%% address. affected: %%url%%'
+        );
     }
 
     /** @test */
     public function key_json_has_bindings()
     {
-        $this->assertKeyHasValue('en.billing.plans.monthly.description',
-            'The %%_field_%% field must be %%width%% pixels by %%height%% %%height%% pixels');
+        $this->assertKeyHasValue(
+            'en.billing.plans.monthly.description',
+            'The %%_field_%% field must be %%width%% pixels by %%height%% %%height%% pixels'
+        );
     }
-
-
 
     /** @test */
     public function found_key_without_dot()
     {
         $this->assertArrayHasKeyLocales('___.key-without-dot', ['en']);
-        $this->assertNewKeyHasPrefixedValue('xx','___.key-without-dot');
+        $this->assertNewKeyHasPrefixedValue('xx', '___.key-without-dot');
     }
 
     /**
@@ -105,7 +106,7 @@ class ReaderTest extends TestCase
      */
     private function assertArrayHasKeyLocales($key, $locales = null)
     {
-        if (!$locales) {
+        if (! $locales) {
             $locales = $this->locales;
         }
         foreach ($locales as $locale) {
@@ -115,12 +116,11 @@ class ReaderTest extends TestCase
 
     private function assertKeyHasValue($key, $value)
     {
-        $this->assertEquals($this->translationsRead[$key] , $value);
+        $this->assertEquals($this->translationsRead[$key], $value);
     }
 
     private function assertNewKeyHasPrefixedValue(string $locale, string $key)
     {
         $this->assertKeyHasValue("$locale.$key", "#$key");
     }
-
 }

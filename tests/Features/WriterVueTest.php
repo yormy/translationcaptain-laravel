@@ -2,9 +2,6 @@
 
 namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 
-use Illuminate\Support\Arr;
-
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
@@ -34,7 +31,7 @@ class WriterVueTest extends TestCase
     public function vue_files_generated()
     {
         foreach ($this->locales as $locale) {
-            foreach(array_keys($this->translationsRead[$locale]) as $file) {
+            foreach (array_keys($this->translationsRead[$locale]) as $file) {
                 $filename = $this->generateFilename($locale, $file);
                 if (false === strpos($filename, "___.json")) {
                     $this->assertFileExists($filename);
@@ -86,5 +83,4 @@ class WriterVueTest extends TestCase
             $file .
             ".json";
     }
-
 }

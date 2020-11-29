@@ -15,7 +15,7 @@ class GeneratorVue extends FilesGenerator
         $this->filetype = new FileTypeJson();
 
         $this->exportPath = App()['path.lang'];
-        $this->exportPath .='_tc_vuw';
+        $this->exportPath .= '_tc_vuw';
 
         parent::__construct($labels);
     }
@@ -55,6 +55,7 @@ class GeneratorVue extends FilesGenerator
     {
         $jsonMessage = json_encode($message);
         $jsonMessage = $this->processDataBinding($jsonMessage);
+
         return json_decode($jsonMessage, true);
     }
 

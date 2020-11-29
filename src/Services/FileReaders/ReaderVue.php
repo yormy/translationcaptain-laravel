@@ -18,7 +18,7 @@ class ReaderVue extends FileReader
     {
         $this->filetype = new FileTypeJson();
 
-        $this->dataBindingPattern ="{(.*?)}";
+        $this->dataBindingPattern = "{(.*?)}";
 
         parent::__construct($locales);
     }
@@ -33,10 +33,9 @@ class ReaderVue extends FileReader
         return $this->messages;
     }
 
-
     public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null) : void
     {
-        if (!is_file($fullPathname)) {
+        if (! is_file($fullPathname)) {
             return;
         }
 
@@ -57,6 +56,7 @@ class ReaderVue extends FileReader
     protected function processTranslation(string $translation) : string
     {
         $translation = $this->createNewDataBinding($translation);
+
         return $translation;
     }
 
@@ -73,18 +73,19 @@ class ReaderVue extends FileReader
             return [];
         }
 
-        if (!$this->isJson(file_get_contents($filename))) {
+        if (! $this->isJson(file_get_contents($filename))) {
             throw new InvalidTranslationFileException($filename);
         }
 
         $arrayTranslations = json_decode(file_get_contents($filename), true);
 
-        if(is_array($arrayTranslations)) {
+        if (is_array($arrayTranslations)) {
             $keyValues = Arr::dot($arrayTranslations);
             $keyValues = $this->fixEmptyArray($keyValues);
 
             return $keyValues;
         }
+
         return [];
     }
 
@@ -99,6 +100,7 @@ class ReaderVue extends FileReader
          * @psalm-suppress UnusedVariable
          */
         json_decode($string);
+
         return (json_last_error() == JSON_ERROR_NONE);
     }
 }
