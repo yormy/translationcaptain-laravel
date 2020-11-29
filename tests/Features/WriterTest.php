@@ -48,6 +48,37 @@ class WriterTest extends TestCase
         }
     }
 
+    /** @test */
+    public function blade_files_contains_translation()
+    {
+        $filename = $this->generateFilename('en', 'action');
+        $fileContents = file_get_contents($filename);
+
+        $this->assertStringContainsString('another.boom.kayak.boom.surfer', $fileContents);
+        $this->assertStringContainsString('key_defined_in_blade_and_vue', $fileContents);
+        $this->assertStringContainsString('this key is defined in blade and vue with same translation', $fileContents);
+    }
+
+    /** @test */
+    public function blade_files_contains_translation_from_json()
+    {
+        $filename = $this->generateFilename('en', 'billing');
+        $fileContents = file_get_contents($filename);
+
+        $this->assertStringContainsString('plans.monthly.description', $fileContents);
+        $this->assertStringContainsString('The :_field_ field must be :_field_ pixels by :_field_ :_field_ pixels', $fileContents);
+    }
+
+    /** @test */
+    public function blade_vendor_files_contains_translation()
+    {
+        $filename = $this->generateFilename('en', 'yormy::level1/rr/messages');
+        $fileContents = file_get_contents($filename);
+
+        $this->assertStringContainsString('expired.title', $fileContents);
+        $this->assertStringContainsString('The invite code :CODE has expired.', $fileContents);
+    }
+
     public function generateFilename(string $locale, string $file): string
     {
         if(strpos($file, '::') === false) {
