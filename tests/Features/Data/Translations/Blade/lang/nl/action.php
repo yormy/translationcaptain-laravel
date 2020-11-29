@@ -15,8 +15,8 @@ return [
                         'surfer' => "snl surfoei",
                         'kayak' => "nl srufie",
                     ],
-                ]
+                ],
             ],
-        ]
+        ],
     ],
 ];

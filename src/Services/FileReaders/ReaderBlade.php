@@ -25,7 +25,6 @@ class ReaderBlade extends FileReader
      */
     const APP_SINGLE_FILES = 2;
 
-
     public function __construct(array $locales)
     {
         $this->importPath = App()['path.lang'];
@@ -56,23 +55,22 @@ class ReaderBlade extends FileReader
 
     public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null) : void
     {
-        if (!is_file($fullPathname)) {
+        if (! is_file($fullPathname)) {
             return;
         }
 
         $relative = str_replace($root, '', $fullPathname);
 
         // remove php extension
-        $relative = substr($relative,0, strlen($relative) - strlen('.php'));
+        $relative = substr($relative, 0, strlen($relative) - strlen('.php'));
 
         // strip leading directory separator
-        $first = substr($relative, 0,1);
+        $first = substr($relative, 0, 1);
         if ($first === DIRECTORY_SEPARATOR) {
-            $relative = substr($relative,1, strlen($relative));
+            $relative = substr($relative, 1, strlen($relative));
         }
 
         if (self::VENDOR_FILES === $directoryType) {
-
             $lastDirSep = (int)strrpos($relative, DIRECTORY_SEPARATOR);
 
             $filename = substr($relative, $lastDirSep + 1, strlen($relative));
@@ -86,10 +84,9 @@ class ReaderBlade extends FileReader
 
             $newPath = implode(DIRECTORY_SEPARATOR, $parts);
             if ($newPath) {
-                $newPath.= DIRECTORY_SEPARATOR;
+                $newPath .= DIRECTORY_SEPARATOR;
             }
             $relative = $vendor. "::". $newPath.  $filename;
-
         }
 
         $keysForPackage = [];
@@ -98,8 +95,8 @@ class ReaderBlade extends FileReader
             $keysForPackage[$key] = $this->processTranslation($translation);
         }
 
-        if (strcasecmp($relative, $language) === 0 ) {
-            $relative= config('translationcaptain-laravel.group_when_group_missing');
+        if (strcasecmp($relative, $language) === 0) {
+            $relative = config('translationcaptain-laravel.group_when_group_missing');
         }
         $this->messages[$language][$relative] = $keysForPackage;
     }
@@ -116,12 +113,14 @@ class ReaderBlade extends FileReader
         $keyValues = Arr::dot($arrayTranslations);
 
         $keyValues = $this->fixEmptyArray($keyValues);
+
         return $keyValues;
     }
 
     protected function processTranslation(string $translation) : string
     {
         $translation = $this->createNewDataBinding($translation);
+
         return $translation;
     }
 

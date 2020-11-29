@@ -21,8 +21,6 @@ class ImportController extends Controller
         return view('translationcaptain-laravel::overview', [
             'overview' => json_encode($messages),
         ]);
-
-
     }
 
     public function pull()
@@ -33,7 +31,7 @@ class ImportController extends Controller
 
         //$allKeys = json_decode($allKeys, true);
 
-       // dd($allKeys);
+        // dd($allKeys);
 
         // export:
         $bladeFilesGenerator = new GeneratorBlade($allKeys);
@@ -56,8 +54,8 @@ class ImportController extends Controller
 //        $allKeys = [
 //            "dsfdsfsdfds" => "jjjj",
 //        ];
-        $url ='https://backend.bedrock.local/api/v1/translationcaptain/labels/upload';
-        $url ='localhost/api/v1/translationcaptain/labels/upload';
+        $url = 'https://backend.bedrock.local/api/v1/translationcaptain/labels/upload';
+        $url = 'localhost/api/v1/translationcaptain/labels/upload';
         // $url = 'https://webhook.site/cd97eddc-7bf8-4c86-8cea-4209e69da91e';
 
         $data = [
@@ -72,5 +70,4 @@ class ImportController extends Controller
         // go push ????
         dd($allKeys);
     }
-
 }

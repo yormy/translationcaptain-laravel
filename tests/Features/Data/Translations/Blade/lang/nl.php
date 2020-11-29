@@ -3,5 +3,5 @@
 return [
 
     'xxxxxxx' => 'LAnguage is ENGLKISH',
-    'xxxxxxxx' => 'English'
+    'xxxxxxxx' => 'English',
 ];

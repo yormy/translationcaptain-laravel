@@ -2,8 +2,6 @@
 
 namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 
-use Illuminate\Support\Arr;
-
 use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
@@ -34,8 +32,7 @@ class WriterBladeTest extends TestCase
     public function blade_files_generated_plain_and_vendor()
     {
         foreach ($this->locales as $locale) {
-
-            foreach(array_keys($this->translationsRead[$locale]) as $file) {
+            foreach (array_keys($this->translationsRead[$locale]) as $file) {
                 $filename = $this->generateFilename($locale, $file);
                 if (false === strpos($filename, "___.php")) {
                     $this->assertFileExists($filename);
@@ -54,8 +51,6 @@ class WriterBladeTest extends TestCase
         $this->assertStringContainsString('key_defined_in_blade_and_vue', $fileContents);
         $this->assertStringContainsString('this key is defined in blade and vue with same translation', $fileContents);
     }
-
-
 
     /** @test */
     public function blade_files_contains_translation_from_json()
@@ -97,7 +92,7 @@ class WriterBladeTest extends TestCase
 
     public function generateFilename(string $locale, string $file): string
     {
-        if(strpos($file, '::') === false) {
+        if (strpos($file, '::') === false) {
             $filename = base_path() . DIRECTORY_SEPARATOR .
                 'resources' .
                 DIRECTORY_SEPARATOR .
@@ -108,10 +103,9 @@ class WriterBladeTest extends TestCase
                 $file .
                 ".php";
         } else {
-
             $vendorSepPos = strpos($file, '::');
             $vendorName = substr($file, 0, $vendorSepPos);
-            $filenameWithoutVendor = substr($file, $vendorSepPos+2);
+            $filenameWithoutVendor = substr($file, $vendorSepPos + 2);
 
             $filename = base_path() . DIRECTORY_SEPARATOR .
                 'resources' .
@@ -127,6 +121,7 @@ class WriterBladeTest extends TestCase
                 $filenameWithoutVendor .
                 ".php";
         }
+
         return $filename;
     }
 
@@ -140,5 +135,4 @@ class WriterBladeTest extends TestCase
             $locale .
             ".php";
     }
-
 }

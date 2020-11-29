@@ -2,12 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services;
 
-use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
-use Illuminate\Console\Command;
-use Illuminate\Contracts\Filesystem\FileNotFoundException;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Str;
 use Yormy\TranslationcaptainLaravel\Exceptions\DuplicateKeyException;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
@@ -55,22 +50,21 @@ class PushService
         foreach ($this->locales as $locale) {
             $missingKeysForLanguage = [];
 
-            if(array_key_exists($locale, $existingTranslations)) {
+            if (array_key_exists($locale, $existingTranslations)) {
                 $existingForLanguageDotted = Arr::dot($existingTranslations[$locale]);
 
-                foreach(array_keys($foundKeysDotted) as $key) {
-                    if (!array_key_exists($key, $existingForLanguageDotted)) {
+                foreach (array_keys($foundKeysDotted) as $key) {
+                    if (! array_key_exists($key, $existingForLanguageDotted)) {
                         $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
                     }
                 }
             } else {
-                foreach(array_keys($foundKeysDotted) as $key) {
+                foreach (array_keys($foundKeysDotted) as $key) {
                     $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
                 }
             }
 
             $missingKeys[$locale] = $missingKeysForLanguage;
-
         }
 
         return $missingKeys;
@@ -83,16 +77,13 @@ class PushService
             return $missingKeys;
         }
 
-        $group = substr($fullKey,0, $firstDot);
-        $key = substr($fullKey, $firstDot+1, strlen($fullKey));
+        $group = substr($fullKey, 0, $firstDot);
+        $key = substr($fullKey, $firstDot + 1, strlen($fullKey));
 
         $missingKeys[$group][$key] = "#$group.$key";
 
         return $missingKeys;
     }
-
-
-
 
     private function mergeLabels(array $origin, array $toMerge) : array
     {
@@ -101,15 +92,13 @@ class PushService
         return array_replace_recursive($origin, $toMerge);
     }
 
-
     public function checkMerge(array $labels, array $labelsToMerge)
     {
         $labelsDotted = Arr::dot($labels);
         $labelsToMergeDotted = Arr::dot($labelsToMerge);
 
-        foreach($labelsDotted as $key => $translation) {
+        foreach ($labelsDotted as $key => $translation) {
             if (array_key_exists($key, $labelsToMergeDotted)) {
-
                 $labelTranslation = $this->removeBinding($translation);
                 $labelTranslationToMerge = $this->removeBinding($labelsToMergeDotted[$key]);
 
@@ -124,7 +113,7 @@ class PushService
     {
         $start = config('translationcaptain-laravel.databinding.start');
         $end = config('translationcaptain-laravel.databinding.end');
-        $pattern ="$start(.*?)$end";
+        $pattern = "$start(.*?)$end";
 
         return preg_replace("/". $pattern ."/", '', $translation);
     }

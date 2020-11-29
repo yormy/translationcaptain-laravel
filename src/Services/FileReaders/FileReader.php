@@ -38,16 +38,15 @@ abstract class FileReader
 
     public function getBareFilename(string $root, string $fullPathname) : string
     {
-
         $relative = str_replace($root, '', $fullPathname);
 
         // strip leading directory separator
-        $first = substr($relative, 0,1);
+        $first = substr($relative, 0, 1);
         if ($first === DIRECTORY_SEPARATOR) {
-            $relative = substr($relative,1, strlen($relative));
+            $relative = substr($relative, 1, strlen($relative));
         }
 
-        return substr($relative,0, strlen($relative) - strlen($this->filetype->extension));
+        return substr($relative, 0, strlen($relative) - strlen($this->filetype->extension));
     }
 
     /**
@@ -59,7 +58,7 @@ abstract class FileReader
      */
     public function importFileTranslations(int $directoryType, string $root, string $importFromDir, string $language = null) : void
     {
-        if (!is_dir($importFromDir)) {
+        if (! is_dir($importFromDir)) {
             return;
         }
 
@@ -97,6 +96,7 @@ abstract class FileReader
                 $translation = str_ireplace($bladeBinding, $TranslationCaptainBinding, $translation);
             }
         }
+
         return $translation;
     }
 
@@ -106,7 +106,7 @@ abstract class FileReader
         // Remove this empty array so we can trust on a single dimensional array
         foreach ($keyValues as $key => $value) {
             if (is_array($value)) {
-                unset ($keyValues[$key]);
+                unset($keyValues[$key]);
             }
         }
 
