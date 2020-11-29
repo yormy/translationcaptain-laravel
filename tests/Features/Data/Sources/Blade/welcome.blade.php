@@ -1,3 +1,3 @@
 {{ __('app.welcome.found') }}
 {{ __('key-without-dot') }}
-{{ __('validations.alpha') }}
+{{ __('action.key_also_in_source') }}
