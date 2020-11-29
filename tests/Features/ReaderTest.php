@@ -21,6 +21,8 @@ class ReaderTest extends TestCase
         $pull = new PushService($this->locales);
         $allKeys = $pull->getAllKeys();
 
+        //dd($allKeys['en']);
+
         $this->translationsRead = Arr::dot($allKeys);
 
         //dd($this->translationsRead);
@@ -29,7 +31,7 @@ class ReaderTest extends TestCase
     /** @test */
     public function found_key_in_translations_subdirectory()
     {
-        $this->assertArrayHasKeyLocales('menus/admin/manage/admin.log', ['en']);
+        $this->assertArrayHasKeyLocales('menus/admin/manage/admin.translations.title', ['en']);
     }
 
     /** @test */
@@ -48,6 +50,14 @@ class ReaderTest extends TestCase
     public function found_key_in_translations_singlefile()
     {
         $this->markTestIncomplete('This test has not been implemented yet.', ['en']);
+    }
+
+    /** @test */
+    public function found_key_in_json()
+    {
+
+        //$this->markTestIncomplete('This test has not been implemented yet.', ['en']);
+        $this->assertArrayHasKeyLocales('billing.plans.monthly', ['en']);
     }
 
 

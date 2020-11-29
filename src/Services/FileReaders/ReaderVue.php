@@ -3,6 +3,7 @@
 namespace Yormy\TranslationcaptainLaravel\Services\FileReaders;
 
 use Illuminate\Support\Arr;
+use Yormy\TranslationcaptainLaravel\Exceptions\InvalidTranslationFileException;
 use Yormy\TranslationcaptainLaravel\Services\FileTypes\FileTypeJson;
 
 class ReaderVue extends FileReader
@@ -60,13 +61,22 @@ class ReaderVue extends FileReader
     }
 
     /**
-     * Convert the php array structure text file into an php array object with dot notations
+     * Convert the json structure text file into an php array object with dot notations
      *
      * @param string $filename
      * @return array
      */
     public function convertImportfileToArray(string $filename) : array
     {
+        $fileExtension = pathinfo($filename)['extension'];
+        if (strtoupper($fileExtension) !== 'JSON') {
+            return [];
+        }
+
+        if (!$this->isJson(file_get_contents($filename))) {
+            throw new InvalidTranslationFileException($filename);
+        }
+
         $arrayTranslations = json_decode(file_get_contents($filename), true);
 
         if(is_array($arrayTranslations)) {
@@ -75,12 +85,16 @@ class ReaderVue extends FileReader
 
             return $keyValues;
         }
-
         return [];
     }
 
     protected function getRawDataBinding($value)
     {
         return '{'. $value. '}';
+    }
+
+    private function isJson($string) {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
     }
 }

@@ -217,28 +217,28 @@ class SearchSources
         return $results;
     }
 
-    /**
-     * Get the keys from the json
-     *
-     * @return mixed
-     */
-    private function getCurrentDefaultTranslations()
-    {
-        try {
-            $languageFileContent = File::get($this->findTranslationPath());
-        } catch (FileNotFoundException $e) {
-            $this->error('Could not find the translations file for language' . self::DEFAULT_LANG);
-            exit(1);
-        }
-        return json_decode($languageFileContent, true);
-    }
+//    /**
+//     * Get the keys from the json
+//     *
+//     * @return mixed
+//     */
+//    private function getCurrentDefaultTranslations()
+//    {
+//        try {
+//            $languageFileContent = File::get($this->findTranslationPath());
+//        } catch (FileNotFoundException $e) {
+//            $this->error('Could not find the translations file for language' . self::DEFAULT_LANG);
+//            exit(1);
+//        }
+//        return json_decode($languageFileContent, true);
+//    }
 
-    private function findTranslationPath()
-    {
-        return base_path() . DIRECTORY_SEPARATOR .
-            self::TRANSLATION_FILE_DIRECTORY . DIRECTORY_SEPARATOR .
-            self::DEFAULT_LANG . '.json';
-    }
+//    private function findTranslationPath()
+//    {
+//        return base_path() . DIRECTORY_SEPARATOR .
+//            self::TRANSLATION_FILE_DIRECTORY . DIRECTORY_SEPARATOR .
+//            self::DEFAULT_LANG . '.json';
+//    }
 
     /**
      * Parse a file in order to find translatable strings.
