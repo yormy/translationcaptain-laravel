@@ -21,8 +21,6 @@ class ReaderTest extends TestCase
         $allKeys = $pull->getAllKeys();
 
         $this->translationsRead = Arr::dot($allKeys);
-
-        //dd($this->translationsRead);
     }
 
     /** @test */
@@ -46,7 +44,7 @@ class ReaderTest extends TestCase
     /** @test */
     public function found_key_in_translations_singlefile()
     {
-        $this->markTestIncomplete('This test has not been implemented yet.', ['en']);
+        $this->assertArrayHasKeyLocales('___.default_single_file_translations', ['en']);
     }
 
     /** @test */
@@ -92,6 +90,8 @@ class ReaderTest extends TestCase
         $this->assertKeyHasValue('en.billing.plans.monthly.description',
             'The %%_field_%% field must be %%width%% pixels by %%height%% %%height%% pixels');
     }
+
+
 
     /** @test */
     public function found_key_without_dot()

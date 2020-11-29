@@ -2,6 +2,6 @@
 
 return [
 
-    'xxxxxxx' => 'LAnguage is ENGLKISH',
+    'default_single_file_translations' => 'Language is ENGLKISH',
     'xxxxxxxx' => 'English'
 ];

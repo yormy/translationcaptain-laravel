@@ -34,7 +34,9 @@ return [
             //'/config/',
         ]
 
-    ]
+    ],
+
+    'group_when_group_missing' => '___',
 
 
 ];

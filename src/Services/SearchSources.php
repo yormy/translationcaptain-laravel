@@ -17,48 +17,8 @@ class SearchSources
 
     /** @var \Illuminate\Contracts\Foundation\Application */
     protected $app;
-//
+
     protected array $messages;
-//
-//    protected array $languages;
-//
-    protected $defaultGroup = "___";
-//
-//    /**
-//     * Published vendor translations
-//     * lang/vendor/<package-name>/<language>/directory/directory/translations.php
-//     */
-//    const VENDOR_FILES = 0;
-//
-//    /**
-//     * App translations
-//     * lang/<language>/directory/directory/translations.php
-//     */
-//    const APP_FILES = 1;
-//
-//    /**
-//     * App translations
-//     * lang/en.php
-//     */
-//    const APP_SINGLE_FILES = 2;
-//
-
-    /**
-     * The target directory for translation files.
-     *
-     * @var string
-     */
-    private const TRANSLATION_FILE_DIRECTORY = 'resources/lang';
-
-    /**
-     * Default language for translation files
-     */
-    private const DEFAULT_LANG = 'en';
-
-    /**
-     * @var string
-     */
-//    private $path;
 
     /**
      * Translation function pattern.
@@ -66,15 +26,6 @@ class SearchSources
      * @var string
      */
     private $pattern = '/(__)\([\'"](.+)[\'"][\),]/U';
-
-
-//    public function __construct()
-//    {
-////        $this->app = App();
-////        $this->fileSystem = new Filesystem();
-////
-////        $this->languages =['en','nl','ar'];
-//    }
 
     public function getMessages()
     {
@@ -86,39 +37,6 @@ class SearchSources
         $allStrings = $this->formatGroupKey($allStrings);
 
         return $allStrings;
-
-//        $currentTranslatedStrings = $this->getCurrentDefaultTranslations();
-//
-//        // Merge the view strings with the
-//        $mergedStrings = array_merge($allStrings, $currentTranslatedStrings);
-//        ksort($mergedStrings, SORT_FLAG_CASE | SORT_NATURAL);
-//
-//        $missingInCurrentLanguage = array_diff_key($mergedStrings, $currentTranslatedStrings);
-//
-//        // Check if there are new changes detected
-//        if (count($missingInCurrentLanguage) === 0) {
-//            $this->info('No new translatable strings found. Exiting...');
-//            return 0;
-//        }
-//
-//        $this->info('Found the following new translation strings:');
-//
-//        $this->line('--------');
-//        foreach ($missingInCurrentLanguage as $key => $diff) {
-//            $this->info($key);
-//            $this->line('--------');
-//        }
-//
-//        if ($this->confirm('Would you like to add this values to ' . self::DEFAULT_LANG . '.json?', false)) {
-//            File::put(
-//                $this->findTranslationPath(),
-//                json_encode($mergedStrings, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES)
-//            );
-//            $this->info('Translations written to file!');
-//        } else {
-//            $this->info('Operation cancelled.');
-//        }
-//        return 0;
     }
 
     private function formatGroupKey(array $allStrings)
@@ -134,7 +52,8 @@ class SearchSources
 
                 $string[$filename][$key] = $translation;
             } else {
-                $string[$this->defaultGroup][$fullkey] =  $translation;
+                $defaultGroup = config('translationcaptain-laravel.group_when_group_missing');
+                $string[$defaultGroup][$fullkey] =  $translation;
             }
         }
         return $string;
@@ -157,20 +76,6 @@ class SearchSources
         }
         return $files;
     }
-//
-//    private function getPathFilesToProcess($path)
-//    {
-//        $files = [];
-//        if (!Str::startsWith($path, '/')) {
-//            $path = '/' . $path;
-//        }
-//        $absPath = base_path() . $path;
-//
-//        // create an array with all processable files
-//        $this->getAllFiles($absPath, $files);
-//
-//        return $files;
-//    }
 
     /**
      * Parse all files and store keys in return array
@@ -216,29 +121,6 @@ class SearchSources
 
         return $results;
     }
-
-//    /**
-//     * Get the keys from the json
-//     *
-//     * @return mixed
-//     */
-//    private function getCurrentDefaultTranslations()
-//    {
-//        try {
-//            $languageFileContent = File::get($this->findTranslationPath());
-//        } catch (FileNotFoundException $e) {
-//            $this->error('Could not find the translations file for language' . self::DEFAULT_LANG);
-//            exit(1);
-//        }
-//        return json_decode($languageFileContent, true);
-//    }
-
-//    private function findTranslationPath()
-//    {
-//        return base_path() . DIRECTORY_SEPARATOR .
-//            self::TRANSLATION_FILE_DIRECTORY . DIRECTORY_SEPARATOR .
-//            self::DEFAULT_LANG . '.json';
-//    }
 
     /**
      * Parse a file in order to find translatable strings.

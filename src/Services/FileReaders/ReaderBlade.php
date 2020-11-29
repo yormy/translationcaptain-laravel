@@ -25,6 +25,7 @@ class ReaderBlade extends FileReader
      */
     const APP_SINGLE_FILES = 2;
 
+
     public function __construct(array $locales)
     {
         $this->importPath = App()['path.lang'];
@@ -69,12 +70,6 @@ class ReaderBlade extends FileReader
         if ($first === DIRECTORY_SEPARATOR) {
             $relative = substr($relative,1, strlen($relative));
         }
-//        echo $relative. "<br>";
-//        return;
-        // determine filename vs keyname
-
-
-        $groupPrefix ="###";
 
         if (self::VENDOR_FILES === $directoryType) {
 
@@ -103,6 +98,9 @@ class ReaderBlade extends FileReader
             $keysForPackage[$key] = $this->processTranslation($translation);
         }
 
+        if (strcasecmp($relative, $language) === 0 ) {
+            $relative= config('translationcaptain-laravel.group_when_group_missing');
+        }
         $this->messages[$language][$relative] = $keysForPackage;
     }
 
