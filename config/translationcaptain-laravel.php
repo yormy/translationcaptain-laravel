@@ -46,5 +46,6 @@ return [
 
     'log_missing_keys' => env('TRANS_LOG_MISSING', true),
 
+    'queue_filename' => 'translationcaption-queue.log'
 
 ];

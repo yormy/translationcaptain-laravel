@@ -3,18 +3,13 @@
 namespace Yormy\TranslationcaptainLaravel\Services;
 
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Translation\Translator as BaseTranslator;
 use Yormy\TranslationcaptainLaravel\Observers\Events\MissingTranslationEvent;
 use Yormy\TranslationcaptainLaravel\Exceptions\MissingTranslationException;
 
-class Translator extends BaseTranslator {
-
-    /**
-     * The current logger instance.
-     *
-     * @var \Illuminate\Log\Writer
-     */
-    protected $logger;
+class Translator extends BaseTranslator
+{
 
     /**
      * Get the translation for the given key.
@@ -23,11 +18,6 @@ class Translator extends BaseTranslator {
      * that a replacement has actually been made.
      *
      * @throws MissingTranslationException When no replacement is made.
-     *
-     * @param  string       $key
-     * @param  array        $replace
-     * @param  string|null  $locale
-     * @param  bool         $fallback
      *
      * @return string|array|null
      */
@@ -40,8 +30,10 @@ class Translator extends BaseTranslator {
                 $this->logMissingTranslation($key, $replace, $locale, $fallback);
             }
 
+            $this->addToQueueForUploading($key);
+
             if (config('translationcaptain-laravel.exceptions.on_missing_key')) {
-                throw new MissingTranslationException($key);
+               throw new MissingTranslationException($key);
             }
 
             event(new MissingTranslationEvent($key, $replace, $locale, $fallback));
@@ -60,6 +52,21 @@ class Translator extends BaseTranslator {
         }
 
         return true;
+    }
+
+    private function addToQueueForUploading(string $key) : void
+    {
+        $queueFilename = config('translationcaptain-laravel.queue_filename');
+
+        if (!Storage::exists($queueFilename)) {
+            Storage::disk('local')->append($queueFilename, "#" . $key . "#");
+            return;
+        }
+
+        $currentQueue = Storage::get($queueFilename);
+        if (false === strpos($currentQueue, "#". $key. "#")) {
+            Storage::disk('local')->append($queueFilename, "#" . $key . "#");
+        }
     }
 
     protected function logMissingTranslation(string $key, array $replace, ?string $locale, bool $fallback) : void
