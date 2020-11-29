@@ -33,7 +33,7 @@ class Translator extends BaseTranslator
             $this->addToQueueForUploading($key);
 
             if (config('translationcaptain-laravel.exceptions.on_missing_key')) {
-              // throw new MissingTranslationException($key);
+               throw new MissingTranslationException($key);
             }
 
             event(new MissingTranslationEvent($key, $replace, $locale, $fallback));

@@ -6,6 +6,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
 use Yormy\TranslationcaptainLaravel\Http\Middleware\ReferrerMiddleware;
+use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
 use Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider;
 
 class TestCase extends Orchestra
@@ -30,6 +31,11 @@ class TestCase extends Orchestra
 //            });
 //
 //        $this->setViewForLayout();
+
+        app()->bind(TranslationServiceProvider::class, function() { // not a service provider but the target of service provider
+            return new TranslationServiceProvider();
+        });
+
 
         $this->overwriteConfigForTesting();
     }
@@ -59,6 +65,7 @@ class TestCase extends Orchestra
     {
         return [
             TranslationcaptainLaravelServiceProvider::class,
+            TranslationServiceProvider::class,
         ];
     }
 
