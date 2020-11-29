@@ -125,7 +125,7 @@ abstract class FilesGenerator
     private function zipping()
     {
         $timestamp = date('Y-m-d_H:m');
-;       $zipFilename = $this->exportPath. DIRECTORY_SEPARATOR. $this->zipFilenamePrefix. "$timestamp.zip";
+        $zipFilename = $this->exportPath. DIRECTORY_SEPARATOR. $this->zipFilenamePrefix. "$timestamp.zip";
 
         $backupDirectory = App()['path.lang'];
 

@@ -43,7 +43,9 @@ class WriterTest extends TestCase
             foreach ($this->translationsRead[$locale] as $file => $content) {
 
                 $filename = $this->generateFilename($locale, $file);
-                $this->assertFileExists($filename);
+                if (false === strpos($filename, "___.php")) {
+                    $this->assertFileExists($filename);
+                }
             }
         }
     }
@@ -67,6 +69,24 @@ class WriterTest extends TestCase
 
         $this->assertStringContainsString('plans.monthly.description', $fileContents);
         $this->assertStringContainsString('The :_field_ field must be :_field_ pixels by :_field_ :_field_ pixels', $fileContents);
+    }
+
+    /** @test */
+    public function blade_files_single_file_translation_generated()
+    {
+        foreach ($this->locales as $locale) {
+            $filename = $this->generateFilenameSingleFileTranslation($locale);
+            $this->assertFileExists($filename);
+        }
+    }
+
+    /** @test */
+    public function blade_files_single_file_translation_content()
+    {
+        $filename = $this->generateFilenameSingleFileTranslation('en');
+        $fileContents = file_get_contents($filename);
+        $this->assertStringContainsString('default_single_file_translations', $fileContents);
+        $this->assertStringContainsString('#___.key-without-dot', $fileContents);
     }
 
     /** @test */
@@ -115,35 +135,15 @@ class WriterTest extends TestCase
     }
 
 
-
-
-
-
-
-
-
-
-    /**
-     * =========== HELPER FUNCTIONS ================
-     */
-    private function assertArrayHasKeyLocales($key, $locales = null)
+    public function generateFilenameSingleFileTranslation(string $locale): string
     {
-        if (!$locales) {
-            $locales = $this->locales;
-        }
-        foreach ($locales as $locale) {
-            $this->assertArrayHasKey("$locale.$key", $this->translationsRead);
-        }
-    }
-
-    private function assertKeyHasValue($key, $value)
-    {
-        $this->assertEquals($this->translationsRead[$key] , $value);
-    }
-
-    private function assertNewKeyHasPrefixedValue(string $locale, string $key)
-    {
-        $this->assertKeyHasValue("$locale.$key", "#$key");
+        return base_path() . DIRECTORY_SEPARATOR .
+            'resources' .
+            DIRECTORY_SEPARATOR .
+            self::LANG_DIR .
+            DIRECTORY_SEPARATOR .
+            $locale .
+            ".php";
     }
 
 }

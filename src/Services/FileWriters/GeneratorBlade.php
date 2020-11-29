@@ -33,6 +33,10 @@ class GeneratorBlade extends FilesGenerator
 
     protected function groupnameToFilename(string $groupName, string $locale): string
     {
+        if ($groupName == config('translationcaptain-laravel.group_when_group_missing')) {
+            return $locale. $this->filetype->extension; // write as en.php
+        }
+
         if ($this->isVendorKey($groupName))
         {
             $vendorSeparatorPosition = strpos($groupName,self::VENDORNAME_SEPARATOR);
