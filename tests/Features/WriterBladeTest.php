@@ -26,6 +26,7 @@ class WriterBladeTest extends TestCase
         $this->translationsRead = $allKeys;
 
         $bladeFilesGenerator = new GeneratorBlade($this->translationsRead);
+        // $bladeFilesGenerator->zipCurrentFiles();
         $bladeFilesGenerator->export($this->locales);
     }
 
