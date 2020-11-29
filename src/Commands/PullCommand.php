@@ -3,7 +3,6 @@
 namespace Yormy\TranslationcaptainLaravel\Commands;
 
 use Illuminate\Console\Command;
-use Yormy\TranslationcaptainLaravel\Services\ImportLaravel;
 use Yormy\TranslationcaptainLaravel\Services\PullService;
 
 class PullCommand extends Command

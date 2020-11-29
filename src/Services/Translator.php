@@ -5,12 +5,11 @@ namespace Yormy\TranslationcaptainLaravel\Services;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Translation\Translator as BaseTranslator;
-use Yormy\TranslationcaptainLaravel\Observers\Events\MissingTranslationEvent;
 use Yormy\TranslationcaptainLaravel\Exceptions\MissingTranslationException;
+use Yormy\TranslationcaptainLaravel\Observers\Events\MissingTranslationEvent;
 
 class Translator extends BaseTranslator
 {
-
     /**
      * Get the translation for the given key.
      *
@@ -33,7 +32,7 @@ class Translator extends BaseTranslator
             $this->addToQueueForUploading($key);
 
             if (config('translationcaptain-laravel.exceptions.on_missing_key')) {
-               throw new MissingTranslationException($key);
+                throw new MissingTranslationException($key);
             }
 
             event(new MissingTranslationEvent($key, $replace, $locale, $fallback));
@@ -60,8 +59,9 @@ class Translator extends BaseTranslator
 
         $formattedKey = $this->formatKeyForQueue($key);
 
-        if (!Storage::exists($queueFilename)) {
+        if (! Storage::exists($queueFilename)) {
             Storage::disk('local')->append($queueFilename, $formattedKey);
+
             return;
         }
 
@@ -78,7 +78,7 @@ class Translator extends BaseTranslator
 
     protected function logMissingTranslation(string $key, array $replace, ?string $locale, bool $fallback) : void
     {
-        $message  = 'Missing translation: ' . $key;
+        $message = 'Missing translation: ' . $key;
         Log::channel('translationcaptain')->info($message);
     }
 }

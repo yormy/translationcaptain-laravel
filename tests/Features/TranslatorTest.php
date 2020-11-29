@@ -33,10 +33,9 @@ class TranslatorTest extends TestCase
     /** @test */
     public function key_is_translated()
     {
-           $translated = __('auth.failed');
-           $this->assertEquals($translated, 'These credentials do not match our records.');
+        $translated = __('auth.failed');
+        $this->assertEquals($translated, 'These credentials do not match our records.');
     }
-
 
     /** @test */
     public function missing_key_exception_thrown()
@@ -70,7 +69,7 @@ class TranslatorTest extends TestCase
         $this->report(__('this-key-does-not-exist'));
         $this->report(__('this-key-does-also-not-exist'));
 
-        if (!Storage::exists($queueFilename)) {
+        if (! Storage::exists($queueFilename)) {
             $this->assertTrue(false);
         } else {
             $fileContents = Storage::disk('local')->get($queueFilename);
@@ -78,5 +77,4 @@ class TranslatorTest extends TestCase
             $this->assertStringContainsString("__('this-key-does-also-not-exist')", $fileContents);
         }
     }
-
 }

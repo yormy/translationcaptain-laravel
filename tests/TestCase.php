@@ -32,7 +32,7 @@ class TestCase extends Orchestra
 //
 //        $this->setViewForLayout();
 
-        app()->bind(TranslationServiceProvider::class, function() { // not a service provider but the target of service provider
+        app()->bind(TranslationServiceProvider::class, function () { // not a service provider but the target of service provider
             return new TranslationServiceProvider();
         });
 

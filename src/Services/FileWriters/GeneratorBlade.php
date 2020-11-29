@@ -22,7 +22,7 @@ class GeneratorBlade extends FilesGenerator
 
     public function export(array $locales = null)
     {
-        if (!$locales) {
+        if (! $locales) {
             $locales = array_keys($this->labels);
         }
 
