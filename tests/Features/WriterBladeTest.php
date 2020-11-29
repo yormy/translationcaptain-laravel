@@ -8,7 +8,7 @@ use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
-class WriterTest extends TestCase
+class WriterBladeTest extends TestCase
 {
     protected $translationsRead;
 
@@ -23,22 +23,15 @@ class WriterTest extends TestCase
         $pull = new PushService($this->locales);
         $allKeys = $pull->getAllKeys();
 
-        $this->translationsRead = $this->fakeExported($allKeys);
-    }
+        $this->translationsRead = $allKeys;
 
-    private function fakeExported($allkeys)
-    {
-        return $allkeys;
-    }
-
-
-
-    /** @test */
-    public function blade_files_generated_plan_and_vendor()
-    {
         $bladeFilesGenerator = new GeneratorBlade($this->translationsRead);
         $bladeFilesGenerator->export($this->locales);
+    }
 
+    /** @test */
+    public function blade_files_generated_plain_and_vendor()
+    {
         foreach ($this->locales as $locale) {
             foreach ($this->translationsRead[$locale] as $file => $content) {
 
@@ -60,6 +53,8 @@ class WriterTest extends TestCase
         $this->assertStringContainsString('key_defined_in_blade_and_vue', $fileContents);
         $this->assertStringContainsString('this key is defined in blade and vue with same translation', $fileContents);
     }
+
+
 
     /** @test */
     public function blade_files_contains_translation_from_json()
@@ -133,7 +128,6 @@ class WriterTest extends TestCase
         }
         return $filename;
     }
-
 
     public function generateFilenameSingleFileTranslation(string $locale): string
     {
