@@ -98,7 +98,7 @@ class PushService
     {
         $this->checkMerge($origin, $toMerge);
 
-        return array_merge_recursive($origin, $toMerge);
+        return array_replace_recursive($origin, $toMerge);
     }
 
 
