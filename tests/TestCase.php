@@ -45,6 +45,8 @@ class TestCase extends Orchestra
         config(['translationcaptain-laravel.paths_sources.blade' => [
             $toAppRoot. 'tests/Features/Data/Sources/Blade',
             ]]);
+
+        config(['translationcaptain-laravel.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
     }
 
     public function get($uri, array $headers = [])
