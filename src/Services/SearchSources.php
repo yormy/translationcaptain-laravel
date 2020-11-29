@@ -3,6 +3,7 @@
 namespace Yormy\TranslationcaptainLaravel\Services;
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class SearchSources
 {
@@ -27,7 +28,6 @@ class SearchSources
         $files = $this->getAllFilesToProcess();
 
         $allStrings = $this->collectStrings($files);
-
 
         $allStrings = $this->formatGroupKey($allStrings);
 
@@ -63,12 +63,17 @@ class SearchSources
     {
         $files = [];
         $sources = config('translationcaptain-laravel.paths_sources.blade');
+
         foreach ($sources as $path) {
             $absPath = base_path() . $path;
 
             // create an array with all processable files
             $this->getAllFiles($absPath, $files);
         }
+
+
+        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        $files[] = Storage::path($queueFilename);
 
         return $files;
     }

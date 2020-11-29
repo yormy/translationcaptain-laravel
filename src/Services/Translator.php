@@ -25,7 +25,7 @@ class Translator extends BaseTranslator
     {
         $translation = parent::get($key, $replace, $locale, $fallback);
 
-        if ($this->hasTranslation($key, $translation, $locale)) {
+        if ($this->translationMissing($key, $translation, $locale)) {
             if (config('translationcaptain-laravel.log_missing_keys')) {
                 $this->logMissingTranslation($key, $replace, $locale, $fallback);
             }
@@ -33,7 +33,7 @@ class Translator extends BaseTranslator
             $this->addToQueueForUploading($key);
 
             if (config('translationcaptain-laravel.exceptions.on_missing_key')) {
-               throw new MissingTranslationException($key);
+              // throw new MissingTranslationException($key);
             }
 
             event(new MissingTranslationEvent($key, $replace, $locale, $fallback));
@@ -42,31 +42,38 @@ class Translator extends BaseTranslator
         return $translation;
     }
 
-    private function hasTranslation(string $key, string $translation, ?string $locale) : bool
+    private function translationMissing(string $key, string $translation, ?string $locale) : bool
     {
         $isDefaultLocale = ($locale === config('translationcaptain-laravel.default_locale'));
 
         // if ($translation === $key && !$isDefaultLocale) {
         if ($translation === $key) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     private function addToQueueForUploading(string $key) : void
     {
         $queueFilename = config('translationcaptain-laravel.queue_filename');
 
+        $formattedKey = $this->formatKeyForQueue($key);
+
         if (!Storage::exists($queueFilename)) {
-            Storage::disk('local')->append($queueFilename, "#" . $key . "#");
+            Storage::disk('local')->append($queueFilename, $formattedKey);
             return;
         }
 
         $currentQueue = Storage::get($queueFilename);
-        if (false === strpos($currentQueue, "#". $key. "#")) {
-            Storage::disk('local')->append($queueFilename, "#" . $key . "#");
+        if (false === strpos($currentQueue, $formattedKey)) {
+            Storage::disk('local')->append($queueFilename, $formattedKey);
         }
+    }
+
+    protected function formatKeyForQueue(string $key) : string
+    {
+        return "__('$key')";
     }
 
     protected function logMissingTranslation(string $key, array $replace, ?string $locale, bool $fallback) : void
