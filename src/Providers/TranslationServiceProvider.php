@@ -22,7 +22,6 @@ class TranslationServiceProvider extends BaseProvider
             // configuration so we can easily get both of these values from there.
             $locale = $app['config']['app.locale'];
 
-            //request()->session()->put('locale', $locale);
             $trans = new Translator($loader, $locale);
 
             $trans->setFallback($app['config']['app.fallback_locale']);
