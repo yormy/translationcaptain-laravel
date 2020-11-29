@@ -5,6 +5,7 @@ namespace Yormy\TranslationcaptainLaravel\Http\Controllers;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Http;
 use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 use Yormy\TranslationcaptainLaravel\Services\PullService;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 
@@ -12,8 +13,8 @@ class ImportController extends Controller
 {
     public function import()
     {
-        $this->push();
-        //$this->pull();
+       // $this->push();
+        $this->pull();
 
 
         die();
@@ -26,18 +27,21 @@ class ImportController extends Controller
     public function pull()
     {
         $locales = ['nl','en'];
-        $pull = new PullService($locales);
-        $allKeys = $pull->getAllKeys();
+        $pull = new PullService();
+        $allKeys = $pull->pullFromRemote();
 
         //$allKeys = json_decode($allKeys, true);
 
-        // dd($allKeys);
+
 
         // export:
         $bladeFilesGenerator = new GeneratorBlade($allKeys);
-        $bladeFilesGenerator->export($locales);
+        $bladeFilesGenerator->export();
 
+        $bladeFilesGenerator = new GeneratorVue($allKeys);
+        $bladeFilesGenerator->export();
 
+        dd($allKeys);
         return;
 
         dd($allKeys);
@@ -47,7 +51,7 @@ class ImportController extends Controller
     {
         $locales = ['nl','en'];
         $push = new PushService($locales);
-        $allKeys = $push->getAllKeys();
+        $allKeys = $push->pushToRemote();
         dd($allKeys);
 
 //        // remote:

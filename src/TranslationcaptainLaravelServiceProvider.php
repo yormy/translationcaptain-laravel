@@ -4,7 +4,9 @@ namespace Yormy\TranslationcaptainLaravel;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Yormy\TranslationcaptainLaravel\Commands\TranslationcaptainLaravelCommand;
+use Yormy\TranslationcaptainLaravel\Commands\PullCommand;
+use Yormy\TranslationcaptainLaravel\Commands\PushCommand;
+use Yormy\TranslationcaptainLaravel\Commands\SyncCommand;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ImportController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
@@ -33,7 +35,9 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
             $this->publishMigrations();
 
             $this->commands([
-                TranslationcaptainLaravelCommand::class,
+                PushCommand::class,
+                PullCommand::class,
+                SyncCommand::class,
             ]);
 
             $ui_type = 'blade';
@@ -99,23 +103,23 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
 
     private function registerUserRoutes()
     {
-        Route::macro('TranslationcaptainLaravelUser', function (string $prefix) {
-            Route::prefix($prefix)->name($prefix. ".")->group(function () {
-                Route::get('/details', [ReferrerDetailsController::class, 'show'])->name('show');
-            });
-        });
+//        Route::macro('TranslationcaptainLaravelUser', function (string $prefix) {
+//            Route::prefix($prefix)->name($prefix. ".")->group(function () {
+//                Route::get('/details', [ReferrerDetailsController::class, 'show'])->name('show');
+//            });
+//        });
     }
 
     private function registerAdminRoutes()
     {
         //  Route::get('/admin1/ref/details/{referrer}', [ReferrerDetailsController::class, 'showForUser'])->name('shownow');
 
-        Route::macro('TranslationcaptainLaravelAdmin', function (string $prefix) {
-            Route::prefix($prefix)->name($prefix. ".")->group(function () {
-                Route::get('/referrers', [ReferrerOverviewController::class, 'index'])->name('overview');
-                Route::get('/referrers/{referrer}', [ReferrerDetailsController::class, 'showForUser'])->name('showForUser');
-            });
-        });
+//        Route::macro('TranslationcaptainLaravelAdmin', function (string $prefix) {
+//            Route::prefix($prefix)->name($prefix. ".")->group(function () {
+//                Route::get('/referrers', [ReferrerOverviewController::class, 'index'])->name('overview');
+//                Route::get('/referrers/{referrer}', [ReferrerDetailsController::class, 'showForUser'])->name('showForUser');
+//            });
+//        });
     }
 
     public static function migrationFileExists(string $migrationFileName): bool

@@ -3,6 +3,8 @@
 namespace Yormy\TranslationcaptainLaravel\Services;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Yormy\TranslationcaptainLaravel\Exceptions\DuplicateKeyException;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
@@ -14,6 +16,27 @@ class PushService
     public function __construct(array $locales)
     {
         $this->locales = $locales;
+    }
+
+    public function pushToRemote()
+    {
+        $allKeys = $this->getAllKeys();
+
+        $domain = config('translationcaptain-laravel.url');
+        $url = $domain. '/labels';
+        $data = [
+            'translations' => base64_encode(json_encode($allKeys)),
+        ];
+
+        $response = Http::post($url, $data);
+
+        $this->deleteQueue();
+    }
+
+    private function deleteQueue()
+    {
+        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        Storage::delete($queueFilename);
     }
 
     public function getAllKeys()

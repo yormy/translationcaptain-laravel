@@ -20,8 +20,12 @@ class GeneratorVue extends FilesGenerator
         parent::__construct($labels);
     }
 
-    public function export(array $locales)
+    public function export(array $locales = null)
     {
+        if (!$locales) {
+            $locales = array_keys($this->labels);
+        }
+
         foreach ($locales as $locale) {
             $filesToExport = $this->prepareExport($locale);
             $this->generateFiles($filesToExport);

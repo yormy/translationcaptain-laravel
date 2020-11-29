@@ -3,17 +3,29 @@
 namespace Yormy\TranslationcaptainLaravel\Services;
 
 use Illuminate\Support\Facades\Http;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 
 class PullService
 {
-    public function getAllKeys()
+    public function pullFromRemote()
     {
-        $url = 'https://backend.bedrock.local/api/v1/translationcaptain/labels/upload';
-        $url = 'localhost/api/v1/translationcaptain/labels/download';
-        // $url = 'https://webhook.site/cd97eddc-7bf8-4c86-8cea-4209e69da91e';
-
+        $domain = config('translationcaptain-laravel.url');
+        $url = $domain. '/labels';
         $response = Http::get($url);
 
-        return $response->json();
+        $pulledKeys = $response->json();
+        $this->generateFiles($pulledKeys);
+
+        return $pulledKeys;
+    }
+
+    private function generateFiles(array $pulledKeys) : void
+    {
+        $bladeFilesGenerator = new GeneratorBlade($pulledKeys);
+        $bladeFilesGenerator->export();
+
+        $bladeFilesGenerator = new GeneratorVue($pulledKeys);
+        $bladeFilesGenerator->export();
     }
 }

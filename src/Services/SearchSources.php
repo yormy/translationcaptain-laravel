@@ -73,7 +73,9 @@ class SearchSources
 
 
         $queueFilename = config('translationcaptain-laravel.queue_filename');
-        $files[] = Storage::path($queueFilename);
+        if (Storage::exists($queueFilename)) {
+            $files[] = Storage::path($queueFilename);
+        }
 
         return $files;
     }

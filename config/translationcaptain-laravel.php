@@ -46,6 +46,8 @@ return [
 
     'log_missing_keys' => env('TRANS_LOG_MISSING', true),
 
-    'queue_filename' => 'translationcaption-queue.log'
+    'queue_filename' => 'translationcaption-queue.log',
+
+    'url' => 'localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
 
 ];
