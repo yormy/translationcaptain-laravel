@@ -17,11 +17,8 @@ class ReaderTest extends TestCase
     {
         parent::setUp();
 
-
         $pull = new PushService($this->locales);
         $allKeys = $pull->getAllKeys();
-
-        //dd($allKeys['en']);
 
         $this->translationsRead = Arr::dot($allKeys);
 
@@ -31,19 +28,19 @@ class ReaderTest extends TestCase
     /** @test */
     public function found_key_in_translations_subdirectory()
     {
-        $this->assertArrayHasKeyLocales('menus/admin/manage/admin.translations.title', ['en']);
+        $this->assertArrayHasKeyLocales('menus/admin/manage/admin.translations.title', ['en','nl']);
     }
 
     /** @test */
     public function found_key_in_translations_vendor()
     {
-        $this->assertArrayHasKeyLocales('firewall::level1/rr/notifications.mail.subject', ['en']);
+        $this->assertArrayHasKeyLocales('yormy::level1/rr/messages.expired.title', ['en']);
     }
 
     /** @test */
     public function found_key_in_translations_deep()
     {
-        $this->assertArrayHasKeyLocales('action.another_test.test.level2', ['en']);
+        $this->assertArrayHasKeyLocales('action.another.boom.kayak.boom.surfer', ['en']);
     }
 
     /** @test */
@@ -55,9 +52,8 @@ class ReaderTest extends TestCase
     /** @test */
     public function found_key_in_json()
     {
-
-        //$this->markTestIncomplete('This test has not been implemented yet.', ['en']);
-        $this->assertArrayHasKeyLocales('billing.plans.monthly', ['en']);
+        $this->assertArrayHasKeyLocales('billing.plans.monthly.title', ['en']);
+        $this->assertArrayHasKeyLocales('billing.plans.monthly.description', ['en']);
     }
 
 
@@ -80,14 +76,21 @@ class ReaderTest extends TestCase
     /** @test */
     public function key_has_translation()
     {
-       $this->assertKeyHasValue('en.validations.alpha', 'The %%_field_%% field may only contain alphabetic characters');
+       $this->assertKeyHasValue('nl.billing.plans.monthly.title', 'Maandelijkse betaal plan');
     }
 
     /** @test */
-    public function key_has_binding_eol()
+    public function key_blade_has_bindings()
     {
-        $this->assertKeyHasValue('en.firewall::level1/rr/notifications.mail.message',
-            'A possible %%middleware%% attack on %%domain%% has been detected from %%ip%% address. The following URL has been affected: %%url%%');
+        $this->assertKeyHasValue('en.yormy::level1/rr/notifications.mail.message',
+            '%%middleware%% attack on %%domain%% has from %%ip%% address. affected: %%url%%');
+    }
+
+    /** @test */
+    public function key_json_has_bindings()
+    {
+        $this->assertKeyHasValue('en.billing.plans.monthly.description',
+            'The %%_field_%% field must be %%width%% pixels by %%height%% %%height%% pixels');
     }
 
     /**

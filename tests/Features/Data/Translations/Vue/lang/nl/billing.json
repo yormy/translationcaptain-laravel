@@ -1,17 +1,8 @@
 {
     "plans" : {
-        "monthly" : "monthly",
-        "yearly" : "yearly"
-    },
-    "subscription" : {
-        "cancelled" : "cancelled",
-        "resumed"   : "resumed"
-    },
-    "payment_method" : {
-        "add_method" : "add payment method",
-        "mark_as_default" : "Mark as default",
-        "brand" : "brand",
-        "expiry" : "expiry",
-        "last" : "last"
+        "monthly" : {
+            "title": "Maandelijkse betaal plan",
+            "description": "The {_field_} field must be {width} pixels by {height} {height} pixels"
+        }
     }
 }
