@@ -10,6 +10,7 @@ use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\SearchSourcesController;
 use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
+use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
 
 class TranslationcaptainLaravelServiceProvider extends ServiceProvider
 {
@@ -48,6 +49,13 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
         $this->registerGuestRoutes();
         $this->registerUserRoutes();
         $this->registerAdminRoutes();
+
+        $this->app->make('config')->set('logging.channels.translationcaptain', [
+            'driver' => 'daily',
+            'path' => storage_path('logs/translationcaptain.log'),
+            'level' => 'debug',
+            'days' => 31,
+        ]);
     }
 
     private function publishMigrations()
@@ -80,6 +88,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/translationcaptain-laravel.php', 'translationcaptain-laravel');
         $this->app->register(EventServiceProvider::class);
+        $this->app->register(TranslationServiceProvider::class);
     }
 
     private function registerGuestRoutes()

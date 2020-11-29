@@ -25,12 +25,16 @@ You can publish the config file with:
 php artisan vendor:publish --provider="Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider" --tag="config"
 ```
 
-## Setting up middelware
-Add the following middleware to your routes web so that the cookies are captured
+## Setting up config
+config/app.php
+replace: 
 ```
-'web' => [
-    ...
-    \Yormy\TranslationcaptainLaravel\Http\Middleware\ReferrerMiddleware::class,
+Illuminate\Translation\TranslationServiceProvider::class
+```
+
+with
+```
+Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider::class,
 ```
 
 ## Without publishing your views and you use of VUE:

@@ -38,5 +38,13 @@ return [
 
     'group_when_group_missing' => '___',
 
+    'exceptions' => [
+        'on_missing_key' => true
+    ],
+
+    'default_locale' => env('DEFAULT_LOCALE', 'nl'),
+
+    'log_missing_keys' => env('TRANS_LOG_MISSING', true),
+
 
 ];
