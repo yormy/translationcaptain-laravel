@@ -22,7 +22,7 @@ class SearchSources
 //
 //    protected array $languages;
 //
-    protected $defaultGroup = "basedefault";
+    protected $defaultGroup = "___";
 //
 //    /**
 //     * Published vendor translations
@@ -134,7 +134,7 @@ class SearchSources
 
                 $string[$filename][$key] = $translation;
             } else {
-                $string["??"][$fullkey] =  $translation;
+                $string[$this->defaultGroup][$fullkey] =  $translation;
             }
         }
         return $string;

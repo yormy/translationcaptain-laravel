@@ -93,6 +93,13 @@ class ReaderTest extends TestCase
             'The %%_field_%% field must be %%width%% pixels by %%height%% %%height%% pixels');
     }
 
+    /** @test */
+    public function found_key_without_dot()
+    {
+        $this->assertArrayHasKeyLocales('___.key-without-dot', ['en']);
+        $this->assertNewKeyHasPrefixedValue('xx','___.key-without-dot');
+    }
+
     /**
      * =========== HELPER FUNCTIONS ================
      */
