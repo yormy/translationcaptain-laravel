@@ -56,7 +56,7 @@ class GeneratorBlade extends FilesGenerator
         return $this->processDataBinding($message);
     }
 
-    protected function makeRawDataBinding($value)
+    protected function makeRawDataBinding($value) : string
     {
         return ':'. $value;
     }

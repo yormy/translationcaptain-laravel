@@ -33,8 +33,8 @@ class WriterBladeTest extends TestCase
     public function blade_files_generated_plain_and_vendor()
     {
         foreach ($this->locales as $locale) {
-            foreach ($this->translationsRead[$locale] as $file => $content) {
 
+            foreach(array_keys($this->translationsRead[$locale]) as $file) {
                 $filename = $this->generateFilename($locale, $file);
                 if (false === strpos($filename, "___.php")) {
                     $this->assertFileExists($filename);

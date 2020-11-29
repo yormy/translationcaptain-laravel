@@ -34,8 +34,7 @@ class WriterVueTest extends TestCase
     public function vue_files_generated()
     {
         foreach ($this->locales as $locale) {
-            foreach ($this->translationsRead[$locale] as $file => $content) {
-
+            foreach(array_keys($this->translationsRead[$locale]) as $file) {
                 $filename = $this->generateFilename($locale, $file);
                 if (false === strpos($filename, "___.json")) {
                     $this->assertFileExists($filename);

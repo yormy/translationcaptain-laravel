@@ -34,7 +34,7 @@ class ReaderVue extends FileReader
     }
 
 
-    public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null)
+    public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null) : void
     {
         if (!is_file($fullPathname)) {
             return;
@@ -88,12 +88,16 @@ class ReaderVue extends FileReader
         return [];
     }
 
-    protected function getRawDataBinding($value)
+    protected function getRawDataBinding($value) : string
     {
         return '{'. $value. '}';
     }
 
-    private function isJson($string) {
+    private function isJson($string) : bool
+    {
+        /**
+         * @psalm-suppress UnusedVariable
+         */
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }

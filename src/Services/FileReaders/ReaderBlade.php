@@ -54,7 +54,7 @@ class ReaderBlade extends FileReader
         return $this->messages;
     }
 
-    public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null)
+    public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null) : void
     {
         if (!is_file($fullPathname)) {
             return;
@@ -125,7 +125,7 @@ class ReaderBlade extends FileReader
         return $translation;
     }
 
-    protected function getRawDataBinding($value)
+    protected function getRawDataBinding($value) : string
     {
         return ":$value";
     }

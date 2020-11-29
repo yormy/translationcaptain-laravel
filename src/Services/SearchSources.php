@@ -86,7 +86,7 @@ class SearchSources
     private function collectStrings(array $files)
     {
         $allStrings = [];
-        foreach ($files as $key => $filePath) {
+        foreach ($files as $filePath) {
             // Get translatable strings in the given view
             $currentStrings = $this->getTranslatable(File::get($filePath));
 
@@ -110,7 +110,7 @@ class SearchSources
     {
         $files = scandir($dir);
 
-        foreach ($files as $key => $value) {
+        foreach ($files as $value) {
             $path = realpath($dir . DIRECTORY_SEPARATOR . $value);
             if (!is_dir($path)) {
                 $results[] = $path;

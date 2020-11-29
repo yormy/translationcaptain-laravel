@@ -58,13 +58,13 @@ class PushService
             if(array_key_exists($locale, $existingTranslations)) {
                 $existingForLanguageDotted = Arr::dot($existingTranslations[$locale]);
 
-                foreach ($foundKeysDotted as $key => $transation) {
+                foreach(array_keys($foundKeysDotted) as $key) {
                     if (!array_key_exists($key, $existingForLanguageDotted)) {
                         $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
                     }
                 }
             } else {
-                foreach ($foundKeysDotted as $key => $transation) {
+                foreach(array_keys($foundKeysDotted) as $key) {
                     $missingKeysForLanguage = $this->addMissingKey($key, $missingKeysForLanguage);
                 }
             }

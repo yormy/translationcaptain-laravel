@@ -58,7 +58,7 @@ class GeneratorVue extends FilesGenerator
         return json_decode($jsonMessage, true);
     }
 
-    protected function makeRawDataBinding($value)
+    protected function makeRawDataBinding($value) : string
     {
         return '{'. $value. '}';
     }

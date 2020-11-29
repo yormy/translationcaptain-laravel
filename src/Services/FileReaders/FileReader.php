@@ -18,6 +18,10 @@ abstract class FileReader
 
     protected $dataBindingPattern;
 
+    abstract public function addSingleTranslationFiles(int $directoryType, string $fullPathname, string $root, string $language = null): void;
+
+    abstract protected function getRawDataBinding($value) : string;
+
     public function __construct(array $locales)
     {
         $this->locales = $locales;

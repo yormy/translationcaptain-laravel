@@ -27,6 +27,10 @@ abstract class FilesGenerator
 
     abstract protected function groupnameToFilename(string $groupName, string $locale): string;
 
+    abstract protected function processMessage(string $message) : string;
+
+    abstract protected function makeRawDataBinding($value) : string;
+
     public function setHeader(string $header) : self
     {
         $this->header = $header;
@@ -133,7 +137,7 @@ abstract class FilesGenerator
         $zip->open($zipFilename, \ZipArchive::CREATE | \ZipArchive::OVERWRITE);
 
         $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($backupDirectory));
-        foreach ($files as $name => $file) {
+        foreach ($files as $file) {
             // We're skipping all subfolders
             if (!$file->isDir()) {
                 $filePath     = $file->getRealPath();
