@@ -40,6 +40,7 @@ class TranslatorTest extends TestCase
     /** @test */
     public function missing_key_exception_thrown()
     {
+        config(['translationcaptain-laravel.exceptions.on_missing_key' => true]);
         try {
             $this->report(__('this-key-does-not-exist'));
             $this->assertTrue(false);
