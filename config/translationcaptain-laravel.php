@@ -1,6 +1,17 @@
 <?php
 
 return [
+    /*
+    |--------------------------------------------------------------------------
+    | Enabled or not
+    |--------------------------------------------------------------------------
+    | Enable or disable the entire translationcaptain functionality
+    | When disabled, no keys are collected, no context is pushed,
+    | no exception on missing keys
+    |--------------------------------------------------------------------------
+    |
+    */
+    'enabled' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +50,7 @@ return [
     'group_when_group_missing' => '___',
 
     'exceptions' => [
-        'on_missing_key' => true
+        'on_missing_key' => false
     ],
 
     'default_locale' => env('DEFAULT_LOCALE', 'nl'),
@@ -49,5 +60,7 @@ return [
     'queue_filename' => 'translationcaption-queue.log',
 
     'url' => 'localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
+
+
 
 ];

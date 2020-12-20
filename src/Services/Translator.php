@@ -24,6 +24,10 @@ class Translator extends BaseTranslator
     {
         $translation = parent::get($key, $replace, $locale, $fallback);
 
+        if (!config('translationcaptain-laravel.enabled')) {
+            return $translation;
+        }
+
         if ($this->translationMissing($key, $translation, $locale)) {
             if (config('translationcaptain-laravel.log_missing_keys')) {
                 $this->logMissingTranslation($key, $replace, $locale, $fallback);
