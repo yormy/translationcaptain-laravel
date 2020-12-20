@@ -27,12 +27,12 @@ class Translator extends BaseTranslator
     {
         $translation = parent::get($key, $replace, $locale, $fallback);
 
-        if (!config('translationcaptain-laravel.enabled')) {
+        if (! config('translationcaptain-laravel.enabled')) {
             return $translation;
         }
 
         $isMissing = $this->translationMissing($key, $translation, $locale);
-        $this->persistKeyForContext($key, !$isMissing);
+        $this->persistKeyForContext($key, ! $isMissing);
 
         if ($isMissing) {
             if (config('translationcaptain-laravel.log_missing_keys')) {
@@ -53,14 +53,14 @@ class Translator extends BaseTranslator
 
     public function persistKeyForContext(string $key, bool $isExisting) : void
     {
-        if (!$this->canCollect($key, $isExisting)) {
+        if (! $this->canCollect($key, $isExisting)) {
             return;
         }
 
         $cookieKey = config("translationcaptain-laravel.cookie.collect");
         $contextItems = Cookie::get($cookieKey);
 
-        if (!is_array($this->cookieContent) || !in_array($key, $this->cookieContent)) {
+        if (! is_array($this->cookieContent) || ! in_array($key, $this->cookieContent)) {
             $this->cookieContent[] = $key;
         }
 
@@ -71,31 +71,30 @@ class Translator extends BaseTranslator
     private function canCollect(string $key, bool $isExisting) : bool
     {
         $enabled = config("translationcaptain-laravel.screenshot_collect_trigger", false);
-        if (!$enabled || $enabled === "NONE") {
+        if (! $enabled || $enabled === "NONE") {
             return false;
         }
 
         $enabledByCookie = Cookie::get(config("translationcaptain-laravel.cookie.screenshot_enabled"));
 
-        if ($enabled === "ON_ENABLED_COOKIE" && !$enabledByCookie) {
+        if ($enabled === "ON_ENABLED_COOKIE" && ! $enabledByCookie) {
             return false;
         }
 
         $contextCollectItems = config("translationcaptain-laravel.screenshot_collect_for", false);
-        if($contextCollectItems !== "ALL" && $isExisting) {
+        if ($contextCollectItems !== "ALL" && $isExisting) {
             return false;
         }
 
-        if (!$this->includedPath() ||
-            !$this->includedRoute() ||
-            !$this->includedKey($key)
+        if (! $this->includedPath() ||
+            ! $this->includedRoute() ||
+            ! $this->includedKey($key)
         ) {
             return false;
         }
 
         return true;
     }
-
 
     private function includedPath() : bool
     {
@@ -106,6 +105,7 @@ class Translator extends BaseTranslator
         if (in_array($path, $excludes)) {
             return false;
         }
+
         return true;
     }
 
@@ -115,6 +115,7 @@ class Translator extends BaseTranslator
         if (in_array($key, $excludes)) {
             return false;
         }
+
         return true;
     }
 
@@ -125,6 +126,7 @@ class Translator extends BaseTranslator
         if (in_array($route, $excludes)) {
             return false;
         }
+
         return true;
     }
 
