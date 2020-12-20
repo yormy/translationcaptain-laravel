@@ -31,16 +31,25 @@ return [
     */
     'enabled' => true,
 
+
     /*
     |--------------------------------------------------------------------------
-    | Default Locale
+    | Translation captain project id
     |--------------------------------------------------------------------------
-    | This is de default base locale. New translation lines stored in the database will
-    | automatically get this language as their base language. In general this is best
-    | to keep this in english (en)
-    | Base language means the language that is used to translate into other languages
-    |
+    | The id of the project on translationcaptain for which these keys are used
     */
+    'projectId' => 'C0QEÄhLYSqiNCePeORF9gw',
+
+/*
+|--------------------------------------------------------------------------
+| Default Locale
+|--------------------------------------------------------------------------
+| This is de default base locale. New translation lines stored in the database will
+| automatically get this language as their base language. In general this is best
+| to keep this in english (en)
+| Base language means the language that is used to translate into other languages
+|
+*/
     'default_locale' => env('DEFAULT_LOCALE', 'nl'),
 
     /*
@@ -169,6 +178,7 @@ return [
 
     'url' => 'localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
 
+    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
 
 
 ];

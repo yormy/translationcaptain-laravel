@@ -1,8 +1,7 @@
 @if (Cookie::get('translationcaptain'))
     <h1>                                  TRANSLATIONCAPTAIN LOADED</h1>
-    <script src="https://backend.bedrock.local/js/tc/index.js"></script>
     <script>
-    // project
+    const projectId='{{config('translationcaptain-laravel.projectId')}}';
 
         function getCookieKey()
         {
@@ -14,5 +13,12 @@
             return 'en';
         }
 
+        function getPostContextUrl()
+        {
+            return '{{config('translationcaptain-laravel.context_url')}}';
+        }
+
+    </script>
+    <script  type="text/javascript" src="https://backend.bedrock.local/js/tc/index.js">
     </script>
 @endif
