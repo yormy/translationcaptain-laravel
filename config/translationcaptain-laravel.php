@@ -1,5 +1,23 @@
 <?php
+//    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
+//    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
+//
 
+
+/*
+|--------------------------------------------------------------------------
+| Pre / Postfix
+|--------------------------------------------------------------------------
+|
+| This is the initial text that will be prepended or appended to the text in the database
+| when the newly translated item is created from the key : the part __('key')
+| Either one of these 2 is necessary to indicate that the itme is already
+| added to the database. It is also a visual marker that this item is
+| not yet translated
+|
+*/
+//    'label_missing_prefix' =>'#',
+//    'label_missing_postfix' =>'?',
 return [
     /*
     |--------------------------------------------------------------------------
@@ -11,7 +29,97 @@ return [
     |--------------------------------------------------------------------------
     |
     */
-    'enabled' => false,
+    'enabled' => true,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Locale
+    |--------------------------------------------------------------------------
+    | This is de default base locale. New translation lines stored in the database will
+    | automatically get this language as their base language. In general this is best
+    | to keep this in english (en)
+    | Base language means the language that is used to translate into other languages
+    |
+    */
+    'default_locale' => env('DEFAULT_LOCALE', 'nl'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | screenshot_collect_trigger
+    |--------------------------------------------------------------------------
+    | When to make the actual screenshots.
+    | Always, never or only when there is a cookie present
+    */
+    'screenshot_collect_trigger' => 'ON_ENABLED_COOKIE', // ALWAYS | ON_ENABLED_COOKIE | NONE
+
+    /*
+    |--------------------------------------------------------------------------
+    | Collect screenshot for which items
+    |--------------------------------------------------------------------------
+    | Collect the context for which items, All items, or only newly added items
+    */
+    'screenshot_collect_for' => "ALL",  // ALL || NEW
+
+    /*
+    |--------------------------------------------------------------------------
+    | Exclusions
+    |--------------------------------------------------------------------------
+    | List the URLS, Routes or Keys you want to exclude from screenshotting
+    |
+    */
+    'exclude' => [
+
+        "urls" => [
+            "/home/text/exclued"
+        ],
+
+        "routes" => [
+            "user.home1"
+        ],
+
+        "keys" => [
+            "app.language"
+        ],
+    ],
+
+    /// CLEANUP BELOW
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cookie names
+    |--------------------------------------------------------------------------
+    | These cookies needs to bo non secure and non encrypted, as we need to read this from javascript
+    | to make the actual screenshot. The cookie is only used in the frontend, so no security issues
+    | NOTE : place in your EncryptCookies.php except list
+    */
+    "cookie" => [
+//    locale
+
+        /*
+        |--------------------------------------------------------------------------
+        | Collect storage
+        |--------------------------------------------------------------------------
+        | The name of the cookie to remember which keys are on this page for associating the screenshot to.
+        | This will contain an array of keynames that will be associated to the captured screenshot
+        | NOTE : This cookie needs to be unencrypted (place in your EncryptCookies.php except list)
+        */
+        "collect" => "translationcaptain_context",
+
+        /*
+        |--------------------------------------------------------------------------
+        | Enabled
+        |--------------------------------------------------------------------------
+        | When the collect context is set to ON_ENABLED_COOKIE, this is the name of the cookie it checks.
+        | If this cookie is set then the system collects the data, if cookie is not set the collection
+        | is skipped
+        | NOTE : This cookie needs to be unencrypted (place in your EncryptCookies.php except list)
+        */
+        "screenshot_enabled" => "translationcaptain"
+    ],
+
+
+
+
 
     /*
     |--------------------------------------------------------------------------
@@ -53,7 +161,7 @@ return [
         'on_missing_key' => false
     ],
 
-    'default_locale' => env('DEFAULT_LOCALE', 'nl'),
+
 
     'log_missing_keys' => env('TRANS_LOG_MISSING', true),
 
