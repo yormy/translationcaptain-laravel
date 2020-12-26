@@ -5,6 +5,14 @@ Pull all keys and translation from TranslationCaptain
 Generate language files in laravel php format from the pull of TranslationCaptain
 Upload a screenshot of the usages of keys to TranslationCaptain
 
+# Setup
+in _translationcaptain.blade.php
+you need to implement the getLanguage function to return the 2 letter language code of the current language of your view
+this will be used to store teh language with the screenshot
+
+
+
+
 
 # Adding a key
 1) Add the key to your code, run 
