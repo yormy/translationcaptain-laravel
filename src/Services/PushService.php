@@ -29,6 +29,7 @@ class PushService
         $url = $domain. "/projects/$projectId/labels/upload";
         $data = [
             'translations' => base64_encode(json_encode($allKeys)),
+            'base_locale' => config('translationcaptain-laravel.default_locale'),
         ];
 
         try {

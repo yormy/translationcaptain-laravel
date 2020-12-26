@@ -132,9 +132,6 @@ class Translator extends BaseTranslator
 
     private function translationMissing(string $key, string $translation, ?string $locale) : bool
     {
-        $isDefaultLocale = ($locale === config('translationcaptain-laravel.default_locale'));
-
-        // if ($translation === $key && !$isDefaultLocale) {
         if ($translation === $key) {
             return true;
         }

@@ -22,23 +22,28 @@ return [
     */
     'projectId' => 'IEB3rcW3SzeOEANm7LEi6w',
 
-/*
-|--------------------------------------------------------------------------
-| Default Locale
-|--------------------------------------------------------------------------
-| This is de default base locale. New translation lines stored in the database will
-| automatically get this language as their base language. In general this is best
-| to keep this in english (en)
-| Base language means the language that is used to translate into other languages
-|
-*/
-    'default_locale' => 'de',//env('DEFAULT_LOCALE', 'nl'),
+    /*
+    |--------------------------------------------------------------------------
+    | Default Locale
+    |--------------------------------------------------------------------------
+    | This is de default base locale. New translation lines stored in the database will
+    | automatically get this language as their base language. In general this is best
+    | to keep this in english (en)
+    | Base language means the language that is used to translate into other languages
+    | Example: if the base language is set to 'en', then all translations will be based on the english text.
+    | Meaning your translators see the english text and need to translate it into french
+    | if the base language is set to 'de' then all translations will be based on german.
+    | Meaning your translators see the german text and need to translate it into french
+    | STRONGLY RECOMMENDED to leave this in english, as most translators speak english
+    |
+    */
+    'default_locale' => env('DEFAULT_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
     | Supported Locales
     |--------------------------------------------------------------------------
-    | The languages you want to push.
+    | The languages you want to push. Languages not listed here are simply ignored
     | ie ['en', 'nl', 'de']
     |
     */
