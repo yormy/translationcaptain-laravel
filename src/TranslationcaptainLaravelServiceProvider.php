@@ -7,8 +7,8 @@ use Illuminate\Support\ServiceProvider;
 use Yormy\TranslationcaptainLaravel\Commands\PullCommand;
 use Yormy\TranslationcaptainLaravel\Commands\PushCommand;
 use Yormy\TranslationcaptainLaravel\Commands\SyncCommand;
-use Yormy\TranslationcaptainLaravel\Http\Controllers\PushController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\PullController;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\PushController;
 use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
 use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
 
