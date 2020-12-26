@@ -1,5 +1,8 @@
 <?php
 
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
+
 return [
 
 
@@ -27,6 +30,7 @@ return [
 
     /// CLEANUP BELOW
 
+
     'paths' => [
         'vue' => '/resources/js/components/lang',
         'blade' => '/resources/lang',
@@ -46,7 +50,26 @@ return [
 
 
 ///////
+    /*
+    |--------------------------------------------------------------------------
+    | Readers
+    |--------------------------------------------------------------------------
+    | Define the sourcepaths and type of readers you want to use
+    |
+    */
+    'readers' => [
+        [
+            'path' => '/resources/lang',
+            'class' => ReaderBlade::class,
+        ],
+        [
+            'path' => '/resources/js/components/lang',
+            'class' => ReaderVue::class,
+        ],
 
+    ],
+
+    /////
 
 
     /*

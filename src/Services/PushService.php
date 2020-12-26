@@ -7,16 +7,28 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Yormy\TranslationcaptainLaravel\Exceptions\DuplicateKeyException;
 use Yormy\TranslationcaptainLaravel\Exceptions\PushFailedException;
-use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
-use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\FileReader;
 
 class PushService
 {
     protected $locales;
 
+    protected $readers;
+
     public function __construct(array $locales)
     {
         $this->locales = $locales;
+
+        foreach (config('translationcaptain.readers') as $readerConfig) {
+            $reader = new $readerConfig['class']($locales);
+            $reader->setImportPath(base_path(). $readerConfig['path']);
+            $this->addReader($reader);
+        }
+    }
+
+    public function addReader(FileReader $reader)
+    {
+        $this->readers[] = $reader;
     }
 
     public function pushToRemote()
@@ -59,17 +71,12 @@ class PushService
 
     private function getExistingTranslations()
     {
-        $blade = new ReaderBlade($this->locales);
-        $importPath = base_path() . config('translationcaptain.paths.blade');
-        $blade->setImportPath($importPath);
-        $bladeLabels = $blade->getMessages();
-
-        $vue = new ReaderVue($this->locales);
-        $importPath = base_path() . config('translationcaptain.paths.vue');
-        $vue->setImportPath($importPath);
-        $vueLabels = $vue->getMessages();
-
-        return $this->mergeLabels($bladeLabels, $vueLabels);
+        $labels = [];
+        foreach ($this->readers as $reader) {
+            $readLabels = $reader->getMessages();
+            $labels = $this->mergeLabels($labels, $readLabels);
+        }
+        return $labels;
     }
 
     private function getMissingKeys(array $existingTranslations) : array

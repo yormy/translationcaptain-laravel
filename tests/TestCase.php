@@ -3,10 +3,10 @@
 namespace Yormy\TranslationcaptainLaravel\Tests;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Route;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Yormy\TranslationcaptainLaravel\Http\Middleware\ReferrerMiddleware;
 use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
 use Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider;
 
 class TestCase extends Orchestra
@@ -43,15 +43,26 @@ class TestCase extends Orchestra
     public function overwriteConfigForTesting()
     {
         $toAppRoot = "/../../../../";
-        config(['translationcaptain.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
 
-        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
+
+        $readers[] = [
+            'path' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang',
+            'class' => ReaderBlade::class,
+        ];
+
+        $readers[] = [
+            'path' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang',
+            'class' => ReaderVue::class,
+        ];
+        config(['translationcaptain.readers' => $readers]);
+//
+//        config(['translationcaptain.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
+//
+//        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
 
         config(['translationcaptain.paths_sources.blade' => [
             $toAppRoot. 'tests/Features/Data/Sources/Blade',
             ]]);
-
-        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
     }
 
     public function get($uri, array $headers = [])

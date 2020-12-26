@@ -18,8 +18,8 @@ class WriterVueTest extends TestCase
     {
         parent::setUp();
 
-        $pull = new PushService($this->locales);
-        $allKeys = $pull->getAllKeys();
+        $push = new PushService($this->locales);
+        $allKeys = $push->getAllKeys();
 
         $this->translationsRead = $allKeys;
 
