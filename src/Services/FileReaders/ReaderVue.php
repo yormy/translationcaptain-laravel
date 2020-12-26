@@ -97,9 +97,9 @@ class ReaderVue extends FileReader
     private function isJson($string) : bool
     {
         /**
-         * @psalm-suppress UnusedVariable
+         * @psalm-suppress UnusedFunctionCall
          */
-        json_decode($string);
+        json_decode($string);   // to get the errors
 
         return (json_last_error() == JSON_ERROR_NONE);
     }

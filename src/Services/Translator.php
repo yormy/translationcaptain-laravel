@@ -19,9 +19,6 @@ class Translator extends BaseTranslator
      * This method acts as a pass-through to Illuminate\Translation\Translator::get(), but verifies
      * that a replacement has actually been made.
      *
-     * @throws MissingTranslationException When no replacement is made.
-     *
-     * @return string|array|null
      */
     public function get($key, array $replace = [], $locale = null, $fallback = true)
     {
@@ -31,7 +28,7 @@ class Translator extends BaseTranslator
             return $translation;
         }
 
-        $isMissing = $this->translationMissing($key, $translation, $locale);
+        $isMissing = $this->translationMissing($key, $translation);
         $this->persistKeyForContext($key, ! $isMissing);
 
         if ($isMissing) {
@@ -58,7 +55,6 @@ class Translator extends BaseTranslator
         }
 
         $cookieKey = config("translationcaptain-laravel.cookie.collect");
-        $contextItems = Cookie::get($cookieKey);
 
         if (! is_array($this->cookieContent) || ! in_array($key, $this->cookieContent)) {
             $this->cookieContent[] = $key;
@@ -130,7 +126,7 @@ class Translator extends BaseTranslator
         return true;
     }
 
-    private function translationMissing(string $key, string $translation, ?string $locale) : bool
+    private function translationMissing(string $key, string $translation) : bool
     {
         if ($translation === $key) {
             return true;
