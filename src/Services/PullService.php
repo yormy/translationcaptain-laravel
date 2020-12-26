@@ -14,8 +14,15 @@ class PullService
         $projectId = config('translationcaptain-laravel.projectId');
         $url = $domain. "/projects/$projectId/labels/download";
 
+        $locales = implode(",", config('translationcaptain-laravel.locales'));
+        $url .= "?locales=$locales";
+
         $response = Http::get($url);
         $pulledKeys = $response->json();
+
+        dd($pulledKeys);
+//        echo $response->body();
+//        die();
 
         $this->generateFiles($pulledKeys);
 

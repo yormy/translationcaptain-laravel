@@ -43,7 +43,7 @@ return [
     |--------------------------------------------------------------------------
     | Supported Locales
     |--------------------------------------------------------------------------
-    | The languages you want to push. Languages not listed here are simply ignored
+    | The languages you want to use. Languages not listed here are simply ignored from pushing and pulling
     | ie ['en', 'nl', 'de']
     |
     */
