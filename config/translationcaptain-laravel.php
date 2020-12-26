@@ -1,23 +1,5 @@
 <?php
-//    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
-//    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
-//
 
-
-/*
-|--------------------------------------------------------------------------
-| Pre / Postfix
-|--------------------------------------------------------------------------
-|
-| This is the initial text that will be prepended or appended to the text in the database
-| when the newly translated item is created from the key : the part __('key')
-| Either one of these 2 is necessary to indicate that the itme is already
-| added to the database. It is also a visual marker that this item is
-| not yet translated
-|
-*/
-//    'label_missing_prefix' =>'#',
-//    'label_missing_postfix' =>'?',
 return [
     /*
     |--------------------------------------------------------------------------
@@ -186,10 +168,6 @@ return [
 
     'queue_filename' => 'translationcaption-queue.log',
 
-    'url' => 'localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
-    //'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
-
-    'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
-
-
+    //'url' => 'http://localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
+    'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
 ];
