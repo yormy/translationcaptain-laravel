@@ -97,7 +97,7 @@ class Translator extends BaseTranslator
         $path = request()->path();
         $path = "/". $path;
 
-        $excludes = config("translationcaptain.exclude.urls");
+        $excludes = config("translationcaptain.screenshot.exclude.urls");
         if (in_array($path, $excludes)) {
             return false;
         }
@@ -107,7 +107,7 @@ class Translator extends BaseTranslator
 
     private function includedKey(string $key) : bool
     {
-        $excludes = config("translationcaptain.exclude.keys");
+        $excludes = config("translationcaptain.screenshot.exclude.keys");
         if (in_array($key, $excludes)) {
             return false;
         }
@@ -118,7 +118,7 @@ class Translator extends BaseTranslator
     private function includedRoute() : bool
     {
         $route = request()->route()->getName();
-        $excludes = config("translationcaptain.exclude.routes");
+        $excludes = config("translationcaptain.screenshot.exclude.routes");
         if (in_array($route, $excludes)) {
             return false;
         }

@@ -7,34 +7,85 @@ use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 
 return [
 
+    /*
+    |--------------------------------------------------------------------------
+    | Enabled or not
+    |--------------------------------------------------------------------------
+    | Enable or disable the entire TranslationCaptain functionality
+    | When disabled, no keys are collected, no context is pushed,
+    | no exception on missing keys
+    |--------------------------------------------------------------------------
+    |
+    */
+    'enabled' => true,
 
     /*
     |--------------------------------------------------------------------------
-    | Exclusions
+    | Translation captain project id
     |--------------------------------------------------------------------------
-    | List the URLS, Routes or Keys you want to exclude from screenshotting
+    | The id of the project on TranslationCaptain for which these keys are used
+    */
+    'project_id' => 'IEB3rcW3SzeOEANm7LEi6w',
+
+    /*
+    |--------------------------------------------------------------------------
+    | TranslationCaptain push/pull/screenshot url
+    |--------------------------------------------------------------------------
     |
     */
-    'exclude' => [
+    'url' => 'http://localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
+    //'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
 
-        "urls" => [
-            "/home/text/exclued"
-        ],
 
-        "routes" => [
-            "user.home1"
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Group name of the key if there was no group name found
+    |--------------------------------------------------------------------------
+    |
+    */
+    'group_when_group_missing' => '___',
 
-        "keys" => [
-            "app.language"
-        ],
+    /*
+    |--------------------------------------------------------------------------
+    | Throw exception when missing key found
+    |--------------------------------------------------------------------------
+    |
+    */
+    'exceptions' => [
+        'on_missing_key' => false
     ],
 
-    /// CLEANUP BELOW
 
 
 
-///////
+    /*
+    |--------------------------------------------------------------------------
+    | Default Locale
+    |--------------------------------------------------------------------------
+    | This is de default base locale. New translation lines stored in the database will
+    | automatically get this language as their base language. In general this is best
+    | to keep this in english (en)
+    | Base language means the language that is used to translate into other languages
+    | Example: if the base language is set to 'en', then all translations will be based on the english text.
+    | Meaning your translators see the english text and need to translate it into french
+    | if the base language is set to 'de' then all translations will be based on german.
+    | Meaning your translators see the german text and need to translate it into french
+    | STRONGLY RECOMMENDED to leave this in english, as most translators speak english
+    |
+    */
+    'default_locale' => env('DEFAULT_LOCALE', 'en'),
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    | The languages you want to use. Languages not listed here are simply ignored from pushing and pulling
+    | ie ['en', 'nl', 'de']
+    |
+    */
+    'locales' => ['en', 'nl', 'de'],
+
     /*
     |--------------------------------------------------------------------------
     | Readers
@@ -87,89 +138,6 @@ return [
         ]
     ],
 
-    /////
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Enabled or not
-    |--------------------------------------------------------------------------
-    | Enable or disable the entire TranslationCaptain functionality
-    | When disabled, no keys are collected, no context is pushed,
-    | no exception on missing keys
-    |--------------------------------------------------------------------------
-    |
-    */
-    'enabled' => true,
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | TranslationCaptain push/pull/screenshot url
-    |--------------------------------------------------------------------------
-    |
-    */
-    'url' => 'http://localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
-    //'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Group name of the key if there was no group name found
-    |--------------------------------------------------------------------------
-    |
-    */
-    'group_when_group_missing' => '___',
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Throw exception when missing key found
-    |--------------------------------------------------------------------------
-    |
-    */
-    'exceptions' => [
-        'on_missing_key' => false
-    ],
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Translation captain project id
-    |--------------------------------------------------------------------------
-    | The id of the project on TranslationCaptain for which these keys are used
-    */
-    'project_id' => 'IEB3rcW3SzeOEANm7LEi6w',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Default Locale
-    |--------------------------------------------------------------------------
-    | This is de default base locale. New translation lines stored in the database will
-    | automatically get this language as their base language. In general this is best
-    | to keep this in english (en)
-    | Base language means the language that is used to translate into other languages
-    | Example: if the base language is set to 'en', then all translations will be based on the english text.
-    | Meaning your translators see the english text and need to translate it into french
-    | if the base language is set to 'de' then all translations will be based on german.
-    | Meaning your translators see the german text and need to translate it into french
-    | STRONGLY RECOMMENDED to leave this in english, as most translators speak english
-    |
-    */
-    'default_locale' => env('DEFAULT_LOCALE', 'en'),
-
-
-    /*
-    |--------------------------------------------------------------------------
-    | Supported Locales
-    |--------------------------------------------------------------------------
-    | The languages you want to use. Languages not listed here are simply ignored from pushing and pulling
-    | ie ['en', 'nl', 'de']
-    |
-    */
-    'locales' => ['en', 'nl', 'de'],
-
-
     /*
     |--------------------------------------------------------------------------
     | Collect screenshots
@@ -215,6 +183,28 @@ return [
         | NOTE : This cookie needs to be unencrypted (place in your EncryptCookies.php except list)
         */
         "collect_cookie" => "translationcaptain_context",
+
+        /*
+        |--------------------------------------------------------------------------
+        | Exclusions
+        |--------------------------------------------------------------------------
+        | List the URLS, Routes or Keys you want to exclude from screenshotting
+        |
+        */
+        'exclude' => [
+
+            "urls" => [
+                "/home/text/exclued"
+            ],
+
+            "routes" => [
+                "user.home1"
+            ],
+
+            "keys" => [
+                "app.language"
+            ],
+        ],
     ],
 
 
