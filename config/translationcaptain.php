@@ -2,6 +2,8 @@
 
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 
 return [
 
@@ -31,30 +33,13 @@ return [
     /// CLEANUP BELOW
 
 
-    'paths' => [
-        'vue' => '/resources/js/components/lang',
-        'blade' => '/resources/lang',
-
-    ],
-
-    'paths_sources' => [
-        'blade' => [
-            '/resources/views/bedrock/admin'
-            //'/app/',
-            //'/config/',
-        ]
-
-    ],
-
-
-
 
 ///////
     /*
     |--------------------------------------------------------------------------
     | Readers
     |--------------------------------------------------------------------------
-    | Define the sourcepaths and type of readers you want to use
+    | Define the source paths and type of readers you want to use
     |
     */
     'readers' => [
@@ -67,6 +52,39 @@ return [
             'class' => ReaderVue::class,
         ],
 
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Writers
+    |--------------------------------------------------------------------------
+    | Define the destination paths and the service to use to write
+    |
+    */
+    'writers' => [
+        [
+            'path' => '/resources/lang_blade',
+            'class' => GeneratorBlade::class,
+        ],
+        [
+            'path' => '/resources/js/components/lang_vue',
+            'class' => GeneratorVue::class,
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Source files
+    |--------------------------------------------------------------------------
+    | Where your source files are located to search through to find extra undefined keys
+    |
+    */
+    'source_code_scan_paths' => [
+        'blade' => [
+            '/resources/views/bedrock/admin'
+            //'/app/',
+            //'/config/',
+        ]
     ],
 
     /////

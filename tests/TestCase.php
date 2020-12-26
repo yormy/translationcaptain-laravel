@@ -7,6 +7,8 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
 use Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider;
 
 class TestCase extends Orchestra
@@ -55,12 +57,21 @@ class TestCase extends Orchestra
             'class' => ReaderVue::class,
         ];
         config(['translationcaptain.readers' => $readers]);
-//
-//        config(['translationcaptain.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
-//
-//        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
 
-        config(['translationcaptain.paths_sources.blade' => [
+
+//        $writers[] = [
+//            'path' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang_blade',
+//            'class' => GeneratorBlade::class,
+//        ];
+//
+//        $readers[] = [
+//            'path' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang_vue',
+//            'class' => GeneratorVue::class,
+//        ];
+//        config(['translationcaptain.writers' => $writers]);
+
+
+        config(['translationcaptain.source_code_scan_paths.blade' => [
             $toAppRoot. 'tests/Features/Data/Sources/Blade',
             ]]);
     }

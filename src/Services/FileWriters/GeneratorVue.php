@@ -8,7 +8,7 @@ class GeneratorVue extends FilesGenerator
 {
     protected $vendorPath = 'vendor';
 
-    public function __construct(array $labels)
+    public function __construct()
     {
         $this->exportSettings = new ExportSettingsJson();
 
@@ -17,7 +17,7 @@ class GeneratorVue extends FilesGenerator
         $this->exportPath = App()['path.lang'];
         $this->exportPath .= '_tc_vuw';
 
-        parent::__construct($labels);
+        parent::__construct();
     }
 
     public function export(array $locales = null)

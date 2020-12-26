@@ -8,7 +8,7 @@ class GeneratorBlade extends FilesGenerator
 {
     protected $vendorPath = 'vendor';
 
-    public function __construct(array $labels)
+    public function __construct()
     {
         $this->exportSettings = new ExportSettingsPhp();
 
@@ -17,7 +17,7 @@ class GeneratorBlade extends FilesGenerator
         $this->exportPath = App()['path.lang'];
         $this->exportPath .= '_tc';
 
-        parent::__construct($labels);
+        parent::__construct();
     }
 
     public function export(array $locales = null)

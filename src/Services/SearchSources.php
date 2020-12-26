@@ -62,7 +62,7 @@ class SearchSources
     private function getAllFilesToProcess()
     {
         $files = [];
-        $sources = config('translationcaptain.paths_sources.blade');
+        $sources = config('translationcaptain.source_code_scan_paths.blade');
 
         foreach ($sources as $path) {
             $absPath = base_path() . $path;
