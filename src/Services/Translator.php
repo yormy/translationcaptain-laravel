@@ -54,7 +54,7 @@ class Translator extends BaseTranslator
             return;
         }
 
-        $cookieKey = config("translationcaptain-laravel.cookie.collect");
+        $cookieKey = config("translationcaptain.cookie.collect");
 
         if (! is_array($this->cookieContent) || ! in_array($key, $this->cookieContent)) {
             $this->cookieContent[] = $key;
@@ -66,18 +66,18 @@ class Translator extends BaseTranslator
 
     private function canCollect(string $key, bool $isExisting) : bool
     {
-        $enabled = config("translationcaptain-laravel.screenshot_collect_trigger", false);
+        $enabled = config("translationcaptain.screenshot_collect_trigger", false);
         if (! $enabled || $enabled === "NONE") {
             return false;
         }
 
-        $enabledByCookie = Cookie::get(config("translationcaptain-laravel.cookie.screenshot_enabled"));
+        $enabledByCookie = Cookie::get(config("translationcaptain.cookie.screenshot_enabled"));
 
         if ($enabled === "ON_ENABLED_COOKIE" && ! $enabledByCookie) {
             return false;
         }
 
-        $contextCollectItems = config("translationcaptain-laravel.screenshot_collect_for", false);
+        $contextCollectItems = config("translationcaptain.screenshot_collect_for", false);
         if ($contextCollectItems !== "ALL" && $isExisting) {
             return false;
         }
@@ -97,7 +97,7 @@ class Translator extends BaseTranslator
         $path = request()->path();
         $path = "/". $path;
 
-        $excludes = config("translationcaptain-laravel.exclude.urls");
+        $excludes = config("translationcaptain.exclude.urls");
         if (in_array($path, $excludes)) {
             return false;
         }
@@ -107,7 +107,7 @@ class Translator extends BaseTranslator
 
     private function includedKey(string $key) : bool
     {
-        $excludes = config("translationcaptain-laravel.exclude.keys");
+        $excludes = config("translationcaptain.exclude.keys");
         if (in_array($key, $excludes)) {
             return false;
         }
@@ -118,7 +118,7 @@ class Translator extends BaseTranslator
     private function includedRoute() : bool
     {
         $route = request()->route()->getName();
-        $excludes = config("translationcaptain-laravel.exclude.routes");
+        $excludes = config("translationcaptain.exclude.routes");
         if (in_array($route, $excludes)) {
             return false;
         }

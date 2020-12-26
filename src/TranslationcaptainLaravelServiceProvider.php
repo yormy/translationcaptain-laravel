@@ -18,16 +18,16 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/translationcaptain-laravel.php' => config_path('translationcaptain.php'),
+                __DIR__ . '/../config/translationcaptain.php' => config_path('translationcaptain.php'),
             ], 'config');
 
             $this->publishes([
-                __DIR__ . '/../resources/views/blade' => base_path('resources/views/vendor/translationcaptain-laravel'),
+                __DIR__ . '/../resources/views/blade' => base_path('resources/views/vendor/translationcaptain'),
             ], 'blade');
 
             $this->publishes([
-                __DIR__ . '/../resources/views/vue' => base_path('resources/views/vendor/translationcaptain-laravel'),
-                __DIR__ . '/../resources/assets' => resource_path('assets/vendor/translationcaptain-laravel'),
+                __DIR__ . '/../resources/views/vue' => base_path('resources/views/vendor/translationcaptain'),
+                __DIR__ . '/../resources/assets' => resource_path('assets/vendor/translationcaptain'),
             ], 'vue');
 
             $this->publishMigrations();
@@ -46,7 +46,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
             }
         }
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views/'. $ui_type, 'translationcaptain-laravel');
+        $this->loadViewsFrom(__DIR__ . '/../resources/views/'. $ui_type, 'translationcaptain');
 
         $this->registerGuestRoutes();
         $this->registerUserRoutes();
@@ -88,7 +88,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__ . '/../config/translationcaptain-laravel.php', 'translationcaptain-laravel');
+        $this->mergeConfigFrom(__DIR__ . '/../config/translationcaptain.php', 'translationcaptain');
         $this->app->register(EventServiceProvider::class);
         $this->app->register(TranslationServiceProvider::class);
     }

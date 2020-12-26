@@ -11,6 +11,6 @@ class TranslationcaptainLaravelFacade extends Facade
 {
 //    protected static function getFacadeAccessor()
 //    {
-//        return 'translationcaptain-laravel';
+//        return 'translationcaptain';
 //    }
 }

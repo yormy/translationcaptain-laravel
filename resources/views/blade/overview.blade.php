@@ -1,4 +1,4 @@
-@extends('translationcaptain-laravel::layouts.app')
+@extends('translationcaptain::layouts.app')
 
 @section('content')
     <table class="table mt-5">
