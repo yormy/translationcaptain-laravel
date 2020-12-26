@@ -8,8 +8,8 @@ use Yormy\TranslationcaptainLaravel\Commands\PullCommand;
 use Yormy\TranslationcaptainLaravel\Commands\PushCommand;
 use Yormy\TranslationcaptainLaravel\Commands\SyncCommand;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\ImportController;
-use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerDetailsController;
-use Yormy\TranslationcaptainLaravel\Http\Controllers\ReferrerOverviewController;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\PushController;
+use Yormy\TranslationcaptainLaravel\Http\Controllers\PullController;
 use Yormy\TranslationcaptainLaravel\Http\Controllers\SearchSourcesController;
 use Yormy\TranslationcaptainLaravel\Providers\EventServiceProvider;
 use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
@@ -99,6 +99,13 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
     {
         Route::get('/import', [ImportController::class, 'import'])->name('show');
         Route::get('/search', [SearchSourcesController::class, 'search'])->name('show');
+
+        Route::macro('Translationcaptain', function (string $prefix) {
+            Route::prefix($prefix)->name($prefix. ".")->group(function () {
+                Route::get('/push', [PushController::class, 'push'])->name('push');
+                Route::get('/pull', [PullController::class, 'pull'])->name('pull');
+            });
+        });
     }
 
     private function registerUserRoutes()

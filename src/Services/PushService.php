@@ -2,10 +2,13 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services;
 
+use http\Exception\InvalidArgumentException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Yormy\TranslationcaptainLaravel\Exceptions\DuplicateKeyException;
+use Yormy\TranslationcaptainLaravel\Exceptions\InvalidException;
+use Yormy\TranslationcaptainLaravel\Exceptions\PushFailedException;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
 
@@ -23,12 +26,18 @@ class PushService
         $allKeys = $this->getAllKeys();
 
         $domain = config('translationcaptain-laravel.url');
-        $url = $domain. '/labels';
+
+        $projectId = config('translationcaptain-laravel.projectId');
+        $url = $domain. "/projects/$projectId/labels/upload";
         $data = [
             'translations' => base64_encode(json_encode($allKeys)),
         ];
 
-        $response = Http::post($url, $data);
+        try {
+            $response = Http::post($url, $data);
+        } catch (\Exception $e) {
+            throw new PushFailedException($e->getMessage());
+        }
 
         $this->deleteQueue();
     }

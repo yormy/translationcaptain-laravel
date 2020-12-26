@@ -38,7 +38,7 @@ return [
     |--------------------------------------------------------------------------
     | The id of the project on translationcaptain for which these keys are used
     */
-    'projectId' => 'C0QEÄhLYSqiNCePeORF9gw',
+    'projectId' => 'IEB3rcW3SzeOEANm7LEi6w',
 
 /*
 |--------------------------------------------------------------------------
@@ -177,6 +177,7 @@ return [
     'queue_filename' => 'translationcaption-queue.log',
 
     'url' => 'localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
+    //'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
 
     'context_url' => "https://backend.bedrock.local/api/v1/multilingual/labels/context/opencontext",
 
