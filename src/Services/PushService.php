@@ -38,6 +38,8 @@ class PushService
         }
 
         $this->deleteQueue();
+
+        return $response;
     }
 
     private function deleteQueue()

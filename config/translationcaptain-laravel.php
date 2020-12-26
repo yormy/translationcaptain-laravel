@@ -32,17 +32,17 @@ return [
 | Base language means the language that is used to translate into other languages
 |
 */
-    'default_locale' => env('DEFAULT_LOCALE', 'nl'),
+    'default_locale' => 'de',//env('DEFAULT_LOCALE', 'nl'),
 
-//    /* obsolete ?
-//    |--------------------------------------------------------------------------
-//    | Supported Locales
-//    |--------------------------------------------------------------------------
-//    | The languages you want to support.
-//    | ie ['en', 'nl', 'de']
-//    |
-//    */
-//    'locales' => ['en', 'nl', 'de'],
+    /*
+    |--------------------------------------------------------------------------
+    | Supported Locales
+    |--------------------------------------------------------------------------
+    | The languages you want to push.
+    | ie ['en', 'nl', 'de']
+    |
+    */
+    'locales' => ['en', 'nl', 'de'],
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,6 @@ return [
 
     'queue_filename' => 'translationcaption-queue.log',
 
-    //'url' => 'http://localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
-    'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
+    'url' => 'http://localhost/api/v1/translationcaptain', // 'https://backend.bedrock.local/
+    //'url' => 'https://backend.bedrock.local/api/v1/translationcaptain',
 ];
