@@ -20,10 +20,6 @@ class PullService
         $response = Http::get($url);
         $pulledKeys = $response->json();
 
-        dd($pulledKeys);
-//        echo $response->body();
-//        die();
-
         $this->generateFiles($pulledKeys);
 
         return $pulledKeys;
