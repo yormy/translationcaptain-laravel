@@ -11,10 +11,12 @@ class PullService
     public function pullFromRemote()
     {
         $domain = config('translationcaptain-laravel.url');
-        $url = $domain. '/labels';
-        $response = Http::get($url);
+        $projectId = config('translationcaptain-laravel.projectId');
+        $url = $domain. "/projects/$projectId/labels/download";
 
+        $response = Http::get($url);
         $pulledKeys = $response->json();
+
         $this->generateFiles($pulledKeys);
 
         return $pulledKeys;
