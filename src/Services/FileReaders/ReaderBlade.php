@@ -96,7 +96,7 @@ class ReaderBlade extends FileReader
         }
 
         if (strcasecmp($relative, $language) === 0) {
-            $relative = config('translationcaptain-laravel.group_when_group_missing');
+            $relative = config('translationcaptain.group_when_group_missing');
         }
         $this->messages[$language][$relative] = $keysForPackage;
     }

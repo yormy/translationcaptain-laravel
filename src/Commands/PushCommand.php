@@ -16,7 +16,7 @@ class PushCommand extends Command
         $this->comment('Pushing keys and translations to TranslationCaptain');
         $this->comment('Pushing...');
 
-        $push = new PushService(config('translationcaptain-laravel.locales'));
+        $push = new PushService(config('translationcaptain.locales'));
         $push->pushToRemote();
 
         $this->comment('Ahoy Captain.. we\'re done');

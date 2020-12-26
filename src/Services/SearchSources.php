@@ -46,7 +46,7 @@ class SearchSources
 
                 $string[$filename][$key] = $translation;
             } else {
-                $defaultGroup = config('translationcaptain-laravel.group_when_group_missing');
+                $defaultGroup = config('translationcaptain.group_when_group_missing');
                 $string[$defaultGroup][$fullkey] = $translation;
             }
         }
@@ -62,7 +62,7 @@ class SearchSources
     private function getAllFilesToProcess()
     {
         $files = [];
-        $sources = config('translationcaptain-laravel.paths_sources.blade');
+        $sources = config('translationcaptain.paths_sources.blade');
 
         foreach ($sources as $path) {
             $absPath = base_path() . $path;
@@ -72,7 +72,7 @@ class SearchSources
         }
 
 
-        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        $queueFilename = config('translationcaptain.queue_filename');
         if (Storage::exists($queueFilename)) {
             $files[] = Storage::path($queueFilename);
         }

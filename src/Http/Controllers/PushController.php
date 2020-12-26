@@ -9,7 +9,7 @@ class PushController extends Controller
 {
     public function push()
     {
-        $push = new PushService(config('translationcaptain-laravel.locales'));
+        $push = new PushService(config('translationcaptain.locales'));
 
         $response = $push->pushToRemote();
         dd($response->body());

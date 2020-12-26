@@ -10,11 +10,11 @@ class PullService
 {
     public function pullFromRemote()
     {
-        $domain = config('translationcaptain-laravel.url');
-        $projectId = config('translationcaptain-laravel.projectId');
+        $domain = config('translationcaptain.url');
+        $projectId = config('translationcaptain.projectId');
         $url = $domain. "/projects/$projectId/labels/download";
 
-        $locales = implode(",", config('translationcaptain-laravel.locales'));
+        $locales = implode(",", config('translationcaptain.locales'));
         $url .= "?locales=$locales";
 
         $response = Http::get($url);

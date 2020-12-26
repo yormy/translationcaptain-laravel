@@ -43,15 +43,15 @@ class TestCase extends Orchestra
     public function overwriteConfigForTesting()
     {
         $toAppRoot = "/../../../../";
-        config(['translationcaptain-laravel.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
+        config(['translationcaptain.paths.blade' => $toAppRoot. 'tests/Features/Data/Translations/Blade/lang']);
 
-        config(['translationcaptain-laravel.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
+        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
 
-        config(['translationcaptain-laravel.paths_sources.blade' => [
+        config(['translationcaptain.paths_sources.blade' => [
             $toAppRoot. 'tests/Features/Data/Sources/Blade',
             ]]);
 
-        config(['translationcaptain-laravel.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
+        config(['translationcaptain.paths.vue' => $toAppRoot. 'tests/Features/Data/Translations/Vue/lang']);
     }
 
     public function get($uri, array $headers = [])

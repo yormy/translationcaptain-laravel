@@ -1,7 +1,7 @@
-@if (config('translationcaptain-laravel.enabled') && Cookie::get('translationcaptain'))
+@if (config('translationcaptain.enabled') && Cookie::get('translationcaptain'))
     <h1>                                  TRANSLATIONCAPTAIN LOADED</h1>
     <script>
-        const projectId='{{config('translationcaptain-laravel.projectId')}}';
+        const projectId='{{config('translationcaptain.projectId')}}';
 
         function getCurrentLanguage()
         {
@@ -18,7 +18,7 @@
 
         function getPostContextUrl()
         {
-            return '{{config('translationcaptain-laravel.url')}}';
+            return '{{config('translationcaptain.url')}}';
         }
 
     </script>

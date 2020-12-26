@@ -90,9 +90,9 @@ abstract class FileReader
             foreach ($innerFind as $value) {
                 $bladeBinding = $this->getRawDataBinding($value);
                 $TranslationCaptainBinding =
-                    config('translationcaptain-laravel.databinding.start')
+                    config('translationcaptain.databinding.start')
                     . $value
-                    . config('translationcaptain-laravel.databinding.end');
+                    . config('translationcaptain.databinding.end');
                 $translation = str_ireplace($bladeBinding, $TranslationCaptainBinding, $translation);
             }
         }

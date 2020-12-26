@@ -150,8 +150,8 @@ abstract class FilesGenerator
 
     protected function processDataBinding(string $message) : string
     {
-        $start = config('translationcaptain-laravel.databinding.start');
-        $end = config('translationcaptain-laravel.databinding.end');
+        $start = config('translationcaptain.databinding.start');
+        $end = config('translationcaptain.databinding.end');
         $pattern = "$start(.*?)$end";
 
         preg_match_all("/$pattern/", $message, $matches);

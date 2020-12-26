@@ -18,7 +18,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../config/translationcaptain-laravel.php' => config_path('translationcaptain-laravel.php'),
+                __DIR__ . '/../config/translationcaptain-laravel.php' => config_path('translationcaptain.php'),
             ], 'config');
 
             $this->publishes([
@@ -41,7 +41,7 @@ class TranslationcaptainLaravelServiceProvider extends ServiceProvider
             $ui_type = 'blade';
         } else {
             $ui_type = 'blade';
-            if ("VUE" === config('translationcaptain-laravel.ui_type')) {
+            if ("VUE" === config('translationcaptain.ui_type')) {
                 $ui_type = 'vue';
             }
         }

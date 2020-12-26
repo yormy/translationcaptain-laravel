@@ -8,7 +8,7 @@ trait CookieTrait
 {
     public function getReferrerFromCookie()
     {
-        $cookieName = config('translationcaptain-laravel.cookie.name');
+        $cookieName = config('translationcaptain.cookie.name');
         if (request()->hasCookie($cookieName)) {
             $publicReferrerId = request()->cookie($cookieName);
 
@@ -20,8 +20,8 @@ trait CookieTrait
 
     public function setCookie($referringUserId)
     {
-        $cookieName = config('translationcaptain-laravel.cookie.name');
-        $cookieLifetime = config('translationcaptain-laravel.cookie.lifetime');
+        $cookieName = config('translationcaptain.cookie.name');
+        $cookieLifetime = config('translationcaptain.cookie.lifetime');
 
         if ($referringUserId) {
             Cookie::queue($cookieName, $referringUserId, $cookieLifetime);

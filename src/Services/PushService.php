@@ -23,13 +23,13 @@ class PushService
     {
         $allKeys = $this->getAllKeys();
 
-        $domain = config('translationcaptain-laravel.url');
+        $domain = config('translationcaptain.url');
 
-        $projectId = config('translationcaptain-laravel.projectId');
+        $projectId = config('translationcaptain.projectId');
         $url = $domain. "/projects/$projectId/labels/upload";
         $data = [
             'translations' => base64_encode(json_encode($allKeys)),
-            'base_locale' => config('translationcaptain-laravel.default_locale'),
+            'base_locale' => config('translationcaptain.default_locale'),
         ];
 
         try {
@@ -45,7 +45,7 @@ class PushService
 
     private function deleteQueue()
     {
-        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        $queueFilename = config('translationcaptain.queue_filename');
         Storage::delete($queueFilename);
     }
 
@@ -60,12 +60,12 @@ class PushService
     private function getExistingTranslations()
     {
         $blade = new ReaderBlade($this->locales);
-        $importPath = base_path() . config('translationcaptain-laravel.paths.blade');
+        $importPath = base_path() . config('translationcaptain.paths.blade');
         $blade->setImportPath($importPath);
         $bladeLabels = $blade->getMessages();
 
         $vue = new ReaderVue($this->locales);
-        $importPath = base_path() . config('translationcaptain-laravel.paths.vue');
+        $importPath = base_path() . config('translationcaptain.paths.vue');
         $vue->setImportPath($importPath);
         $vueLabels = $vue->getMessages();
 
@@ -144,8 +144,8 @@ class PushService
 
     public function removeBinding(string $translation): string
     {
-        $start = config('translationcaptain-laravel.databinding.start');
-        $end = config('translationcaptain-laravel.databinding.end');
+        $start = config('translationcaptain.databinding.start');
+        $end = config('translationcaptain.databinding.end');
         $pattern = "$start(.*?)$end";
 
         return preg_replace("/". $pattern ."/", '', $translation);

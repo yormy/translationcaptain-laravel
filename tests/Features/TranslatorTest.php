@@ -40,7 +40,7 @@ class TranslatorTest extends TestCase
     /** @test */
     public function missing_key_exception_thrown()
     {
-        config(['translationcaptain-laravel.exceptions.on_missing_key' => true]);
+        config(['translationcaptain.exceptions.on_missing_key' => true]);
 
         try {
             $this->report(__('this-key-does-not-exist'));
@@ -53,7 +53,7 @@ class TranslatorTest extends TestCase
     /** @test */
     public function missing_key_no_exception_thrown()
     {
-        config(['translationcaptain-laravel.exceptions.on_missing_key' => false]);
+        config(['translationcaptain.exceptions.on_missing_key' => false]);
         $this->expectsEvents(MissingTranslationEvent::class);
         $this->report(__('this-key-does-not-exist'));
         $this->assertTrue(true);
@@ -63,9 +63,9 @@ class TranslatorTest extends TestCase
     public function missing_key_added_for_uploading()
     {
         // added to log & added to queu
-        config(['translationcaptain-laravel.exceptions.on_missing_key' => false]);
+        config(['translationcaptain.exceptions.on_missing_key' => false]);
 
-        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        $queueFilename = config('translationcaptain.queue_filename');
         Storage::delete($queueFilename);
 
         $this->report(__('this-key-does-not-exist'));

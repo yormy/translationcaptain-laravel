@@ -24,7 +24,7 @@ class Translator extends BaseTranslator
     {
         $translation = parent::get($key, $replace, $locale, $fallback);
 
-        if (! config('translationcaptain-laravel.enabled')) {
+        if (! config('translationcaptain.enabled')) {
             return $translation;
         }
 
@@ -32,13 +32,13 @@ class Translator extends BaseTranslator
         $this->persistKeyForContext($key, ! $isMissing);
 
         if ($isMissing) {
-            if (config('translationcaptain-laravel.log_missing_keys')) {
+            if (config('translationcaptain.log_missing_keys')) {
                 $this->logMissingTranslation($key, $replace, $locale, $fallback);
             }
 
             $this->addToQueueForUploading($key);
 
-            if (config('translationcaptain-laravel.exceptions.on_missing_key')) {
+            if (config('translationcaptain.exceptions.on_missing_key')) {
                 throw new MissingTranslationException($key);
             }
 
@@ -137,7 +137,7 @@ class Translator extends BaseTranslator
 
     private function addToQueueForUploading(string $key) : void
     {
-        $queueFilename = config('translationcaptain-laravel.queue_filename');
+        $queueFilename = config('translationcaptain.queue_filename');
 
         $formattedKey = $this->formatKeyForQueue($key);
 
