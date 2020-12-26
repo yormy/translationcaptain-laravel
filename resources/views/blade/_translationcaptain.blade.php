@@ -1,7 +1,7 @@
 @if (config('translationcaptain.enabled') && Cookie::get('translationcaptain'))
     <h1>                                  TRANSLATIONCAPTAIN LOADED</h1>
     <script>
-        const projectId='{{config('translationcaptain.projectId')}}';
+        const projectId='{{config('translationcaptain.project_id')}}';
 
         function getCurrentLanguage()
         {

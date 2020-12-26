@@ -32,7 +32,7 @@ class Translator extends BaseTranslator
         $this->persistKeyForContext($key, ! $isMissing);
 
         if ($isMissing) {
-            if (config('translationcaptain.log_missing_keys')) {
+            if (config('translationcaptain.log.missing_keys')) {
                 $this->logMissingTranslation($key, $replace, $locale, $fallback);
             }
 
@@ -54,7 +54,7 @@ class Translator extends BaseTranslator
             return;
         }
 
-        $cookieKey = config("translationcaptain.cookie.collect");
+        $cookieKey = config("translationcaptain.screenshot.collect_cookie");
 
         if (! is_array($this->cookieContent) || ! in_array($key, $this->cookieContent)) {
             $this->cookieContent[] = $key;
@@ -66,18 +66,18 @@ class Translator extends BaseTranslator
 
     private function canCollect(string $key, bool $isExisting) : bool
     {
-        $enabled = config("translationcaptain.screenshot_collect_trigger", false);
+        $enabled = config("translationcaptain.screenshot.trigger", false);
         if (! $enabled || $enabled === "NONE") {
             return false;
         }
 
-        $enabledByCookie = Cookie::get(config("translationcaptain.cookie.screenshot_enabled"));
+        $enabledByCookie = Cookie::get(config("translationcaptain.screenshot.enabled_cookie"));
 
         if ($enabled === "ON_ENABLED_COOKIE" && ! $enabledByCookie) {
             return false;
         }
 
-        $contextCollectItems = config("translationcaptain.screenshot_collect_for", false);
+        $contextCollectItems = config("translationcaptain.screenshot.collect", false);
         if ($contextCollectItems !== "ALL" && $isExisting) {
             return false;
         }

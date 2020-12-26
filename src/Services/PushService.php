@@ -25,7 +25,7 @@ class PushService
 
         $domain = config('translationcaptain.url');
 
-        $projectId = config('translationcaptain.projectId');
+        $projectId = config('translationcaptain.project_id');
         $url = $domain. "/projects/$projectId/labels/upload";
         $data = [
             'translations' => base64_encode(json_encode($allKeys)),
