@@ -101,14 +101,7 @@ class SearchSources
         return $allStrings;
     }
 
-    /**
-     * Get all the files that need to be parsed
-     *
-     * @param $dir
-     * @param array $results
-     * @return array
-     */
-    private function getAllFiles($dir, &$results = [])
+    private function getAllFiles($dir, array &$results = []) : array
     {
         $files = scandir($dir);
 

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db2d5a8129395bb3fb79875d124d1045",
+    "content-hash": "8126ff08915ed42b5a3f0740c07f2c08",
     "packages": [
         {
             "name": "brick/math",
@@ -570,16 +570,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v8.19.0",
+            "version": "v8.20.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb"
+                "reference": "b5d8573ab16027867eaa1ac148893833434f9b02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
-                "reference": "f5f331cee60f1bbe672503b7eb9ba5b22b2ceacb",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b5d8573ab16027867eaa1ac148893833434f9b02",
+                "reference": "b5d8573ab16027867eaa1ac148893833434f9b02",
                 "shasum": ""
             },
             "require": {
@@ -729,7 +729,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2020-12-15T16:16:31+00:00"
+            "time": "2020-12-22T21:21:19+00:00"
         },
         {
             "name": "laravel/legacy-factories",
@@ -7457,6 +7457,62 @@
                 "xml conversion"
             ],
             "time": "2019-03-29T20:06:56+00:00"
+        },
+        {
+            "name": "phpstan/phpstan",
+            "version": "0.12.64",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/phpstan/phpstan.git",
+                "reference": "23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa",
+                "reference": "23eb1cb7ae125f45f1d0e48051bcf67a9a9b08aa",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1|^8.0"
+            },
+            "conflict": {
+                "phpstan/phpstan-shim": "*"
+            },
+            "bin": [
+                "phpstan",
+                "phpstan.phar"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "0.12-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "PHPStan - PHP Static Analysis Tool",
+            "funding": [
+                {
+                    "url": "https://github.com/ondrejmirtes",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/phpstan",
+                    "type": "patreon"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/phpstan/phpstan",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2020-12-21T11:59:02+00:00"
         },
         {
             "name": "psalm/plugin-laravel",

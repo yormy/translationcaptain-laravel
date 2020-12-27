@@ -52,9 +52,6 @@ abstract class FileReader
     /**
      * Recursive walk the directory tree and import the files according to
      * the laravel base structure: lang/<language>/group/group.php file stucture
-     *
-     * @param $root
-     * @param $baseDir
      */
     public function importFileTranslations(int $directoryType, string $root, string $importFromDir, string $language = null) : void
     {

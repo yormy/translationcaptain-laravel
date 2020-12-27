@@ -28,7 +28,8 @@
     "require-dev": {
         "jaschilz/php-coverage-badger": "^2.0",
         "phpunit/phpunit": "^9.3",
-        "psalm/plugin-laravel": "^1.2",
+        "psalm/plugin-laravel": "^1.4",
+        "phpstan/phpstan": "^0.12.59",
         "vimeo/psalm": "^4.1.1"
     },
     "autoload": {
@@ -43,7 +44,8 @@
         }
     },
     "scripts": {
-        "psalm": "vendor/bin/psalm --no-diff --no-cache --report-show-info=false --report=psalm-report.txt",
+        "psalm": "vendor/bin/psalm --memory-limit=-1 --no-diff --no-cache --report-show-info=false --report=psalm-report.txt",
+        "phpstan": "vendor/bin/phpstan analyze src --error-format=raw --level=4",
         "test": "vendor/bin/phpunit --colors=always --testdox",
         "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
     },
