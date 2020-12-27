@@ -76,6 +76,7 @@ class PushService
             $readLabels = $reader->getMessages();
             $labels = $this->mergeLabels($labels, $readLabels);
         }
+
         return $labels;
     }
 

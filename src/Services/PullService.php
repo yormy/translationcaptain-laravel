@@ -40,7 +40,6 @@ class PullService
         return $pulledKeys;
     }
 
-
     private function generateFiles(array $pulledKeys) : void
     {
         foreach ($this->writers as $writer) {
