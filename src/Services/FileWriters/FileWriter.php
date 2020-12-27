@@ -127,7 +127,7 @@ abstract class FileWriter
     private function writeFile(string $fullpath, string $fileContents)
     {
         if (! file_exists(dirname($fullpath))) {
-            mkdir(dirname($fullpath), 0666, true);
+            mkdir(dirname($fullpath), 0766, true);
         }
         file_put_contents($fullpath, $fileContents);
     }
