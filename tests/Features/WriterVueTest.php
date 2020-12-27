@@ -24,8 +24,7 @@ class WriterVueTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
-        $toAppRoot = base_path(). "/../../../../";
-        $this->exportPath = $toAppRoot. 'tests/Features/Data/Exports/Vue/lang_vue';
+        $this->exportPath = './tests/Features/Data/Exports/Vue/lang_vue';
 
         $writer = new WriterVue();
         $writer->setExportPath($this->exportPath);
