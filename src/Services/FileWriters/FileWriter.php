@@ -131,8 +131,8 @@ abstract class FileWriter
         }
 
         echo getcwd();
-        echo json_encode(scandir(getcwd(). "/tests"));
-        echo substr(sprintf('%o', fileperms(getcwd(). "/tests")), -4);
+        echo json_encode(scandir(dirname($fullpath)));
+        echo substr(sprintf('%o', fileperms(dirname($fullpath))), -4);
         echo $fullpath;
 
         file_put_contents($fullpath, $fileContents);
