@@ -24,8 +24,8 @@ class WriterBladeTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
-        $toAppRoot = base_path(). "/../../../../";
-        $this->exportPath = $toAppRoot. 'tests/Features/Data/Exports/Blade/lang_blade';
+        $toAppRoot = "";//base_path(). "/../../../../";
+        $this->exportPath = $toAppRoot. './tests/Features/Data/Exports/Blade/lang_blade';
 
         $writer = new WriterBlade();
         $writer->setExportPath($this->exportPath);
