@@ -128,7 +128,7 @@ abstract class FileWriter
     {
         if (! file_exists(dirname($fullpath))) {
             // NOTE: 0666 file put permission denied github actions
-            mkdir(dirname($fullpath), 0766, true);
+            mkdir(dirname($fullpath), 0700, true);
         }
         file_put_contents($fullpath, $fileContents);
     }
