@@ -127,13 +127,11 @@ abstract class FileWriter
     private function writeFile(string $fullpath, string $fileContents)
     {
         if (! file_exists(dirname($fullpath))) {
-            mkdir(dirname($fullpath), 0660, true);
+            mkdir(dirname($fullpath), 0777, true);
         }
 
-        echo getcwd();
-        echo json_encode(scandir(dirname($fullpath)));
+        echo dirname($fullpath);
         echo substr(sprintf('%o', fileperms(dirname($fullpath))), -4);
-        echo $fullpath;
 
         file_put_contents($fullpath, $fileContents);
     }
