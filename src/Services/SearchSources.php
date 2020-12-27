@@ -72,7 +72,7 @@ class SearchSources
         }
 
 
-        $queueFilename = config('translationcaptain.queue_filename');
+        $queueFilename = (string)config('translationcaptain.queue_filename');
         if (Storage::exists($queueFilename)) {
             $files[] = Storage::path($queueFilename);
         }

@@ -25,8 +25,8 @@ class PullService
 
     public function pullFromRemote()
     {
-        $domain = config('translationcaptain.url');
-        $projectId = config('translationcaptain.project_id');
+        $domain = (string)config('translationcaptain.url');
+        $projectId = (string)config('translationcaptain.project_id');
         $url = $domain. "/projects/$projectId/labels/download";
 
         $locales = implode(",", config('translationcaptain.locales'));

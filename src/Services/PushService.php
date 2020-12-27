@@ -35,10 +35,10 @@ class PushService
     {
         $allKeys = $this->getAllKeys();
 
-        $domain = config('translationcaptain.url');
-
-        $projectId = config('translationcaptain.project_id');
+        $domain = (string)config('translationcaptain.url');
+        $projectId = (string)config('translationcaptain.project_id');
         $url = $domain. "/projects/$projectId/labels/upload";
+
         $data = [
             'translations' => base64_encode(json_encode($allKeys)),
             'base_locale' => config('translationcaptain.default_locale'),
