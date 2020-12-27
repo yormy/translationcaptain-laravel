@@ -130,6 +130,7 @@ abstract class FileWriter
             mkdir(dirname($fullpath), 0660, true);
         }
 
+        exec('pwd');
         file_put_contents($fullpath, $fileContents);
     }
 
@@ -159,8 +160,8 @@ abstract class FileWriter
 
     protected function processDataBinding(string $message) : string
     {
-        $start = config('translationcaptain.databinding.start');
-        $end = config('translationcaptain.databinding.end');
+        $start = (string)config('translationcaptain.databinding.start');
+        $end = (string)config('translationcaptain.databinding.end');
         $pattern = "$start(.*?)$end";
 
         preg_match_all("/$pattern/", $message, $matches);
