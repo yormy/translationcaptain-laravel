@@ -12,7 +12,8 @@ class WriterBladeTest extends TestCase
 
     protected $locales = ['nl','en','xx']; // test also non existing locale
 
-    const LANG_DIR = 'lang_tc';
+
+    protected $exportPath;
 
     public function setUp(): void
     {
@@ -23,7 +24,12 @@ class WriterBladeTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
+        $toAppRoot = base_path(). "/../../../../";
+        $this->exportPath = $toAppRoot. 'tests/Features/Data/Exports/Blade/lang_blade';
+
         $writer = new WriterBlade();
+        $writer->setExportPath($this->exportPath);
+
         $writer->setLabels($this->translationsRead);
         // $bladeFilesGenerator->zipCurrentFiles();
         $writer->export($this->locales);
@@ -94,10 +100,8 @@ class WriterBladeTest extends TestCase
     public function generateFilename(string $locale, string $file): string
     {
         if (strpos($file, '::') === false) {
-            $filename = base_path() . DIRECTORY_SEPARATOR .
-                'resources' .
+            $filename = $this->exportPath.
                 DIRECTORY_SEPARATOR .
-                self::LANG_DIR .
                 DIRECTORY_SEPARATOR .
                 $locale .
                 DIRECTORY_SEPARATOR .
@@ -108,18 +112,15 @@ class WriterBladeTest extends TestCase
             $vendorName = substr($file, 0, $vendorSepPos);
             $filenameWithoutVendor = substr($file, $vendorSepPos + 2);
 
-            $filename = base_path() . DIRECTORY_SEPARATOR .
-                'resources' .
-                DIRECTORY_SEPARATOR.
-                self::LANG_DIR .
+            $filename = $this->exportPath.
                 DIRECTORY_SEPARATOR.
                 'vendor'.
                 DIRECTORY_SEPARATOR.
                 $vendorName.
                 DIRECTORY_SEPARATOR.
                 $locale .
-                DIRECTORY_SEPARATOR .
-                $filenameWithoutVendor .
+                DIRECTORY_SEPARATOR.
+                $filenameWithoutVendor.
                 ".php";
         }
 
@@ -128,12 +129,9 @@ class WriterBladeTest extends TestCase
 
     public function generateFilenameSingleFileTranslation(string $locale): string
     {
-        return base_path() . DIRECTORY_SEPARATOR .
-            'resources' .
-            DIRECTORY_SEPARATOR .
-            self::LANG_DIR .
-            DIRECTORY_SEPARATOR .
-            $locale .
+        return $this->exportPath.
+            DIRECTORY_SEPARATOR.
+            $locale.
             ".php";
     }
 }

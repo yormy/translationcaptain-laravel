@@ -12,7 +12,8 @@ class WriterVueTest extends TestCase
 
     protected $locales = ['nl','en','xx']; // test also non existing locale
 
-    const LANG_DIR = 'lang_tc_vuw';
+
+    protected $exportPath;
 
     public function setUp(): void
     {
@@ -23,7 +24,13 @@ class WriterVueTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
+        $toAppRoot = base_path(). "/../../../../";
+        $this->exportPath = $toAppRoot. 'tests/Features/Data/Exports/Vue/lang_vue';
+
         $writer = new WriterVue();
+        $toAppRoot = "/../../../../";
+        $writer->setExportPath($this->exportPath);
+
         $writer->setLabels($this->translationsRead);
         $writer->export($this->locales);
     }
@@ -74,14 +81,11 @@ class WriterVueTest extends TestCase
      */
     public function generateFilename(string $locale, string $file): string
     {
-        return base_path() . DIRECTORY_SEPARATOR .
-            'resources' .
-            DIRECTORY_SEPARATOR .
-            self::LANG_DIR .
-            DIRECTORY_SEPARATOR .
-            $locale .
-            DIRECTORY_SEPARATOR .
-            $file .
+        return $this->exportPath.
+            DIRECTORY_SEPARATOR.
+            $locale.
+            DIRECTORY_SEPARATOR.
+            $file.
             ".json";
     }
 }
