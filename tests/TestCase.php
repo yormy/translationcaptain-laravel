@@ -7,8 +7,8 @@ use Orchestra\Testbench\TestCase as Orchestra;
 use Yormy\TranslationcaptainLaravel\Providers\TranslationServiceProvider;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterVue;
 use Yormy\TranslationcaptainLaravel\TranslationcaptainLaravelServiceProvider;
 
 class TestCase extends Orchestra

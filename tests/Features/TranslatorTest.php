@@ -5,7 +5,7 @@ namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 use Illuminate\Support\Facades\Storage;
 use Yormy\TranslationcaptainLaravel\Exceptions\MissingTranslationException;
 use Yormy\TranslationcaptainLaravel\Observers\Events\MissingTranslationEvent;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterVue;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
@@ -16,19 +16,6 @@ class TranslatorTest extends TestCase
     protected $locales = ['nl','en','xx']; // test also non existing locale
 
     const LANG_DIR = 'lang_tc_vuw';
-
-//    public function setUp(): void
-//    {
-//        parent::setUp();
-//
-//        $pull = new PushService($this->locales);
-//        $allKeys = $pull->getAllKeys();
-//
-//        $this->translationsRead = $allKeys;
-//
-//        $bladeFilesGenerator = new GeneratorVue($this->translationsRead);
-//        $bladeFilesGenerator->export($this->locales);
-//    }
 
     /** @test */
     public function key_is_translated()

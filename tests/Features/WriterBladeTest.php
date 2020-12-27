@@ -2,7 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterBlade;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
@@ -23,9 +23,10 @@ class WriterBladeTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
-        $bladeFilesGenerator = new GeneratorBlade($this->translationsRead);
+        $writer = new WriterBlade();
+        $writer->setLabels($this->translationsRead);
         // $bladeFilesGenerator->zipCurrentFiles();
-        $bladeFilesGenerator->export($this->locales);
+        $writer->export($this->locales);
     }
 
     /** @test */

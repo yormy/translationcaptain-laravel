@@ -3,11 +3,11 @@
 namespace Yormy\TranslationcaptainLaravel\Services;
 
 use Illuminate\Support\Facades\Http;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\FilesGenerator;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\FileWriter;
 
 class PullService
 {
-    private $generators;
+    private $writers;
 
     public function __construct()
     {
@@ -18,9 +18,9 @@ class PullService
         }
     }
 
-    public function addWriter(FilesGenerator $writer)
+    public function addWriter(FileWriter $writer)
     {
-        $this->generators[] = $writer;
+        $this->writers[] = $writer;
     }
 
     public function pullFromRemote()
@@ -43,9 +43,9 @@ class PullService
 
     private function generateFiles(array $pulledKeys) : void
     {
-        foreach ($this->generators as $generator) {
-            $generator->setLabels($pulledKeys);
-            $generator->export();
+        foreach ($this->writers as $writer) {
+            $writer->setLabels($pulledKeys);
+            $writer->export();
         }
     }
 }

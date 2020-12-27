@@ -4,7 +4,7 @@ namespace Yormy\TranslationcaptainLaravel\Services\FileWriters;
 
 use Yormy\TranslationcaptainLaravel\Services\FileTypes\FileTypePhp;
 
-class GeneratorBlade extends FilesGenerator
+class WriterBlade extends FileWriter
 {
     protected $vendorPath = 'vendor';
 

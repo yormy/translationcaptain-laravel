@@ -2,7 +2,9 @@
 
 namespace Yormy\TranslationcaptainLaravel\Services\FileWriters;
 
-abstract class FilesGenerator
+use Yormy\TranslationcaptainLaravel\Exceptions\InvalidSetupException;
+
+abstract class FileWriter
 {
     const VENDORNAME_SEPARATOR = '::';
 
@@ -55,6 +57,10 @@ abstract class FilesGenerator
 
     protected function prepareExport(string $locale) : array
     {
+        if (!$this->labels) {
+            throw new InvalidSetupException('Labels not set');
+        }
+
         $groups = $this->labels[$locale];
 
         $filesToExport = [];

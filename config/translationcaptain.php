@@ -2,8 +2,8 @@
 
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderBlade;
 use Yormy\TranslationcaptainLaravel\Services\FileReaders\ReaderVue;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorBlade;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterBlade;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterVue;
 
 return [
 
@@ -115,11 +115,11 @@ return [
     'writers' => [
         [
             'path' => '/resources/lang_blade',
-            'class' => GeneratorBlade::class,
+            'class' => WriterBlade::class,
         ],
         [
             'path' => '/resources/js/components/lang_vue',
-            'class' => GeneratorVue::class,
+            'class' => WriterVue::class,
         ],
     ],
 

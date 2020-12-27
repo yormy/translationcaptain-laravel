@@ -2,7 +2,7 @@
 
 namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\GeneratorVue;
+use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterVue;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
@@ -23,8 +23,9 @@ class WriterVueTest extends TestCase
 
         $this->translationsRead = $allKeys;
 
-        $bladeFilesGenerator = new GeneratorVue($this->translationsRead);
-        $bladeFilesGenerator->export($this->locales);
+        $writer = new WriterVue();
+        $writer->setLabels($this->translationsRead);
+        $writer->export($this->locales);
     }
 
     /** @test */
