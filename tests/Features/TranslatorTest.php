@@ -5,8 +5,6 @@ namespace Yormy\TranslationcaptainLaravel\Tests\Features;
 use Illuminate\Support\Facades\Storage;
 use Yormy\TranslationcaptainLaravel\Exceptions\MissingTranslationException;
 use Yormy\TranslationcaptainLaravel\Observers\Events\MissingTranslationEvent;
-use Yormy\TranslationcaptainLaravel\Services\FileWriters\WriterVue;
-use Yormy\TranslationcaptainLaravel\Services\PushService;
 use Yormy\TranslationcaptainLaravel\Tests\TestCase;
 
 class TranslatorTest extends TestCase
