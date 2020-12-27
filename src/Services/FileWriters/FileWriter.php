@@ -128,8 +128,6 @@ abstract class FileWriter
     {
         if (! file_exists(dirname($fullpath))) {
             mkdir(dirname($fullpath), 0660, true);
-        } else {
-            chmod(dirname($fullpath), 0660);
         }
 
         echo getcwd();
