@@ -12,7 +12,6 @@ class PushController extends Controller
         $locales = config('translationcaptain.locales');
         $push = new PushService($locales);
 
-        $response = $push->pushToRemote();
-        dd($response->body());
+        return $push->pushToRemote();
     }
 }

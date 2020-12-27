@@ -3,22 +3,19 @@
 namespace Yormy\TranslationcaptainLaravel\Commands;
 
 use Illuminate\Console\Command;
-use Yormy\TranslationcaptainLaravel\Services\PushService;
+use Yormy\TranslationcaptainLaravel\Commands\Traits\PushTrait;
 
 class PushCommand extends Command
 {
-    public $signature = 'tcp:push';
+    use PushTrait;
 
-    public $description = 'Push local changes and found keys to TranslationCaptain';
+    public $signature = 'translationcaptain:push {option?}';
+
+    public $description = 'Push local changes and found keys to TranslationCaptain
+    "translationcaptain:push details" : print out the processed keys';
 
     public function handle()
     {
-        $this->comment('Pushing keys and translations to TranslationCaptain');
-        $this->comment('Pushing...');
-
-        $push = new PushService(config('translationcaptain.locales'));
-        $push->pushToRemote();
-
-        $this->comment('Ahoy Captain.. we\'re done');
+        $this->goPush();
     }
 }

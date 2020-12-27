@@ -3,28 +3,28 @@
 namespace Yormy\TranslationcaptainLaravel\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
+use Yormy\TranslationcaptainLaravel\Commands\Traits\PullTrait;
+use Yormy\TranslationcaptainLaravel\Commands\Traits\PushTrait;
 use Yormy\TranslationcaptainLaravel\Services\PullService;
 use Yormy\TranslationcaptainLaravel\Services\PushService;
 
 class SyncCommand extends Command
 {
-    public $signature = 'tcp:sync';
+    use PushTrait;
+    use PullTrait;
 
-    public $description = 'Push changes to TranslationCaptain and Pull to refresh local files';
+    public $signature = 'translationcaptain:sync {option?}';
+
+    public $description = 'Push changes to TranslationCaptain and Pull to refresh local files
+    "translationcaptain:sync details" : print out the processed keys';
 
     public function handle()
     {
-        $this->comment('TranslationCaptain Syncing, First Push Then Pull ');
+        $this->goPush();
 
-        $this->comment('Pushing...');
-        $locales = ['nl','en'];
-        $push = new PushService($locales);
-        $push->pushToRemote();
+        $this->comment('   ');
 
-        $this->comment('Ahoy, let start Pulling...');
-        $push = new PullService();
-        $push->pullFromRemote();
-
-        $this->comment('Ahoy Captain.. we\'re done');
+        $this->goPull();
     }
 }
