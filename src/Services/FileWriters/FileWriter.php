@@ -57,7 +57,7 @@ abstract class FileWriter
 
     protected function prepareExport(string $locale) : array
     {
-        if (!$this->labels) {
+        if (! $this->labels) {
             throw new InvalidSetupException('Labels not set');
         }
 
