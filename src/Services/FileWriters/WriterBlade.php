@@ -39,7 +39,7 @@ class WriterBlade extends FileWriter
         }
 
         if ($this->isVendorKey($groupName)) {
-            $vendorSeparatorPosition = strpos($groupName, self::VENDORNAME_SEPARATOR);
+            $vendorSeparatorPosition = (int)strpos($groupName, self::VENDORNAME_SEPARATOR);
             $vendorName = substr($groupName, 0, $vendorSeparatorPosition);
             $filename = substr($groupName, $vendorSeparatorPosition + strlen(self::VENDORNAME_SEPARATOR), strlen($groupName));
 
