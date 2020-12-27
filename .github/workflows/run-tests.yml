@@ -40,7 +40,7 @@ jobs:
           composer require "laravel/framework:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
       - name: Prepare write
-        run: sudo chmod -R 777 /home/runner/work/translationcaptain-laravel/translationcaptain-laravel/tests
+        run: sudo chown -R $USER:$USER /home/runner/work/translationcaptain-laravel/translationcaptain-laravel/tests
       - name: Execute tests
         run: vendor/bin/phpunit --coverage-text --coverage-clover=clover-push.xml
 
