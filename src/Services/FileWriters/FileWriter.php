@@ -130,7 +130,10 @@ abstract class FileWriter
             mkdir(dirname($fullpath), 0660, true);
         }
 
-        exec('pwd');
+        echo getcwd();
+        echo json_encode(scandir(getcwd(). "/tests"));
+        echo substr(sprintf('%o', fileperms(getcwd(). "/tests")), -4);
+        die();
         file_put_contents($fullpath, $fileContents);
     }
 
