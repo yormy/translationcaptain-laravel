@@ -41,6 +41,10 @@ jobs:
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction
       - name: Prepare write
         run: sudo chmod -R 777 ./tests
+      - name: mkdir
+        run: sudo mkdir -p ./tests/Features/Data/Exports/Blade/lang_blade
+      - name: touch
+        run: sudo touch ./tests/Features/Data/Exports/Blade/lang_blade/zz.xx
       - name: Execute tests
         run: vendor/bin/phpunit --coverage-text --coverage-clover=clover-push.xml
 
