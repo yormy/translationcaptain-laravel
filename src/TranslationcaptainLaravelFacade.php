@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\Facade;
  */
 class TranslationcaptainLaravelFacade extends Facade
 {
-//    protected static function getFacadeAccessor()
-//    {
-//        return 'translationcaptain';
-//    }
+    protected static function getFacadeAccessor()
+    {
+        return 'TranslationcaptainLaravel';
+    }
 }
