@@ -30,11 +30,11 @@ trait PushTrait
             $unprocessedKeyCount = $body['data']['unprocessed_keys'];
             $this->comment('we could not process '. $unprocessedKeyCount. ' keys');
             $this->comment('Arrr...'. $body['message']);
+
             return;
         }
 
         $this->comment('Captain, we pushed '. count($processedKeys). ' keys');
         $this->comment('Ahoy Captain.. we\'re done');
     }
-
 }

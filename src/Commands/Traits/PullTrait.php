@@ -3,9 +3,7 @@
 namespace Yormy\TranslationcaptainLaravel\Commands\Traits;
 
 use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Cookie;
 use Yormy\TranslationcaptainLaravel\Services\PullService;
-use Yormy\TranslationcaptainLaravel\Services\PushService;
 
 trait PullTrait
 {
@@ -30,5 +28,4 @@ trait PullTrait
         $this->comment('Captain, we pulled '. count(Arr::dot($pulledKeys)). ' keys');
         $this->comment('Ahoy Captain.. we\'re done');
     }
-
 }
