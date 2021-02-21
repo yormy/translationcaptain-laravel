@@ -28,6 +28,11 @@ class Translator extends BaseTranslator
             return $translation;
         }
 
+        if (is_array($translation)) {
+            echo "You have an error in your translation files: ";
+            dd($translation);
+        }
+
         $isMissing = $this->translationMissing($key, $translation);
         $this->persistKeyForContext($key, ! $isMissing);
 
