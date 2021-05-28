@@ -1,4 +1,4 @@
-# Tracking of referrals in laravel
+# Translation Captain package for laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/yormy/translationcaptain-laravel.svg?style=flat-square)](https://packagist.org/packages/yormy/translationcaptain-laravel)
 [![Total Downloads](https://img.shields.io/packagist/dt/yormy/translationcaptain-laravel.svg?style=flat-square)](https://packagist.org/packages/yormy/translationcaptain-laravel)
